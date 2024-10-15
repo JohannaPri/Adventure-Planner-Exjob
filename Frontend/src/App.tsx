@@ -1,16 +1,12 @@
-import { useState } from 'react'
+import { useState } from "react";
+import NavBar from "./components/layout/NavBar";
 
 function App() {
-  
-
   return (
     <>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-      
+      <NavBar />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

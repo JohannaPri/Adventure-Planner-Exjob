@@ -8,9 +8,7 @@ type ListProps = {
 export const List = ({ className, children, ...rest }: ListProps) => {
   return (
     <>
-      <li className={className} {...rest}>
-        {children}
-      </li>
+      <li className={className} {...rest}>{children}</li>
     </>
   );
 };

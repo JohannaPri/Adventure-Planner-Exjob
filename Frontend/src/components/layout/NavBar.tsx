@@ -27,7 +27,7 @@ const NavBar = () => {
   return (
     <header className="fixed top-0 left-0 z-50 w-full h-auto overflow-x-hidden bg-transparent">
       <Slide direction="down">
-        <nav className={`w-full md:h-24 h-20 ${navBarColor ? "bg-white" : "bg-transparent"} lg:px-24 md:px-12 px-8 flex justify-between items-center`}>
+        <nav className={`w-full md:h-24 h-20 ${navBarColor ? "bg-white" : "bg-white bg-opacity-70"} lg:px-24 md:px-12 px-8 flex justify-between items-center`}>
           <Image
             as="a"
             href="/"

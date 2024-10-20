@@ -1,11 +1,15 @@
 export const NavLinks = [
   {
-    name: "My Adventures",
-    url: "/my-adventures",
+    name: "Top Destinations",
+    url: "#top-destinations",
   },
   {
-    name: "Profile",
-    url: "/profile",
+    name: "Services",
+    url: "#services",
+  },
+  {
+    name: "Contact",
+    url: "#contact",
   }
 ];
 
@@ -19,3 +23,18 @@ export const NavButtons = [
     url: "/signup",
   },
 ];
+
+export const NavLoggedIn = [
+  {
+    name: "Home",
+    url: "/",
+  },
+  {
+    name: "My Destinations",
+    url: "/my-destinations",
+  },
+  {
+    name: "Profile",
+    url: "/profile",
+  },
+]

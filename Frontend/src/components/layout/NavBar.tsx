@@ -13,7 +13,7 @@ const NavBar = () => {
   const [navBarColor, setNavBarColor] = useState<boolean>(false);
 
   const listenScrollEvent = () => {
-    window.scrollY < 10 ? setNavBarColor(true) : setNavBarColor(false);
+    window.scrollY < 10 ? setNavBarColor(false) : setNavBarColor(true);
   }
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const NavBar = () => {
                 {
                   NavButtons.map((navbutton, index) => (
                     <List className="w-full" key={index}>
-                      <Button onClick={() => navigate(navbutton.url)} type="button" className={`${navbutton.name == "Signup" ? "border-2 border-gray-950 before:top-0" : "before:bottom-0 border-b-2 border-transparent hover:border-gray-950"} py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-pink-400 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base`}>{navbutton.name}</Button>
+                      <Button onClick={() => navigate(navbutton.url)} type="button" className={`${navbutton.name == "Signup" ? "border-2 border-gray-950 before:top-0" : "before:bottom-0 border-b-2 border-transparent hover:border-gray-950"} py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-gray-200 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base`}>{navbutton.name}</Button>
                     </List>
                   ))
                 }

@@ -1,7 +1,7 @@
 type TextOwnProps<E extends React.ElementType> = {
-    className: string
-    children?: React.ReactNode
-    as?: E
+    className: string;
+    children?: React.ReactNode;
+    as?: E;
 }
 
 type TextProps<E extends React.ElementType> = TextOwnProps<E> & Omit<React.ComponentProps<E>, keyof TextOwnProps<E>>

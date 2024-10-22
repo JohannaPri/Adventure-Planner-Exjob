@@ -38,3 +38,32 @@ export const NavLoggedIn = [
     url: "/profile",
   },
 ]
+
+export const TopDestinationTexts = {
+  cards: [
+    {
+      country: "Italy",
+      city: "Amalfi Coast",
+    },
+    {
+      country: "USA",
+      city: "New York City",
+    },
+    {
+      country: "France",
+      city: "Paris",
+    },
+    {
+      country: "UK",
+      city: "London",
+    },
+    {
+      country: "Australia",
+      city: "Sydney",
+    },
+    {
+      country: "Greece",
+      city: "Santorini",
+    },
+  ],
+};

@@ -1,15 +1,15 @@
 export const NavLinks = [
   {
     name: "Top Destinations",
-    url: "#top-destinations",
+    url: "top-destinations",
   },
   {
     name: "Services",
-    url: "#services",
+    url: "services",
   },
   {
     name: "Contact",
-    url: "#contact",
+    url: "contact",
   }
 ];
 
@@ -67,3 +67,42 @@ export const TopDestinationTexts = {
     },
   ],
 };
+
+export const countries: string[] = [
+  "France",
+  "Sri Lanka",
+  "Austria",
+  "South Africa",
+  "United Kingdom",
+  "Germany",
+  "Croatia",
+  "Iceland",
+  "Sweden",
+  "Australia",
+  "Turkey",
+  "Switzerland",
+  "Norway",
+  "Portugal",
+  "Spain",
+  "New Zealand",
+  "Ireland",
+  "Greece",
+  "Italy",
+  "Japan",
+  "Hong Kong",
+  "The Netherlands",
+  "Chile",
+  "Indonesia",
+  "The Maldives",
+  "Canada",
+  "Brazil",
+  "Vietnam",
+  "Faroe Islands",
+  "Caribbean",
+  "Cape Verde",
+  "Zanzibar",
+  "Thailand",
+  "USA",
+  "Alaska",
+  "Singapore"
+];

@@ -1,14 +1,30 @@
+import React, { useState, useEffect } from "react";
 import { Image } from "../Image";
 import bgImage from "../../assets/background/background-image.png";
 import planeSvg from "../../assets/background/plane.svg";
 import { Text } from "../Text";
 import { Fade, Slide } from "react-awesome-reveal";
 import { Button } from "../Button";
+import { countries } from "../Data/DataLists";
 
 const HeroSection = () => {
+  const [randomCountry, setRandomCountry] = useState<string>('');
+
+  const getRandomCountry = () => {
+    const randomIndex = Math.floor(Math.random() * countries.length);
+    setRandomCountry(countries[randomIndex]);
+  }
+
+  useEffect(() => {
+    getRandomCountry();
+    const intervalId = setInterval(getRandomCountry, 3000);
+
+    return () => clearInterval(intervalId);
+  },[])
+
   return (
     <>
-    <section className="w-full lg:h-screen md:h-[550px] h-[830px] relative overflow-x-hidden flex justify-end font-poppins">
+    <section id="home" className="w-full lg:h-screen md:h-[550px] h-[830px] relative overflow-x-hidden flex justify-end font-poppins">
       <section className="w-full lg:h-screen md:h-[550px] h-[830] overflow-hidden relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -89,11 +105,14 @@ const HeroSection = () => {
             filter="url(#shadow)"
             height="1000"
             width="1000"
-            transform="rotate(0)"
+            transform="rotate()"
             fill="#FCD1D1"
             className="shadow-md"
             d="M50,120 C30,110 20,90 40,80 C20,60 40,40 60,50 C70,30 100,20 120,40 C140,20 180,40 170,70 C190,80 190,120 160,110 C140,140 100,150 80,130 C70,150 50,140 50,120 Z"
           />
+          <text x="53%" y="45%" transform="rotate(0)" textAnchor="middle" dominantBaseline="middle" fontSize="7" fill="rgb(75 85 99)" style={{ fontSize: '8' }}>
+            {randomCountry}?
+          </text>
         </svg>
 
         {/*<Image image={planeSvg} alt="plane" className="" /> */}

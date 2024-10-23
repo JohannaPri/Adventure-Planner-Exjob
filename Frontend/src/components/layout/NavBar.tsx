@@ -10,6 +10,13 @@ import { List } from "../List";
 const NavBar = () => {
   const navigate = useNavigate();
 
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const [navBarColor, setNavBarColor] = useState<boolean>(false);
 
   const listenScrollEvent = () => {
@@ -30,7 +37,7 @@ const NavBar = () => {
         <nav className={`w-full md:h-24 h-20 ${navBarColor ? "bg-white" : "bg-white bg-opacity-70"} lg:px-24 md:px-12 px-8 flex justify-between items-center`}>
           <Image
             as="a"
-            href="/"
+            onClick={() => scrollToSection("home")}
             className="h-8 md:h-10"
             image={Logo}
             alt="Logo"
@@ -40,7 +47,7 @@ const NavBar = () => {
                 {
                   NavLinks.map((navlink, index) => (
                     <List className="w-full text-base" key={index}>
-                        <NavLink to={navlink.url} className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4">{navlink.name}</NavLink>
+                        <NavLink to={''} onClick={() => scrollToSection(navlink.url)} className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4">{navlink.name}</NavLink>
                     </List>
                   ))
                 }

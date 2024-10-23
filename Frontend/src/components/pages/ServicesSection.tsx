@@ -26,7 +26,7 @@ const ServicesSection = () => {
 
   return (
     <>
-      <section className="relative flex flex-col items-center justify-center w-full h-full px-6 lg:px-24 md:px-20 font-poppins">
+      <section id="services" className="relative flex flex-col items-center justify-center w-full h-full px-6 lg:px-24 md:px-20 font-poppins">
         <main className="flex flex-col items-center justify-center w-full gap-3 pt-32">
           <Text
             as="p"

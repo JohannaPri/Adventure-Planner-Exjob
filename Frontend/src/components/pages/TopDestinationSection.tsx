@@ -85,7 +85,7 @@ const TopDestinationSection = () => {
     }, [])
 
     return (
-        <section className="relative flex flex-col items-center justify-center w-full h-auto px-6 my-20 lg:px-24 md:px-20">
+        <section id="top-destinations" className="relative flex flex-col items-center justify-center w-full h-auto px-6 my-20 lg:px-24 md:px-20">
           <Text
             as="p"
             className="text-sm font-normal tracking-widest uppercase text-deepSlate lg:text-base"
@@ -107,10 +107,10 @@ const TopDestinationSection = () => {
                 {
                     TopDestinationTexts.cards.map((card, index) => (
                         <div key={index} className="px-3 md:px-6">
-                            <Card cardClass="overflow-hidden shadow-md rounded-lg cursor-pointer group" imageAlt={card.country} imageSrc={renderCities(index)} imageWrapperClass="w-full h-[250px] overflow-hidden" cover="group-hover:scale-125 transition duration-500 ease" textWrapperClass="flex flex-col gap-4 w-full px-5 py-5">
+                            <Card cardClass="overflow-hidden shadow-md rounded-lg cursor-default group" imageAlt={card.country} imageSrc={renderCities(index)} imageWrapperClass="w-full h-[250px] overflow-hidden" cover="group-hover:scale-125 transition duration-500 ease" textWrapperClass="flex flex-col gap-4 w-full px-5 py-5">
                                 <div className="flex items-center justify-between">
                                     <Text as="h4" className="text-deepSlate font-medium">
-                                        {card.country}, {card.city}
+                                        {card.city}, {card.country}
                                     </Text>
                                 </div>
                             </Card>

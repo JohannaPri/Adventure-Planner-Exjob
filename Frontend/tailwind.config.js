@@ -9,6 +9,7 @@ export default {
       colors: {
         cloudBlue: "#AEE1E1",
         cloudGray: "#D3E0DC",
+        cloudGray2: "#b0c8c1",
         cloudPink: "#FCD1D1",
         darkBlue: "#A5CDCE",
         darkPurple: "#5B4B8A",

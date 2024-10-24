@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Image } from "../Image";
-import bgImage from "../../assets/background/background-image.png";
 import planeSvg from "../../assets/background/plane.svg";
 import { Text } from "../Text";
 import { Fade, Slide } from "react-awesome-reveal";
 import { Button } from "../Button";
-import { countries } from "../Data/DataLists";
+import { HeroTexts, Countries } from "../Data/DataLists";
 
 const HeroSection = () => {
   const [randomCountry, setRandomCountry] = useState<string>('');
+  const heroText = HeroTexts[0];
 
   const getRandomCountry = () => {
-    const randomIndex = Math.floor(Math.random() * countries.length);
-    setRandomCountry(countries[randomIndex]);
-  }
+  const randomIndex = Math.floor(Math.random() * Countries.length);
+  setRandomCountry(Countries[randomIndex]);
+}
 
   useEffect(() => {
     getRandomCountry();
@@ -115,16 +115,15 @@ const HeroSection = () => {
           </text>
         </svg>
 
-        {/*<Image image={planeSvg} alt="plane" className="" /> */}
       </section>
       <main className="absolute top-0 left-0 grid w-full h-auto px-5 pt-24 lg:h-full md:grid-cols-2 lg:px-24 md:px-24 md:pt-32 lg:pt-0">
         <div className="flex flex-col justify-center order-2 gap-3 md:gap-6 md:order-1">
           <Text
             as="p"
-            className="text-sm font-normal tracking-widest uppercase text-deepSlate lg:text-base"
+            className="text-sm font-normal tracking-widest uppercase text-slateGray lg:text-base"
           >
             <Fade duration={2000}>
-              Plan your next trip with Adventure Planner
+              {heroText.firstText}
             </Fade>
           </Text>
           <Text
@@ -132,7 +131,7 @@ const HeroSection = () => {
             className="text-3xl font-medium text-gray-600 lg:text-7xl md:text-5xl"
           >
             <Slide direction="right" duration={1200}>
-              Let us create your adventure of a lifetime.
+              {heroText.bigText}
             </Slide>
           </Text>
           <Text
@@ -140,9 +139,11 @@ const HeroSection = () => {
             className="text-sm font-light text-justify text-gray-600 md:text-base"
           >
             <Fade duration={2000}>
-              We ensure you have everything you need in one place,
+              {heroText.secondText1}
             </Fade>
-            <Fade duration={2000}>from planning to traveling.</Fade>
+            <Fade duration={2000}>
+              {heroText.secondText2}
+            </Fade>
           </Text>
           <div className="flex items-center justify-between w-full gap-0 md:justify-start lg:gap-12 md:gap-6">
             <Button

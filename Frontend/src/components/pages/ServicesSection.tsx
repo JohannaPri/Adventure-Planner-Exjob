@@ -30,7 +30,7 @@ const ServicesSection = () => {
         <main className="flex flex-col items-center justify-center w-full gap-3 pt-32">
           <Text
             as="p"
-            className="text-sm font-normal tracking-widest uppercase text-deepSlate lg:text-base"
+            className="text-sm font-normal tracking-widest uppercase text-slateGray lg:text-base"
           >
             <Fade duration={2000}>Our Services</Fade>
           </Text>

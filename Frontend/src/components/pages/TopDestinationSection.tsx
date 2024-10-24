@@ -88,17 +88,17 @@ const TopDestinationSection = () => {
         <section id="top-destinations" className="relative flex flex-col items-center justify-center w-full h-auto px-6 my-20 lg:px-24 md:px-20">
           <Text
             as="p"
-            className="text-sm font-normal tracking-widest uppercase text-deepSlate lg:text-base"
+            className="text-sm font-normal tracking-widest uppercase text-slateGray lg:text-base"
           >
             <Fade duration={2000}>Top Destinations</Fade>
           </Text>
 
           <div className="flex items-center justify-end w-full gap-5 px-3 mt-12 md:px-6">
-                <Button onClick={previous} className="p-2 border-none rounded-full outline-none cursor-pointer bg-slateGray text-slateGray hover:bg-slateGray hover:text-white" type="button">
-                    <CaretLeft size={18} color="white" weight="fill" />
+                <Button onClick={previous} className="p-2 border-none rounded-full outline-none cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black" type="button">
+                    <CaretLeft size={18} color="currentColor" weight="fill" />
                 </Button>
-                <Button onClick={next} className="p-2 border-none rounded-full outline-none cursor-pointer bg-slateGray text-slateGray hover:bg-slateGray hover:text-white" type="button">
-                    <CaretRight size={18} color="white" weight="fill" />
+                <Button onClick={next} className="p-2 border-none rounded-full outline-none cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black" type="button">
+                    <CaretRight size={18} color="currentColor" weight="fill" />
                 </Button>
           </div>
 

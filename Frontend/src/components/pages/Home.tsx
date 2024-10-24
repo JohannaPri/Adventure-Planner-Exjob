@@ -1,6 +1,7 @@
 import HeroSection from "./HeroSection"
 import ServicesSection from "./ServicesSection"
 import TopDestinationSection from "./TopDestinationSection"
+import Footer from "./Footer"
 
 const Home = () => {
     return (
@@ -8,6 +9,7 @@ const Home = () => {
             <HeroSection />
             <ServicesSection />
             <TopDestinationSection />
+            <Footer />
         </>
     )
 }

@@ -79,7 +79,6 @@ export const countries: string[] = [
   "Iceland",
   "Sweden",
   "Australia",
-  "Turkey",
   "Switzerland",
   "Norway",
   "Portugal",

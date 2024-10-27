@@ -19,16 +19,18 @@ import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo } from "@phosphor-icon
         };
 
     return (
-      <footer className="flex flex-col w-full bg-cloudGray">
+      <footer id="footer" className="flex flex-col w-full bg-cloudGray">
         <section className="grid w-full h-auto px-6 py-16 lg:grid-cols-5 md:grid-cols-3 lg:px-20 md:px-12 gap-7 md:gap-4 lg:gap-0">
-          <div className="flex flex-col items-start gap-4 px-4">
+          <div className="flex flex-col items-start gap-4 px-4 justify-center lg:px-4 md:px-4">
             <Slide direction="down">
-              <Image
-                className="w-28 md:h-10 cursor-pointer"
-                onClick={() => scrollToSection("home")}
-                image={Logo}
-                alt="Logo"
-              />
+              <div className="sm:px-20 lg:px-9 px-24">
+                <Image
+                  className="w-36 md:h-15 cursor-pointer"
+                  onClick={() => scrollToSection("home")}
+                  image={Logo}
+                  alt="Logo"
+                />
+              </div>
             </Slide>
             <blockquote className="text-lg italic font-semibold text-slateGray mt-4 relative">
               <div className="absolute top-0 left-0">
@@ -88,6 +90,24 @@ import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo } from "@phosphor-icon
             </Text>
             <ul className="flex flex-col gap-2 md:ml-11 cursor-pointer">
               {FooterTexts.contacts.links.map((link, index) => (
+                <List key={index} className="text-sm">
+                  <div
+                    onClick={() => navigate(link.url)}
+                    className="transition-all duration-300 text-slateGray hover:underline"
+                  >
+                    {link.name}
+                  </div>
+                </List>
+              ))}
+            </ul>
+          </div>
+          
+          <div className="flex flex-col gap-4 md:items-center md:mt-8 font-poppins">
+            <Text className="text-xl text-slateGray" as="h2">
+              {FooterTexts.more.caption}
+            </Text>
+            <ul className="flex flex-col gap-2 mr-4 cursor-pointer">
+              {FooterTexts.more.links.map((link, index) => (
                 <List key={index} className="text-sm">
                   <div
                     onClick={() => navigate(link.url)}

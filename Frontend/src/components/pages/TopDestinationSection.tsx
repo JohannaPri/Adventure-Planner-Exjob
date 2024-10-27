@@ -85,7 +85,8 @@ const TopDestinationSection = () => {
     }, [])
 
     return (
-        <section id="top-destinations" className="relative flex flex-col items-center justify-center w-full h-auto px-6 my-20 lg:px-24 md:px-20">
+        <section id="top-destinations" className="relative flex flex-col items-center justify-center w-full h-screen px-6 my-20 lg:px-24 md:px-20">
+            <main className="flex flex-col items-center justify-center w-full gap-3 pt-0">
           <Text
             as="p"
             className="text-sm font-normal tracking-widest uppercase text-slateGray lg:text-base"
@@ -119,6 +120,7 @@ const TopDestinationSection = () => {
                 }
             </Slider>
           </div>
+          </main>
         </section>
     )
 }

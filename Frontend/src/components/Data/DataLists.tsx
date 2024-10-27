@@ -7,6 +7,13 @@ export const HeroTexts = [
   }
 ];
 
+export const NewsLetterTexts = {
+  firstText1: "Join our adventure!", 
+  firstText2: "Subscribe for exclusive travel tips, updates, and inspiration straight to your inbox.",
+  placeholderText: "Your email",
+  buttonText: "Subscribe"
+}
+
 export const NavLinks = [
   {
     name: "Services",
@@ -18,7 +25,7 @@ export const NavLinks = [
   },
   {
     name: "Contact",
-    url: "contact",
+    url: "footer",
   }
 ];
 
@@ -124,7 +131,28 @@ export const FooterTexts = {
         url: "/tos"
       }
     ]
-  }
+  },
+  more: {
+    caption: "More",
+    links: [
+      {
+        name: "More",
+        url: "more",
+      },
+      {
+        name: "More",
+        url: "more",
+      },
+      {
+        name: "More",
+        url: "more",
+      },
+      {
+        name: "More",
+        url: "more",
+      }
+    ]
+  },
 }
 
 export const Countries: string[] = [

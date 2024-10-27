@@ -148,7 +148,7 @@ const HeroSection = () => {
           <div className="flex items-center justify-between w-full gap-0 md:justify-start lg:gap-12 md:gap-6">
             <Button
               type="button"
-              className="px-5 py-3 text-white border-none rounded-1 outline-none lg:px-7 font-extralight bg-slateGray hover:bg-black hover:text-white hover:border-gray-950 transition-all duration-300 ease-in"
+              className="shadow-md px-5 py-3 text-white border-none rounded-1 outline-none lg:px-7 font-extralight bg-slateGray hover:shadow-none hover:bg-black hover:text-white hover:border-gray-950 transition-all duration-300 ease-in"
             >
               Sign up
             </Button>

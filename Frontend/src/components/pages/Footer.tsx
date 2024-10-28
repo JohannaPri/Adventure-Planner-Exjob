@@ -21,9 +21,9 @@ import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo } from "@phosphor-icon
     return (
       <footer id="footer" className="flex flex-col w-full bg-cloudGray">
         <section className="grid w-full h-auto px-6 py-16 lg:grid-cols-5 md:grid-cols-3 lg:px-20 md:px-12 gap-7 md:gap-4 lg:gap-0">
-          <div className="flex flex-col items-start gap-4 px-4 justify-center lg:px-4 md:px-4">
+          <div className="flex flex-col items-center gap-4 px-4 justify-center lg:px-4 md:px-4">
             <Slide direction="down">
-              <div className="sm:px-20 lg:px-9 px-24">
+              <div className="sm:px-20 lg:px-9 px-24 flex justify-center">
                 <Image
                   className="w-36 md:h-15 cursor-pointer"
                   onClick={() => scrollToSection("home")}
@@ -32,7 +32,7 @@ import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo } from "@phosphor-icon
                 />
               </div>
             </Slide>
-            <blockquote className="text-lg italic font-semibold text-slateGray mt-4 relative">
+            <blockquote className="max-w-md text-lg italic font-semibold text-slateGray mt-4 relative text-center">
               <div className="absolute top-0 left-0">
                 <svg
                   className="w-3 h-3 text-slateGray"
@@ -52,7 +52,7 @@ import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo } from "@phosphor-icon
                 {heroText.bigText}
               </Text>
 
-              <div className="absolute bottom-0 right-0">
+              <div className="absolute top-10 -right-1 transform -translate-x-1/2">
                 <svg
                   className="w-3 h-3 text-slateGray"
                   aria-hidden="true"
@@ -106,7 +106,7 @@ import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo } from "@phosphor-icon
             <Text className="text-xl text-slateGray" as="h2">
               {FooterTexts.more.caption}
             </Text>
-            <ul className="flex flex-col gap-2 mr-4 cursor-pointer">
+            <ul className="flex flex-col gap-2 md:ml-8 cursor-pointer">
               {FooterTexts.more.links.map((link, index) => (
                 <List key={index} className="text-sm">
                   <div
@@ -121,7 +121,7 @@ import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo } from "@phosphor-icon
           </div>
 
           <div className="flex flex-col gap-4 lg:items-center md:mt-8">
-            <ul className="flex items-center w-full gap-4 lg:justify-center">
+            <ul className="flex items-center w-full gap-4 lg:justify-center max-sm:justify-center">
               <List>
                 <div
                   onClick={() => navigate("/")}

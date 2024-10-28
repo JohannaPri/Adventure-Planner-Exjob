@@ -136,20 +136,20 @@ export const FooterTexts = {
     caption: "More",
     links: [
       {
-        name: "More",
-        url: "more",
+        name: "Careers",
+        url: "/careers",
       },
       {
-        name: "More",
-        url: "more",
+        name: "Partners",
+        url: "/partners",
       },
       {
-        name: "More",
-        url: "more",
+        name: "Events",
+        url: "/events",
       },
       {
-        name: "More",
-        url: "more",
+        name: "Community",
+        url: "/community",
       }
     ]
   },

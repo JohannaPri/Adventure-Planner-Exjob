@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Image } from "../Image";
-import planeSvg from "../../assets/background/plane.svg";
 import { Text } from "../Text";
 import { Fade, Slide } from "react-awesome-reveal";
 import { Button } from "../Button";
@@ -29,7 +28,7 @@ const HeroSection = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 200 200"
-          className="max-w-full max-h-full z-10"
+          className="max-w-full max-h-full z-10 max-md:z-0"
           style={{ position: "absolute", bottom: "6%", right: "-3%" }}
         >
           <defs>
@@ -58,7 +57,7 @@ const HeroSection = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 200 200"
-          className="max-w-full max-h-full"
+          className="max-w-full max-h-full max-md:mt-20"
           style={{ position: "absolute", top: "15%", right: "10%" }}
         >
           <defs>
@@ -86,7 +85,7 @@ const HeroSection = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 200 200"
-          className="max-w-full max-h-full z-10"
+          className="max-w-full max-h-full z-10 max-sm:w-80 max-md:w-2/3 max-md:h-2/3 max-sm:h-80 max-sm:-ml-24 max-md:-ml-28"
           style={{ position: "absolute", top: "30%", left: "55%" }}
         >
           <defs>
@@ -116,11 +115,11 @@ const HeroSection = () => {
         </svg>
 
       </section>
-      <main className="absolute top-0 left-0 grid w-full h-auto px-5 pt-24 lg:h-full md:grid-cols-2 lg:px-24 md:px-24 md:pt-32 lg:pt-0">
+      <main className="absolute top-0 max-sm:top-5 left-0 grid w-full h-auto px-5 pt-24 lg:h-full md:grid-cols-2 lg:px-24 md:px-24 md:pt-32 lg:pt-0">
         <div className="flex flex-col justify-center order-2 gap-3 md:gap-6 md:order-1">
           <Text
             as="p"
-            className="text-sm font-normal tracking-widest uppercase text-slateGray lg:text-base"
+            className="text-sm max-sm:mb-2 max-md:mt-4 font-normal tracking-widest uppercase text-slateGray lg:text-base"
           >
             <Fade duration={2000}>
               {heroText.firstText}
@@ -128,7 +127,7 @@ const HeroSection = () => {
           </Text>
           <Text
             as="h1"
-            className="text-3xl font-medium text-gray-600 lg:text-7xl md:text-5xl"
+            className="text-3xl max-sm:mb-2 max-md:mt-2 font-medium text-gray-600 lg:text-7xl md:text-5xl"
           >
             <Slide direction="right" duration={1200}>
               {heroText.bigText}
@@ -136,7 +135,7 @@ const HeroSection = () => {
           </Text>
           <Text
             as="p"
-            className="text-sm font-light text-justify text-gray-600 md:text-base"
+            className="text-sm font-light max-sm:mb-4 max-md:mb-4 max-md:mt-2 text-justify text-gray-600 md:text-base"
           >
             <Fade duration={2000}>
               {heroText.secondText1}

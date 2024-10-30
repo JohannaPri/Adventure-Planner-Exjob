@@ -11,7 +11,6 @@ const Home = () => {
             <ServicesSection />
             <TopDestinationSection />
             <NewsLetterSection />
-            <Footer />
         </>
     )
 }

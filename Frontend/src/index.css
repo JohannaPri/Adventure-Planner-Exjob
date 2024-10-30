@@ -6,4 +6,20 @@
 
 html {
     scroll-behavior: smooth;
+    font-family: 'Poppins';
+}
+
+input::placeholder {
+    color: slateGray !important;
+    opacity: 1 !important;
+}
+
+select {
+    color: slateGray !important;
+    opacity: 1 !important;
+}
+
+option {
+    color: slateGray !important;
+    opacity: 1 !important;
 }

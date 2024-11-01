@@ -21,7 +21,10 @@ export default {
         slateGray: "#3C3F4E",
         softPlum: "#8D5B9C",
         deepSlate: "#2F4A6E"
-      }
+      },
+      backgroundImage: {
+        'bgMapMix': "url('./assets/background/search-home.jpg')",
+      },
     },
   },
   plugins: [],

@@ -9,6 +9,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
 import LoggedIn from './components/pages/LoggedIn';
+import ErrorPage from './components/pages/ErrorPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/loggedIn" element={<LoggedIn />} />
+        <Route path="*" element={<ErrorPage /> } />
       </Routes>
       <Footer />
     </>

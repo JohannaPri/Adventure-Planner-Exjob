@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+import { keepTheme } from "keep-react/keepTheme";
+
+const config = {
   content: ["./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
   ],
@@ -29,4 +31,6 @@ export default {
   },
   plugins: [],
 }
+
+export default keepTheme(config);
 

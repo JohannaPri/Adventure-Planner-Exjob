@@ -58,7 +58,7 @@ const NavBar = () => {
                 {
                   NavLinks.map((navlink, index) => (
                     <List className="w-full text-base" key={index}>
-                        <NavLink to={''} onClick={() => scrollToSection(navlink.url)} className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4">{navlink.name}</NavLink>
+                        <NavLink to={''} onClick={() => scrollToSection(navlink.url)} className="relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b">{navlink.name}</NavLink>
                     </List>
                   ))
                 }

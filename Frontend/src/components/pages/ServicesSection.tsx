@@ -1,7 +1,5 @@
 import { Text } from "../Text";
-import { Fade, Slide, Bounce, Zoom } from "react-awesome-reveal";
-import { Button } from "../Button";
-import { Image } from "../Image";
+import { Fade } from "react-awesome-reveal";
 import { Card } from "../Cards";
 
 const ServicesSection = () => {

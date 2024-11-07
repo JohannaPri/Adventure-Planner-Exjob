@@ -1,0 +1,99 @@
+{
+    "meta": {
+        "count": 1,
+        "links": {
+            "self": "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=LON&destinationLocationCode=NYC&departureDate=2024-11-10&returnDate=2024-12-05&adults=2&nonStop=true&currencyCode=EUR&max=1"
+        }
+    },
+    "data": [
+        {
+            "type": "flight-offer",
+            "id": "1",
+            "source": "GDS",
+            "oneWay": false,
+            "itineraries": [
+                {
+                    "duration": "PT8H15M",
+                    "segments": [
+                        {
+                            "departure": {
+                                "iataCode": "LHR",
+                                "terminal": "2",
+                                "at": "2024-11-10T07:25:00"
+                            },
+                            "arrival": {
+                                "iataCode": "JFK",
+                                "terminal": "5",
+                                "at": "2024-11-10T10:40:00"
+                            },
+                            "carrierCode": "B6",
+                            "number": "2220",
+                            "aircraft": {
+                                "code": "32Q"
+                            },
+                            "operating": {
+                                "carrierCode": "B6"
+                            },
+                            "duration": "PT8H15M",
+                            "id": "1",
+                            "numberOfStops": 0,
+                            "blacklistedInEU": false
+                        }
+                    ]
+                }
+            ],
+            "price": {
+                "currency": "EUR",
+                "total": "1519.02",
+                "base": "512.00",
+                "grandTotal": "1519.02"
+            },
+            "validatingAirlineCodes": [
+                "B6"
+            ],
+            "travelerPricings": [
+                {
+                    "travelerId": "1",
+                    "fareOption": "STANDARD",
+                    "travelerType": "ADULT",
+                    "price": {
+                        "currency": "EUR",
+                        "total": "759.51",
+                        "base": "256.00"
+                    },
+                    "fareDetailsBySegment": [
+                        {
+                            "segmentId": "1",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "ML36EWL1",
+                            "brandedFare": "DN",
+                            "brandedFareLabel": "BLUE BASIC",
+                            "class": "L"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "dictionaries": {
+        "locations": {
+            "LHR": {
+                "cityCode": "LON",
+                "countryCode": "GB"
+            },
+            "JFK": {
+                "cityCode": "NYC",
+                "countryCode": "US"
+            }
+        },
+        "aircraft": {
+            "32Q": "AIRBUS A321NEO"
+        },
+        "currencies": {
+            "EUR": "EURO"
+        },
+        "carriers": {
+            "B6": "JETBLUE AIRWAYS"
+        }
+    }
+}

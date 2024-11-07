@@ -1,24 +1,13 @@
 import React, { useState } from "react";
-import { Text } from "./Text";
 import { Input } from "./Input";
 import { Button } from "./Button";
-import { ButtonWIcon } from "./ButtonWIcon";
-import { Select } from "./Select";
+
 import {
-  MagnifyingGlass,
-  List,
-  AirplaneTakeoff,
-  AirplaneLanding,
   UserList,
-  ArrowRight,
-  AirplaneTilt,
   House,
-  Mountains,
-  Sun,
 } from "@phosphor-icons/react";
-import Datepicker from "react-tailwindcss-datepicker";
 import { DatePickerComponent } from "./DatePickerComponent";
-import { DateRange } from "react-date-range";
+
 
 const AccommodationComponent = () => {
   const [adults, setAdults] = useState<number>(0);

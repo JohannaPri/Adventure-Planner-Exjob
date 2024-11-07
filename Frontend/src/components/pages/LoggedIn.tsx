@@ -10,7 +10,6 @@ const LoggedIn = () => {
   //const [error, setError] = useState<string | null>(null);
 
   const [selectedButton, setSelectedButton] = useState<string | null>("flight");
-
   const handleSelect = (buttonName: string) => {
     setSelectedButton(buttonName);
     setSearchType(buttonName as SearchType);
@@ -84,6 +83,7 @@ const LoggedIn = () => {
           </div>
         </div>
       </section>
+  
     </section>
   );
 };

@@ -2,7 +2,7 @@ import { Text } from "../Text";
 import { Input } from "../Input";
 import { Button } from "../Button";
 import { Envelope } from '@phosphor-icons/react'
-import { NewsLetterTexts } from "../Data/DataLists";
+import { NewsLetterTexts } from "../../data/DataLists";
 import { Slide, AttentionSeeker } from "react-awesome-reveal";
 
 

@@ -11,7 +11,7 @@ import City4 from "../../assets/topDestinations/city4.jpg";
 import City5 from "../../assets/topDestinations/city5.jpg";
 import City6 from "../../assets/topDestinations/city6.jpg";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
-import { TopDestinationTexts } from "../Data/DataLists";
+import { TopDestinationTexts } from "../../data/DataLists";
 
 const TopDestinationSection = () => {
     const sliderRef = useRef<Slider | null>();

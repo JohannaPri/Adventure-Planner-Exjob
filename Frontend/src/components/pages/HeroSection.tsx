@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Image } from "../Image";
 import { Text } from "../Text";
 import { Fade, Slide } from "react-awesome-reveal";
 import { Button } from "../Button";
-import { HeroTexts, Countries } from "../Data/DataLists";
+import { HeroTexts, Countries } from "../../data/DataLists";
 
 const HeroSection = () => {
   const [randomCountry, setRandomCountry] = useState<string>('');

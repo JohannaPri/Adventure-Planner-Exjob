@@ -4,7 +4,7 @@ import { Slide } from "react-awesome-reveal";
 import Logo from "../../assets/logo/logo.svg";
 import { Image } from "../Image";
 import { Button } from "../Button";
-import { NavButtons, NavLinks } from "../Data/DataLists";
+import { NavButtons, NavLinks } from "../../data/DataLists";
 import { List } from "../List";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 

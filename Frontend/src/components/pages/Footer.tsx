@@ -1,8 +1,8 @@
 import { Image } from "../Image";
 import { Text } from "../Text";
 import Logo from "../../assets/logo/logo.svg";
-import { HeroTexts, FooterTexts } from "../Data/DataLists";
-import { NavLink, useNavigate } from "react-router-dom";
+import { HeroTexts, FooterTexts } from "../../data/DataLists";
+import { useNavigate } from "react-router-dom";
 import { List } from "../List";
 import { Slide } from "react-awesome-reveal";
 import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo } from "@phosphor-icons/react";

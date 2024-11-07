@@ -1,72 +1,97 @@
-import React, { useState } from "react";
-import { Text } from "./Text";
+import React, { useState, useCallback } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Input } from "./Input";
 import { Button } from "./Button";
-import { ButtonWIcon } from "./ButtonWIcon";
 import { Select } from "./Select";
-import {
-  MagnifyingGlass,
-  List,
-  AirplaneTakeoff,
-  AirplaneLanding,
-  UserList,
-  ArrowRight,
-  AirplaneTilt,
-  House,
-  Mountains,
-  Sun,
-} from "@phosphor-icons/react";
-import Datepicker from "react-tailwindcss-datepicker";
+import debounce from "lodash/debounce";
+import { AirplaneTakeoff, AirplaneLanding, UserList } from "@phosphor-icons/react";
+import { fetchAirports } from "../redux/slices/airportSlice";
+import { AppDispatch, RootState } from "../redux/store";
 import { DatePickerComponent } from "./DatePickerComponent";
-import { DateRange } from "react-date-range";
+import { parseAsBoolean, parseAsInteger, parseAsIsoDate, parseAsString, useQueryState } from 'nuqs';
 
 
 const FlightComponent = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const [destination, setDestination] = useState<string>("");
+  const [departure, setDeparture] = useState<string>("");
+  const [airportSuggestions, setAirportSuggestions] = useState<string[]>([]);
+  const [activeInput, setActiveInput] = useState<'departure' | 'destination' | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const airportData = useSelector((state: RootState) => state.airport.data);
+  const airportStatus = useSelector((state: RootState) => state.airport.status);
+  const airportError = useSelector((state: RootState) => state.airport.error);
+
+  type DatePickerComponentProps = {
+    onDateChange: (fromDate: string, toDate: string) => void;
+  };
+  
+
+  // QUERY nuqs
+
+  //
+
+  const handleDateChange = (fromDate: string, toDate: string) => {
+    console.log(`From: `, fromDate);
+    console.log(`To: `, toDate);
+  }
+
+  const handleDestinationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setDestination(value);
+    debouncedFetchAirports(value);
+    if (airportData) {
+      setAirportSuggestions(airportData.map(airport => airport.displayname));
+    }
+  }
+
+  const handleAirportSelect = (airportName: string) => {
+    if (activeInput === 'departure') {
+      setDeparture(airportName);
+    } else if (activeInput === 'destination') {
+      setDestination(airportName);
+    }
+    setAirportSuggestions([]);
+  };
+
+  const handleFocus = (inputType: 'departure' | 'destination') => {
+    setActiveInput(inputType);
+  };
+
+  const debouncedFetchAirports = useCallback(
+    debounce((input: string) => {
+      if (input) {
+        dispatch(fetchAirports(input));
+      }
+    }, 200),
+    [dispatch]
+  );
+
+  const handleDepartureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setDeparture(value);
+    debouncedFetchAirports(value > '' ? value : '');
+    console.log(value)
+    if (airportData) {
+      setAirportSuggestions(airportData.map(airport => airport.displayname));
+    }
+  };
 
   const [adults, setAdults] = useState<number>(0);
   const [children, setChildren] = useState<number>(0);
-  const [isPassengerListOpen, setIsPassengerListOpen] =
-    useState<boolean>(false);
+  const [isPassengerListOpen, setIsPassengerListOpen] = useState<boolean>(false);
 
+  const togglePassengerSelector = () => setIsPassengerListOpen((prev) => !prev);
   const incrementAdults = () => setAdults((prev) => Math.min(prev + 1, 10));
   const decrementAdults = () => setAdults((prev) => Math.max(prev - 1, 0));
-
   const incrementChildren = () => setChildren((prev) => Math.min(prev + 1, 10));
   const decrementChildren = () => setChildren((prev) => Math.max(prev - 1, 0));
 
-  const togglePassengerSelector = () => setIsPassengerListOpen((prev) => !prev);
-
-  const START_FROM = new Date();
-  START_FROM.setMonth(START_FROM.getMonth() + 1);
-
-  const MIN_DATE = new Date();
-  MIN_DATE.setDate(MIN_DATE.getDate() + 1);
-
-  interface DateRange {
-    startDate: Date | null;
-    endDate: Date | null;
-  }
-
-  const [value, setValue] = useState<DateRange>({
-    startDate: new Date(),
-    endDate: null,
-  });
-
-  const handleChange = (newValue: DateRange | null) => {
-    if (newValue) {
-      setValue(newValue);
-    } else {
-      setValue({
-        startDate: new Date(),
-        endDate: null,
-      });
-    }
-
-    console.log(value);
-  };
 
     return (
         <>
+        <div className="flex flex-col p-4 space-y-4">
         <Select
           containerClass="relative"
           selectClass="border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-4 py-1 cursor-pointer"
@@ -76,10 +101,13 @@ const FlightComponent = () => {
         </Select>
         <div className="flex flex-col gap-4 md:flex-row md:gap-4">
           <Input
+            onFocus={() => handleFocus('departure')}
+            onChange={handleDepartureChange}
             containerClass="relative"
             inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
             type="text"
             placeholder="Departure"
+            value={departure}
           >
             <div className="absolute text-white top-4 left-3">
               <AirplaneTakeoff
@@ -90,10 +118,13 @@ const FlightComponent = () => {
             </div>
           </Input>
           <Input
+            onFocus={() => handleFocus('destination')}
+            onChange={handleDestinationChange}
             containerClass="relative"
             inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
             type="text"
             placeholder="Destination"
+            value={destination}
           >
             <div className="absolute text-white top-4 left-3">
               <AirplaneLanding
@@ -104,19 +135,7 @@ const FlightComponent = () => {
             </div>
           </Input>
           <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
-            <DatePickerComponent />
-            {/* <Datepicker
-              value={value}
-              onChange={handleChange}
-              primaryColor={"sky"}
-              separator={"→"}
-              startFrom={START_FROM}
-              popoverDirection="down"
-              minDate={MIN_DATE}
-              displayFormat={"MM/DD/YYYY"}
-              readOnly
-              inputClassName="border border-slateGray cursior-pointer rounded-lg outline-none w-[300px] h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1"
-            />  */}
+            <DatePickerComponent onDateChange={handleDateChange} />
           </div>
           <div>
             <Button
@@ -189,16 +208,35 @@ const FlightComponent = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-end">
-          <Button
-            type="button"
-            className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
-          >
-            Search
-          </Button>
-        </div>
-      </>
-    )
+        
+        {airportStatus === 'succeeded' && airportData && airportSuggestions.length > 0 && (
+          <div className="mt-4">
+            <ul className="bg-white border rounded-lg border-slateGray">
+              {airportSuggestions.map((airportName, index) => (
+                <li
+                  key={index}
+                  className="p-2 cursor-pointer hover:bg-cloudGray"
+                  onClick={() => handleAirportSelect(airportName)}
+                >
+                  <h2 className="text-slateGray">{airportName}</h2>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {airportError && <p className="text-red-500">{airportError}</p>}
+      </div>
+      <div className="flex justify-end">
+        <Button
+          type="button"
+          className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
+        >
+          Search
+        </Button>
+      </div>
+    </>
+  )
 }
 
 export default FlightComponent;

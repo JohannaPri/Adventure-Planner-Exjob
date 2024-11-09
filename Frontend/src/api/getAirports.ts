@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.headers.common['Authorization'] = `Bearer cfe2b62c-bbcc-4a1f-8710-d0baeeb82d1f`;
+axios.defaults.headers.common['Authorization'] = `Bearer ${import.meta.env.VITE_RAPAPI_CLIENT_TOKEN}`;
 
 const fetchAirportData = async (query: string) => {
   try {

@@ -5,8 +5,6 @@ export interface Coordinates {
     lon: number;
 }
 
-const openCageKey = '28c2b935bff74ec6a5b097cf00405c66';
-
 export const getCoordinatesByCity = async (city: string): Promise<Coordinates> => {
     const url = `https://m2.eeazy.se/rapapi/coordinates?city=${city}`;
 

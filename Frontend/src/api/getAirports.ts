@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-axios.defaults.headers.common['Authorization'] = `Bearer ${import.meta.env.VITE_RAPAPI_CLIENT_TOKEN}`;
+const apiKey = import.meta.env.VITE_RAPAPI_CLIENT_TOKEN;
+axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`;
 
 const fetchAirportData = async (query: string) => {
   try {

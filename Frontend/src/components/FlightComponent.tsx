@@ -74,6 +74,7 @@ const FlightComponent = () => {
     debouncedFetchAirports(value > '' ? value : '');
     console.log(value)
     if (airportData) {
+      console.log(airportData);
       setAirportSuggestions(airportData.map(airport => airport.displayname));
     }
   };

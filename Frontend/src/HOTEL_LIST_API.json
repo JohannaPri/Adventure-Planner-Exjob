@@ -1,436 +1,1644 @@
 {
-    "meta": {
-        "count": 1,
-        "links": {
-            "self": "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=LON&destinationLocationCode=NYC&departureDate=2024-11-10&returnDate=2024-12-05&adults=2&nonStop=true&currencyCode=EUR&max=1"
-        }
-    },
     "data": [
         {
-            "type": "flight-offer",
-            "id": "1",
-            "source": "GDS",
-            "instantTicketingRequired": false,
-            "nonHomogeneous": false,
-            "oneWay": false,
-            "isUpsellOffer": false,
-            "lastTicketingDate": "2024-11-06",
-            "lastTicketingDateTime": "2024-11-06",
-            "numberOfBookableSeats": 7,
-            "itineraries": [
-                {
-                    "duration": "PT8H15M",
-                    "segments": [
-                        {
-                            "departure": {
-                                "iataCode": "LHR",
-                                "terminal": "2",
-                                "at": "2024-11-10T07:25:00"
-                            },
-                            "arrival": {
-                                "iataCode": "JFK",
-                                "terminal": "5",
-                                "at": "2024-11-10T10:40:00"
-                            },
-                            "carrierCode": "B6",
-                            "number": "2220",
-                            "aircraft": {
-                                "code": "32Q"
-                            },
-                            "operating": {
-                                "carrierCode": "B6"
-                            },
-                            "duration": "PT8H15M",
-                            "id": "1",
-                            "numberOfStops": 0,
-                            "blacklistedInEU": false
-                        }
-                    ]
-                },
-                {
-                    "duration": "PT7H5M",
-                    "segments": [
-                        {
-                            "departure": {
-                                "iataCode": "JFK",
-                                "terminal": "5",
-                                "at": "2024-12-05T08:40:00"
-                            },
-                            "arrival": {
-                                "iataCode": "LHR",
-                                "terminal": "2",
-                                "at": "2024-12-05T20:45:00"
-                            },
-                            "carrierCode": "B6",
-                            "number": "1107",
-                            "aircraft": {
-                                "code": "32Q"
-                            },
-                            "operating": {
-                                "carrierCode": "B6"
-                            },
-                            "duration": "PT7H5M",
-                            "id": "2",
-                            "numberOfStops": 0,
-                            "blacklistedInEU": false
-                        }
-                    ]
-                }
-            ],
-            "price": {
-                "currency": "EUR",
-                "total": "1519.02",
-                "base": "512.00",
-                "fees": [
-                    {
-                        "amount": "0.00",
-                        "type": "SUPPLIER"
-                    },
-                    {
-                        "amount": "0.00",
-                        "type": "TICKETING"
-                    }
-                ],
-                "grandTotal": "1519.02",
-                "additionalServices": [
-                    {
-                        "amount": "119.06",
-                        "type": "CHECKED_BAGS"
-                    }
-                ]
+            "chainCode": "BW",
+            "iataCode": "STO",
+            "dupeId": 700057609,
+            "name": "BEST WESTERN TABY PARK HTL & CONFERENCE",
+            "hotelId": "BWSTO081",
+            "geoCode": {
+                "latitude": 51.69193,
+                "longitude": 0.09618
             },
-            "pricingOptions": {
-                "fareType": [
-                    "PUBLISHED"
-                ],
-                "includedCheckedBagsOnly": false
+            "address": {
+                "countryCode": "SE"
             },
-            "validatingAirlineCodes": [
-                "B6"
+            "amenities": [
+                "TELEVISION"
             ],
-            "travelerPricings": [
-                {
-                    "travelerId": "1",
-                    "fareOption": "STANDARD",
-                    "travelerType": "ADULT",
-                    "price": {
-                        "currency": "EUR",
-                        "total": "759.51",
-                        "base": "256.00"
-                    },
-                    "fareDetailsBySegment": [
-                        {
-                            "segmentId": "1",
-                            "cabin": "ECONOMY",
-                            "fareBasis": "ML36EWL1",
-                            "brandedFare": "DN",
-                            "brandedFareLabel": "BLUE BASIC",
-                            "class": "L",
-                            "includedCheckedBags": {
-                                "quantity": 0
-                            },
-                            "amenities": [
-                                {
-                                    "description": "CHECKED BAG FIRST",
-                                    "isChargeable": true,
-                                    "amenityType": "BAGGAGE",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "CHECKED BAG SECOND",
-                                    "isChargeable": true,
-                                    "amenityType": "BAGGAGE",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "EXTRA LEGROOM",
-                                    "isChargeable": true,
-                                    "amenityType": "PRE_RESERVED_SEAT",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "ADVANCE SEAT SELECTION",
-                                    "isChargeable": true,
-                                    "amenityType": "PRE_RESERVED_SEAT",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "SNACK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "ALCOHOLIC DRINK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "NON ALCOHOLIC DRINK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "segmentId": "2",
-                            "cabin": "ECONOMY",
-                            "fareBasis": "ML36EXL1",
-                            "brandedFare": "DN",
-                            "brandedFareLabel": "BLUE BASIC",
-                            "class": "L",
-                            "includedCheckedBags": {
-                                "quantity": 0
-                            },
-                            "amenities": [
-                                {
-                                    "description": "CHECKED BAG FIRST",
-                                    "isChargeable": true,
-                                    "amenityType": "BAGGAGE",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "CHECKED BAG SECOND",
-                                    "isChargeable": true,
-                                    "amenityType": "BAGGAGE",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "EXTRA LEGROOM",
-                                    "isChargeable": true,
-                                    "amenityType": "PRE_RESERVED_SEAT",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "ADVANCE SEAT SELECTION",
-                                    "isChargeable": true,
-                                    "amenityType": "PRE_RESERVED_SEAT",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "SNACK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "ALCOHOLIC DRINK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "NON ALCOHOLIC DRINK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "travelerId": "2",
-                    "fareOption": "STANDARD",
-                    "travelerType": "ADULT",
-                    "price": {
-                        "currency": "EUR",
-                        "total": "759.51",
-                        "base": "256.00"
-                    },
-                    "fareDetailsBySegment": [
-                        {
-                            "segmentId": "1",
-                            "cabin": "ECONOMY",
-                            "fareBasis": "ML36EWL1",
-                            "brandedFare": "DN",
-                            "brandedFareLabel": "BLUE BASIC",
-                            "class": "L",
-                            "includedCheckedBags": {
-                                "quantity": 0
-                            },
-                            "amenities": [
-                                {
-                                    "description": "CHECKED BAG FIRST",
-                                    "isChargeable": true,
-                                    "amenityType": "BAGGAGE",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "CHECKED BAG SECOND",
-                                    "isChargeable": true,
-                                    "amenityType": "BAGGAGE",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "EXTRA LEGROOM",
-                                    "isChargeable": true,
-                                    "amenityType": "PRE_RESERVED_SEAT",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "ADVANCE SEAT SELECTION",
-                                    "isChargeable": true,
-                                    "amenityType": "PRE_RESERVED_SEAT",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "SNACK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "ALCOHOLIC DRINK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "NON ALCOHOLIC DRINK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "segmentId": "2",
-                            "cabin": "ECONOMY",
-                            "fareBasis": "ML36EXL1",
-                            "brandedFare": "DN",
-                            "brandedFareLabel": "BLUE BASIC",
-                            "class": "L",
-                            "includedCheckedBags": {
-                                "quantity": 0
-                            },
-                            "amenities": [
-                                {
-                                    "description": "CHECKED BAG FIRST",
-                                    "isChargeable": true,
-                                    "amenityType": "BAGGAGE",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "CHECKED BAG SECOND",
-                                    "isChargeable": true,
-                                    "amenityType": "BAGGAGE",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "EXTRA LEGROOM",
-                                    "isChargeable": true,
-                                    "amenityType": "PRE_RESERVED_SEAT",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "ADVANCE SEAT SELECTION",
-                                    "isChargeable": true,
-                                    "amenityType": "PRE_RESERVED_SEAT",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "SNACK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "ALCOHOLIC DRINK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                },
-                                {
-                                    "description": "NON ALCOHOLIC DRINK",
-                                    "isChargeable": false,
-                                    "amenityType": "MEAL",
-                                    "amenityProvider": {
-                                        "name": "BrandedFare"
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "rating": 3,
+            "lastUpdate": "2023-06-15T11:05:43"
+        },
+        {
+            "chainCode": "CC",
+            "iataCode": "STO",
+            "dupeId": 700022921,
+            "name": "CLARION COLLECTION HOTEL TAPTO",
+            "hotelId": "CCSTO018",
+            "geoCode": {
+                "latitude": 59.34362,
+                "longitude": 18.08635
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:04:41"
+        },
+        {
+            "chainCode": "CC",
+            "iataCode": "STO",
+            "dupeId": 700007381,
+            "name": "CLARION HOTEL AMARANTEN",
+            "hotelId": "CCSTO115",
+            "geoCode": {
+                "latitude": 59.33135,
+                "longitude": 18.04516
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:36:38"
+        },
+        {
+            "chainCode": "CC",
+            "iataCode": "STO",
+            "dupeId": 700050853,
+            "name": "CLARION HOTEL SIGN",
+            "hotelId": "CCSTO081",
+            "geoCode": {
+                "latitude": 59.33471,
+                "longitude": 18.05303
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:08:20"
+        },
+        {
+            "chainCode": "CC",
+            "iataCode": "STO",
+            "dupeId": 700020444,
+            "name": "CLARION HOTEL STOCKHOLM",
+            "hotelId": "CCSTO059",
+            "geoCode": {
+                "latitude": 59.30727,
+                "longitude": 18.07491
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:02:03"
+        },
+        {
+            "chainCode": "CC",
+            "iataCode": "STO",
+            "dupeId": 700058065,
+            "name": "CLARION COLLECTION HOTEL WELLINGTON",
+            "hotelId": "CCSTO064",
+            "geoCode": {
+                "latitude": 59.33528,
+                "longitude": 18.08237
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:04:41"
+        },
+        {
+            "chainCode": "CI",
+            "iataCode": "STO",
+            "dupeId": 700031168,
+            "name": "COMFORT HOTEL STOCKHOLM",
+            "hotelId": "CISTO030",
+            "geoCode": {
+                "latitude": 59.33309,
+                "longitude": 18.05445
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:02:50"
+        },
+        {
+            "chainCode": "DS",
+            "iataCode": "STO",
+            "dupeId": 700148382,
+            "name": "NOBIS HOTEL",
+            "hotelId": "DSSTOOBI",
+            "geoCode": {
+                "latitude": 59.33301,
+                "longitude": 18.07353
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 5,
+            "lastUpdate": "2023-06-15T10:21:10"
+        },
+        {
+            "chainCode": "DS",
+            "iataCode": "STO",
+            "dupeId": 700061679,
+            "name": "STALLMASTAREGARDEN HOTEL",
+            "hotelId": "DSSTOSTA",
+            "geoCode": {
+                "latitude": 59.35168,
+                "longitude": 18.04338
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 5,
+            "lastUpdate": "2023-06-15T10:22:29"
+        },
+        {
+            "chainCode": "DS",
+            "iataCode": "STO",
+            "dupeId": 700014975,
+            "name": "NORDIC C HOTEL",
+            "hotelId": "DSSTONOR",
+            "geoCode": {
+                "latitude": 59.33222,
+                "longitude": 18.0568
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 5,
+            "lastUpdate": "2023-06-15T10:03:38"
+        },
+        {
+            "chainCode": "DS",
+            "iataCode": "STO",
+            "dupeId": 700020445,
+            "name": "NORDIC LIGHT HOTEL",
+            "hotelId": "DSSTO740",
+            "geoCode": {
+                "latitude": 59.33256,
+                "longitude": 18.05758
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 5,
+            "lastUpdate": "2023-06-15T10:02:51"
+        },
+        {
+            "chainCode": "DS",
+            "iataCode": "STO",
+            "dupeId": 700059611,
+            "name": "HOTEL J",
+            "hotelId": "DSSTO654",
+            "geoCode": {
+                "latitude": 59.31838,
+                "longitude": 18.16476
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 5,
+            "lastUpdate": "2023-06-15T10:02:35"
+        },
+        {
+            "chainCode": "FX",
+            "iataCode": "STO",
+            "dupeId": 700007386,
+            "name": "FIRST HOTEL REISEN",
+            "hotelId": "FXSTOREI",
+            "geoCode": {
+                "latitude": 59.32547,
+                "longitude": 18.07543
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:02:35"
+        },
+        {
+            "chainCode": "FX",
+            "iataCode": "STO",
+            "dupeId": 700099254,
+            "name": "FIRST HOTEL NORRTULL",
+            "hotelId": "FXSTONOR",
+            "geoCode": {
+                "latitude": 59.34767,
+                "longitude": 18.04008
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:27:13"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700099235,
+            "name": "ULFSUNDA SLOTT",
+            "hotelId": "IQSTOULF",
+            "geoCode": {
+                "latitude": 59.34088,
+                "longitude": 17.9618
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 5,
+            "lastUpdate": "2023-06-15T10:03:54"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700039584,
+            "name": "STAYAT STOCKHOLM BROMMA",
+            "hotelId": "IQSTORES",
+            "geoCode": {
+                "latitude": 59.33423,
+                "longitude": 17.97898
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:03:39"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700099182,
+            "name": "MEMORY HOTEL",
+            "hotelId": "IQSTOMEM",
+            "geoCode": {
+                "latitude": 59.40628,
+                "longitude": 17.94727
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:03:07"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700099198,
+            "name": "MR CHIP HOTEL",
+            "hotelId": "IQSTOCHI",
+            "geoCode": {
+                "latitude": 59.40208,
+                "longitude": 17.94765
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:02:51"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700099232,
+            "name": "LOVIK KONFERENS",
+            "hotelId": "IQSTOLOV",
+            "geoCode": {
+                "latitude": 59.36673,
+                "longitude": 18.19817
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:03:23"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700128262,
+            "name": "ELITE HOTEL MARINA TOWER",
+            "hotelId": "IQSTOMAR",
+            "geoCode": {
+                "latitude": 59.31478,
+                "longitude": 18.10945
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:16:28"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700039715,
+            "name": "2HOME HOTEL APARTMENTS",
+            "hotelId": "IQSTO2HO",
+            "geoCode": {
+                "latitude": 59.36346,
+                "longitude": 17.97924
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T11:06:28"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700013019,
+            "name": "ELITE HOTEL STOCKHOLM PLAZA",
+            "hotelId": "IQSTOPLA",
+            "geoCode": {
+                "latitude": 59.33749,
+                "longitude": 18.06975
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:17:31"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700026515,
+            "name": "CRYSTAL PLAZA HOTEL",
+            "hotelId": "IQSTOCRY",
+            "geoCode": {
+                "latitude": 59.33828,
+                "longitude": 18.06851
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T11:04:50"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700175185,
+            "name": "SKY HOTEL APARTMENTS STOCKHOLM",
+            "hotelId": "IQSTOLIN",
+            "geoCode": {
+                "latitude": 59.33379,
+                "longitude": 18.01607
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:08:53"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700043870,
+            "name": "HOTEL HELLSTEN",
+            "hotelId": "IQSTOHEL",
+            "geoCode": {
+                "latitude": 59.34154,
+                "longitude": 18.05943
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T09:54:45"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700044697,
+            "name": "REX HOTEL",
+            "hotelId": "IQSTOREX",
+            "geoCode": {
+                "latitude": 59.34149,
+                "longitude": 18.05948
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T09:44:31"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700190466,
+            "name": "HOTEL MANEN",
+            "hotelId": "IQSTOMAN",
+            "geoCode": {
+                "latitude": 59.26353,
+                "longitude": 17.90593
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:28:47"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700022922,
+            "name": "THE RIVAL HOTEL",
+            "hotelId": "IQSTORIV",
+            "geoCode": {
+                "latitude": 59.31816,
+                "longitude": 18.06364
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:29:19"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700144100,
+            "name": "ELITE EDEN PARK HOTEL",
+            "hotelId": "IQSTOEEP",
+            "geoCode": {
+                "latitude": 59.33842,
+                "longitude": 18.07467
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:01:49"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700099283,
+            "name": "ELITE HOTEL ADLON",
+            "hotelId": "IQSTOADL",
+            "geoCode": {
+                "latitude": 59.33338,
+                "longitude": 18.05711
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T11:09:08"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700120411,
+            "name": "HESSELBY SLOTT",
+            "hotelId": "IQSTOHAS",
+            "geoCode": {
+                "latitude": 59.36572,
+                "longitude": 17.85865
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:03:39"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "STO",
+            "dupeId": 700020558,
+            "name": "HARINGE SLOTT",
+            "hotelId": "IQSTOHAR",
+            "geoCode": {
+                "latitude": 59.10296,
+                "longitude": 18.12937
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:19:36"
+        },
+        {
+            "chainCode": "OI",
+            "iataCode": "STO",
+            "dupeId": 700190469,
+            "name": "OERLOGSHOTELLET",
+            "hotelId": "OISTO04Z",
+            "geoCode": {
+                "latitude": 59.33038,
+                "longitude": 18.07725
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 2,
+            "lastUpdate": "2023-09-12T19:36:49"
+        },
+        {
+            "chainCode": "OI",
+            "iataCode": "STO",
+            "dupeId": 501366169,
+            "name": "COLUMBUS LOFT",
+            "hotelId": "OISTOCOL",
+            "geoCode": {
+                "latitude": 59.31558,
+                "longitude": 18.07857
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-09-12T19:38:48"
+        },
+        {
+            "chainCode": "OI",
+            "iataCode": "STO",
+            "dupeId": 700167703,
+            "name": "HOTEL SODER",
+            "hotelId": "OISTOSDR",
+            "geoCode": {
+                "latitude": 59.31511,
+                "longitude": 18.07685
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-09-12T19:40:47"
+        },
+        {
+            "chainCode": "OI",
+            "iataCode": "STO",
+            "dupeId": 700164437,
+            "name": "ACAPULCO HOTELL",
+            "hotelId": "OISTO04X",
+            "geoCode": {
+                "latitude": 59.3092,
+                "longitude": 18.08101
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 2,
+            "lastUpdate": "2023-09-12T19:35:48"
+        },
+        {
+            "chainCode": "OI",
+            "iataCode": "STO",
+            "dupeId": 700099311,
+            "name": "FORETAGSHUSET INEDAL",
+            "hotelId": "OISTOINE",
+            "geoCode": {
+                "latitude": 59.33634,
+                "longitude": 18.03649
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-09-12T19:39:49"
+        },
+        {
+            "chainCode": "PD",
+            "iataCode": "STO",
+            "dupeId": 700154896,
+            "name": "PARK INN HAMMARBY SJOSTAD",
+            "hotelId": "PDSTO389",
+            "geoCode": {
+                "latitude": 59.30308,
+                "longitude": 18.09
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:17:15"
+        },
+        {
+            "chainCode": "PD",
+            "iataCode": "STO",
+            "dupeId": 700023251,
+            "name": "PARK INN SOLNA",
+            "hotelId": "PDSTO114",
+            "geoCode": {
+                "latitude": 59.35908,
+                "longitude": 18.00003
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:04:26"
+        },
+        {
+            "chainCode": "QI",
+            "iataCode": "STO",
+            "dupeId": 700023250,
+            "name": "QUALITY HOTEL WINN HANINGE",
+            "hotelId": "QISTO090",
+            "geoCode": {
+                "latitude": 59.16597,
+                "longitude": 18.13656
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:09:56"
+        },
+        {
+            "chainCode": "QI",
+            "iataCode": "STO",
+            "dupeId": 700028113,
+            "name": "QUALITY HOTEL PRINCE PHILIP",
+            "hotelId": "QISTO039",
+            "geoCode": {
+                "latitude": 59.27268,
+                "longitude": 17.90825
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:03:39"
+        },
+        {
+            "chainCode": "QI",
+            "iataCode": "STO",
+            "dupeId": 700020446,
+            "name": "QUALITY HOTEL GLOBE",
+            "hotelId": "QISTO040",
+            "geoCode": {
+                "latitude": 59.29223,
+                "longitude": 18.08386
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:03:39"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "STO",
+            "dupeId": 700027212,
+            "name": "RADISSON BLU ARLANDIA STO",
+            "hotelId": "RDSTOS14",
+            "geoCode": {
+                "latitude": 59.63975,
+                "longitude": 17.94226
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:04:11"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "STO",
+            "dupeId": 700153604,
+            "name": "RADISSON BLU WATERFRONT STO",
+            "hotelId": "RDSTO153",
+            "geoCode": {
+                "latitude": 59.33006,
+                "longitude": 18.05553
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:00:15"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "STO",
+            "dupeId": 700037309,
+            "name": "RADISSON BLU SKYCITY STOCKHOLM",
+            "hotelId": "RDSTOS33",
+            "geoCode": {
+                "latitude": 59.64879,
+                "longitude": 17.9278
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:03:39"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "STO",
+            "dupeId": 700011540,
+            "name": "RADISSON BLU ROYAL VIKING STO",
+            "hotelId": "RDSTOS12",
+            "geoCode": {
+                "latitude": 59.33145,
+                "longitude": 18.05765
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:04:11"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "STO",
+            "dupeId": 700037523,
+            "name": "RADISSON BLU ROYAL PARK STO",
+            "hotelId": "RDSTO399",
+            "geoCode": {
+                "latitude": 59.36927,
+                "longitude": 18.03095
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:04:11"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "STO",
+            "dupeId": 700021316,
+            "name": "RADISSON BLU STRAND STOCKHOLM",
+            "hotelId": "RDSTOS11",
+            "geoCode": {
+                "latitude": 59.33092,
+                "longitude": 18.07713
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:04:11"
+        },
+        {
+            "chainCode": "RT",
+            "iataCode": "STO",
+            "dupeId": 700164439,
+            "name": "IBIS STYLES STOCKHOLM",
+            "hotelId": "RTSTOSTO",
+            "geoCode": {
+                "latitude": 59.38002,
+                "longitude": 18.00866
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:01:34"
+        },
+        {
+            "chainCode": "SH",
+            "iataCode": "STO",
+            "dupeId": 700023179,
+            "name": "SCANDIC ALVIK",
+            "hotelId": "SHSTO200",
+            "geoCode": {
+                "latitude": 59.33158,
+                "longitude": 17.98233
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:03:55"
+        },
+        {
+            "chainCode": "SH",
+            "iataCode": "STO",
+            "dupeId": 700155296,
+            "name": "SCANDIC VICTORIA TOWER",
+            "hotelId": "SHSTO802",
+            "geoCode": {
+                "latitude": 59.40634,
+                "longitude": 17.95881
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T09:50:18"
+        },
+        {
+            "chainCode": "SH",
+            "iataCode": "STO",
+            "dupeId": 700057504,
+            "name": "SCANDIC FORESTA",
+            "hotelId": "SHSTO835",
+            "geoCode": {
+                "latitude": 59.35982,
+                "longitude": 18.1197
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T09:50:03"
+        },
+        {
+            "chainCode": "SH",
+            "iataCode": "STO",
+            "dupeId": 700027839,
+            "name": "SCANDIC JARVA KROG",
+            "hotelId": "SHSTO865",
+            "geoCode": {
+                "latitude": 59.37925,
+                "longitude": 18.00979
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:03:39"
+        },
+        {
+            "chainCode": "SH",
+            "iataCode": "STO",
+            "dupeId": 700006025,
+            "name": "SCANDIC GAMLA STAN",
+            "hotelId": "SHSTO821",
+            "geoCode": {
+                "latitude": 59.32307,
+                "longitude": 18.06992
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T11:09:19"
+        },
+        {
+            "chainCode": "SH",
+            "iataCode": "STO",
+            "dupeId": 700036371,
+            "name": "SCANDIC TABY",
+            "hotelId": "SHSTO838",
+            "geoCode": {
+                "latitude": 59.43369,
+                "longitude": 18.06487
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:04:11"
+        },
+        {
+            "chainCode": "SH",
+            "iataCode": "STO",
+            "dupeId": 501440606,
+            "name": "SCANDIC TALK",
+            "hotelId": "SHSTO826",
+            "geoCode": {
+                "latitude": 59.27625,
+                "longitude": 18.0126
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T11:09:09"
+        },
+        {
+            "chainCode": "SX",
+            "iataCode": "STO",
+            "dupeId": 700056751,
+            "name": "ARISTON HOTELL-LIDINGO",
+            "hotelId": "SXSTOARI",
+            "geoCode": {
+                "latitude": 59.3675,
+                "longitude": 18.15058
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 2,
+            "lastUpdate": "2023-06-15T10:39:48"
+        },
+        {
+            "chainCode": "SX",
+            "iataCode": "STO",
+            "dupeId": 700120214,
+            "name": "LANGHOLMEN HOTEL",
+            "hotelId": "SXSTOLAN",
+            "geoCode": {
+                "latitude": 59.32085,
+                "longitude": 18.02705
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 2,
+            "lastUpdate": "2023-06-15T10:02:52"
+        },
+        {
+            "chainCode": "WK",
+            "iataCode": "STO",
+            "dupeId": 700062044,
+            "name": "VILLA KALLHAGEN",
+            "hotelId": "WKSTOVIL",
+            "geoCode": {
+                "latitude": 59.33347,
+                "longitude": 18.11535
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:17:32"
+        },
+        {
+            "chainCode": "WK",
+            "iataCode": "STO",
+            "dupeId": 700190467,
+            "name": "MELODY HOTEL",
+            "hotelId": "WKSTO509",
+            "geoCode": {
+                "latitude": 59.32489,
+                "longitude": 18.09659
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:25:39"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700180636,
+            "name": "VILLA PAULI HOTEL",
+            "hotelId": "WVSTOPAU",
+            "geoCode": {
+                "latitude": 59.33182,
+                "longitude": 18.08417
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:11:46"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700099282,
+            "name": "PIER 16",
+            "hotelId": "WVSTOGAS",
+            "geoCode": {
+                "latitude": 59.35705,
+                "longitude": 18.23393
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:19:23"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700120359,
+            "name": "SIGTUNA STADS HOTELL",
+            "hotelId": "WVSTOSIG",
+            "geoCode": {
+                "latitude": 59.61516,
+                "longitude": 17.71942
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 5,
+            "lastUpdate": "2023-06-15T10:20:25"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700099193,
+            "name": "MAUDES HOTEL SOLNA",
+            "hotelId": "WVSTOMAU",
+            "geoCode": {
+                "latitude": 59.36009,
+                "longitude": 17.97806
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:17:32"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700192008,
+            "name": "HOTEL BY MAUDE",
+            "hotelId": "WVSTO768",
+            "geoCode": {
+                "latitude": 59.36025,
+                "longitude": 17.98209
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:29:20"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700022428,
+            "name": "MAUDES HOTEL ENSKEDE",
+            "hotelId": "WVSTOMAN",
+            "geoCode": {
+                "latitude": 59.27222,
+                "longitude": 18.07574
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:17:16"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700057445,
+            "name": "MORNINGTON HOTEL STOCKHOLM BROMMA",
+            "hotelId": "WVSTO100",
+            "geoCode": {
+                "latitude": 59.34656,
+                "longitude": 17.9654
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T09:49:31"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700051375,
+            "name": "MORNINGTON HOTEL STOCKHOLM CITY",
+            "hotelId": "WVSTO016",
+            "geoCode": {
+                "latitude": 59.33767,
+                "longitude": 18.07964
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:11:15"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700155594,
+            "name": "BIZ APARTMENT",
+            "hotelId": "WVSTOBIZ",
+            "geoCode": {
+                "latitude": 59.3414,
+                "longitude": 18.11236
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:18:51"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700013205,
+            "name": "HOTEL TEGNERLUNDEN",
+            "hotelId": "WVSTOTEG",
+            "geoCode": {
+                "latitude": 59.33872,
+                "longitude": 18.05451
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:11:31"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700190468,
+            "name": "OMENA HOTEL STOCKHOLM",
+            "hotelId": "WVSTOOME",
+            "geoCode": {
+                "latitude": 59.33579,
+                "longitude": 18.05098
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 2,
+            "lastUpdate": "2023-06-15T10:29:20"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700005396,
+            "name": "HOTEL BIRGER JARL",
+            "hotelId": "WVSTOBIR",
+            "geoCode": {
+                "latitude": 59.34232,
+                "longitude": 18.06239
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T09:55:49"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700017715,
+            "name": "HOTEL TERMINUS",
+            "hotelId": "WVSTO018",
+            "geoCode": {
+                "latitude": 59.33061,
+                "longitude": 18.05962
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:26:58"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700219788,
+            "name": "THE KINGS GARDEN",
+            "hotelId": "WVSTO535",
+            "geoCode": {
+                "latitude": 59.3313,
+                "longitude": 18.06928
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T11:07:11"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700220060,
+            "name": "STORY HOTEL SIGNALFABRIKEN",
+            "hotelId": "WVSTO421",
+            "geoCode": {
+                "latitude": 59.36162,
+                "longitude": 17.96742
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 2,
+            "lastUpdate": "2023-06-15T11:04:41"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700071953,
+            "name": "WELCOME HOTEL BARKARBY",
+            "hotelId": "WVSTOWEL",
+            "geoCode": {
+                "latitude": 59.40551,
+                "longitude": 17.86911
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 2,
+            "lastUpdate": "2023-06-15T10:04:43"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700164445,
+            "name": "YASURAGI HASSELUDDEN",
+            "hotelId": "WVSTO998",
+            "geoCode": {
+                "latitude": 59.28392,
+                "longitude": 18.08571
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:15:11"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700049194,
+            "name": "COLLECTORS VICTORY HOTEL",
+            "hotelId": "WVSTOVIC",
+            "geoCode": {
+                "latitude": 59.32436,
+                "longitude": 18.06785
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T09:52:40"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "STO",
+            "dupeId": 700035044,
+            "name": "COLLECTORS LADY HAMILTON HOTEL",
+            "hotelId": "WVSTOLAD",
+            "geoCode": {
+                "latitude": 59.32575,
+                "longitude": 18.06921
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 5,
+            "lastUpdate": "2023-06-15T10:14:55"
+        },
+        {
+            "chainCode": "WW",
+            "iataCode": "STO",
+            "dupeId": 700031169,
+            "name": "HOTEL ANNO 1647",
+            "hotelId": "WWSTOANN",
+            "geoCode": {
+                "latitude": 59.31925,
+                "longitude": 18.07147
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:04:11"
+        },
+        {
+            "chainCode": "WW",
+            "iataCode": "STO",
+            "dupeId": 700006737,
+            "name": "HOTEL DIPLOMAT",
+            "hotelId": "WWSTODIP",
+            "geoCode": {
+                "latitude": 59.33223,
+                "longitude": 18.07998
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:03:55"
+        },
+        {
+            "chainCode": "YH",
+            "iataCode": "STO",
+            "dupeId": 700072715,
+            "name": "QUEENS HOTEL",
+            "hotelId": "YHSTOQUE",
+            "geoCode": {
+                "latitude": 59.33618,
+                "longitude": 18.0592
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:14:39"
+        },
+        {
+            "chainCode": "YH",
+            "iataCode": "STO",
+            "dupeId": 700169805,
+            "name": "BROMMAVIK HOTEL",
+            "hotelId": "YHSTOBRO",
+            "geoCode": {
+                "latitude": 59.35949,
+                "longitude": 17.9603
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 4,
+            "lastUpdate": "2023-06-15T10:12:18"
+        },
+        {
+            "chainCode": "YH",
+            "iataCode": "STO",
+            "dupeId": 700059488,
+            "name": "HOTEL ALVSJO",
+            "hotelId": "YHSTOALV",
+            "geoCode": {
+                "latitude": 59.27886,
+                "longitude": 18.00866
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:03:40"
+        },
+        {
+            "chainCode": "YH",
+            "iataCode": "STO",
+            "dupeId": 700058941,
+            "name": "FLYGHOTELLET",
+            "hotelId": "YHSTOFLY",
+            "geoCode": {
+                "latitude": 59.33995,
+                "longitude": 17.94006
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 3,
+            "lastUpdate": "2023-06-15T10:03:56"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "STO",
+            "dupeId": 700099208,
+            "name": "HORNSGATAN HOTEL",
+            "hotelId": "YXSTO842",
+            "geoCode": {
+                "latitude": 59.31846,
+                "longitude": 18.05932
+            },
+            "address": {
+                "countryCode": "SE"
+            },
+            "amenities": [
+                "TELEVISION"
+            ],
+            "rating": 2,
+            "lastUpdate": "2023-06-15T09:49:16"
         }
     ],
-    "dictionaries": {
-        "locations": {
-            "LHR": {
-                "cityCode": "LON",
-                "countryCode": "GB"
-            },
-            "JFK": {
-                "cityCode": "NYC",
-                "countryCode": "US"
-            }
-        },
-        "aircraft": {
-            "32Q": "AIRBUS A321NEO"
-        },
-        "currencies": {
-            "EUR": "EURO"
-        },
-        "carriers": {
-            "B6": "JETBLUE AIRWAYS"
+    "meta": {
+        "count": 86,
+        "links": {
+            "self": "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?amenities=TELEVISION&cityCode=STO&hotelSource=ALL&radiusUnit=KM&ratings=2,3,4,5"
         }
     }
 }

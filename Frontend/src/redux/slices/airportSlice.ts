@@ -18,6 +18,7 @@ export const fetchAirports = createAsyncThunk<Airport[], string>(
     'airports/fetchAirports',
     async (query) => {
         const response = await fetchAirportData(query);
+        console.log(response);
         return response;
     }
 );
@@ -40,7 +41,7 @@ const airportSlice = createSlice({
           state.error = action.error.message || 'Something went wrong';
           console.error("Error fetching airports:", action.error);
         });
-    },
+    }, 
   });
 
 export default airportSlice.reducer;

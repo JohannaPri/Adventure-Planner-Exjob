@@ -2,7 +2,8 @@
 import { keepTheme } from "keep-react/keepTheme";
 
 const config = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}",
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
   ],
   theme: {
@@ -22,15 +23,23 @@ const config = {
         darkTeal: "#004B47",
         slateGray: "#3C3F4E",
         softPlum: "#8D5B9C",
-        deepSlate: "#2F4A6E"
+        deepSlate: "#2F4A6E",
       },
       backgroundImage: {
         'bgMapMix': "url('./assets/background/search-home.jpg')",
       },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(2px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'fade-in': 'fade-in 0.3s ease-in-out forwards',
+      },
     },
   },
   plugins: [],
-}
+};
 
 export default keepTheme(config);
-

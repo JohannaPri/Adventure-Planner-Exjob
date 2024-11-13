@@ -4,6 +4,7 @@ const apiKey = import.meta.env.VITE_RAPAPI_CLIENT_TOKEN;
 axios.defaults.headers.common['Authorization'] = `Bearer ${apiKey}`;
 
 const fetchAirportData = async (query: string) => {
+  console.log('QUERY: ', query);
   try {
     const response = await axios.get(
       `https://m2.eeazy.se/rapapi/airport?location=${encodeURIComponent(query)}`

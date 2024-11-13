@@ -58,7 +58,6 @@ const AmadeusAPI: React.FC<AmadeusApiProps> = ({ endpoint, children }) => {
     setError(null);
 
     try {
-      console.log('TOKEN: ', accessToken);
       const response = await axios.get(endpoint, {
         headers: {
           Authorization: `Bearer ${accessToken}`,

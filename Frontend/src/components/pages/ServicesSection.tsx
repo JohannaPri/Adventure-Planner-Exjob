@@ -5,18 +5,22 @@ import { Card } from "../Cards";
 const ServicesSection = () => {
   const cardsData = [
     {
+      icon: "airplane",
       firstText: "Flights",
       secondText: "We help you take off on your next adventure by easily searching for flights to your favorite destinations. Discover the best deals and find the perfect itinerary that fits your travel plans, whether it’s a quick escape or a dream vacation.",
     },
     {
+      icon: "house",
       firstText: "Accommodation",
       secondText: "We help you find the ideal place to stay by searching a variety of accommodations. Whether you prefer a cozy hotel or a luxurious resort, we make it easy to discover options that fit your style and budget.",
     },
     {
+      icon: "mountains",
       firstText: "Activities",
       secondText: "We help you create unforgettable experiences with activities that cater to all tastes, whether you crave an adrenaline rush, a relaxing spa retreat, or a delightful culinary adventure.",
     },
     {
+      icon: "sun",
       firstText: "Weather",
       secondText: "We help you discover ideal destinations based on your preferred weather, ensuring that every trip aligns with your dreams, whether it’s sunny beaches or cozy retreats.",
     },
@@ -39,7 +43,8 @@ const ServicesSection = () => {
                     imageWrapperClass=""
                     cover="object-cover"
                     imageAlt=""
-                    imageSrc="none"
+                    imageSrc=""
+                    icon={card.icon}
                     textWrapperClass="w-full flex flex-col items-center gap-2 flex-grow"
                     key={index}
                 >

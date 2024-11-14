@@ -7,17 +7,21 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import { AccordionComponent } from './components/AccordionComponent';
 
 import LoggedIn from './components/pages/LoggedIn';
 import ErrorPage from './components/pages/ErrorPage';
+import CookieConsent from './components/CookieConsent';
 
 function App() {
   return (
     <>
+      <CookieConsent />
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/loggedIn" element={<LoggedIn />} />
+        <Route path="/faq" element={<AccordionComponent />} />
         <Route path="*" element={<ErrorPage /> } />
       </Routes>
       <Footer />

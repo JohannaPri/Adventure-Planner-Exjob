@@ -32,6 +32,7 @@ type Flight = {
 type FlightData = Flight;
 
 export type FormattedFlightData = {
+  flightId: string;
   price: string;
   outbound: {
     carrier: string;
@@ -41,6 +42,7 @@ export type FormattedFlightData = {
     departureTime: string;
     arrivalTime: string;
     duration: string;
+    stops: string;
   };
   return: {
     carrier: string;
@@ -50,6 +52,7 @@ export type FormattedFlightData = {
     departureTime: string;
     arrivalTime: string;
     duration: string;
+    stops: string;
   };
 };
 
@@ -76,6 +79,7 @@ export function formatFlightData(data: FlightData[]): FormattedFlightData[] {
       ? new Date(outbound.arrivalTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       : "N/A";
     const outboundDuration = outbound?.duration ? formatDuration(outbound.duration) : "N/A"; 
+    const outBoundStops = outbound?.numberOfStops === 0 ? 'direct' : `${outbound?.numberOfStops} stops`;
 
     const returnFlight = flight.travel[1]?.segments[0];
     const returnCarrier = returnFlight?.airplane?.carrierName || "Unknown Carrier";
@@ -89,8 +93,10 @@ export function formatFlightData(data: FlightData[]): FormattedFlightData[] {
       ? new Date(returnFlight.arrivalTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       : "N/A";
     const returnDuration = returnFlight?.duration ? formatDuration(returnFlight.duration) : "N/A";
+    const returnStops = returnFlight.numberOfStops === 0 ? 'direct' : `${returnFlight?.numberOfStops} stops`;
 
     return {
+      flightId: flight.flightId,
       price,
       outbound: {
         carrier: outboundCarrier,
@@ -99,7 +105,8 @@ export function formatFlightData(data: FlightData[]): FormattedFlightData[] {
         arrival: outboundArrival,
         departureTime: outboundDepartureTime,
         arrivalTime: outboundArrivalTime,
-        duration: outboundDuration
+        duration: outboundDuration,
+        stops: outBoundStops
       },
       return: {
         carrier: returnCarrier,
@@ -108,7 +115,8 @@ export function formatFlightData(data: FlightData[]): FormattedFlightData[] {
         arrival: returnArrival,
         departureTime: returnDepartureTime,
         arrivalTime: returnArrivalTime,
-        duration: returnDuration
+        duration: returnDuration,
+        stops: returnStops
       }
     };
   });

@@ -387,7 +387,6 @@ const FlightComponent = () => {
           Search
         </Button>
       </div>
-      <FlightResults />
     </>
   );
 };

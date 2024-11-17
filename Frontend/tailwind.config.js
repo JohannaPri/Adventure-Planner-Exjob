@@ -27,6 +27,9 @@ const config = {
       },
       backgroundImage: {
         'bgMapMix': "url('./assets/background/search-home.jpg')",
+        'bgFin': "url('./assets/search/fin.png')",
+        'bgCar': "url('./assets/search/carSearch.jpg')",
+        'bgCarOpacity': "url('./assets/background/carSearchOpacity.jpg')",
       },
       keyframes: {
         'fade-in': {

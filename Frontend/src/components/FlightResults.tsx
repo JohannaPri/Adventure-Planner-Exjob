@@ -12,11 +12,29 @@ const FlightResults: React.FC = () => {
 
   const formattedFlightData = flightData ? formatFlightData(flightData) : [];
 
-  if (status === "loading") return <div>Oops, this is taking a bit longer than expected! 🌎✈️ There are so many amazing options, and we’re just making sure to bring you the best ones. Hang tight—your perfect adventure is almost ready!</div>;
+  if (status === "loading") return <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-lg max-w-lg mx-auto mt-20 text-center animate-pulse mb-20">
+  <h2 className="text-xl md:text-2xl font-semibold text-slateGray mb-4">
+    Oops, this is taking a bit longer than expected! 🌎✈️
+  </h2>
+  <p className="text-gray-700 text-base md:text-lg">
+    There are so many amazing options, and we’re just making sure to bring you the best ones. Hang tight—your perfect adventure is almost ready!
+  </p>
+</div>
   if (status === "failed") return <div>Error: {error}</div>;
 
-  if (!formattedFlightData || formattedFlightData.length === 0)
-    return <div className="break-words text-pretty">Uh-oh, no flights found! ✈️😮 Looks like all the planes are busy exploring other skies. Try adjusting your search—your perfect flight might just be one refresh away!</div>
+  console.log('FLIGHDATA: ', status === "succeeded");
+  const hasSearched = status === "succeeded";
+
+  if (hasSearched && (!formattedFlightData || formattedFlightData.length === 0)) {
+    return <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-lg max-w-lg mx-auto mt-20 text-center animate-pulse mb-20">
+    <h2 className="text-xl md:text-2xl font-semibold text-slateGray mb-4">
+    Uh-oh, no flights found! ✈️😮
+    </h2>
+    <p className="text-gray-700 text-base md:text-lg">
+    Looks like all the planes are busy exploring other skies. Try adjusting your search—your perfect flight might just be one refresh away!
+    </p> 
+    </div>
+  }
 
   
   return (

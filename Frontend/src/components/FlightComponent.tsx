@@ -5,6 +5,7 @@ import React, {
   useRef,
   useReducer,
 } from "react";
+import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import store, { AppDispatch, RootState } from "../redux/store";
 import { fetchAirports } from "../redux/slices/airportSlice";
@@ -25,9 +26,17 @@ import {
   AirplaneTakeoff,
   AirplaneLanding,
   UserList,
+  Trash,
 } from "@phosphor-icons/react";
 import { DatePickerComponent } from "./DatePickerComponent";
 import FlightResults from "./FlightResults";
+import { toast } from 'keep-react';
+
+interface SuggestionsDropdownProps {
+  suggestions: string[];
+  onSelect: (value: string) => void;
+  position: { top: number; left: number; width: number; };
+}
 
 const FlightComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -46,6 +55,7 @@ const FlightComponent = () => {
 
   const departureInputRef = useRef<HTMLInputElement | null>(null);
   const destinationInputRef = useRef<HTMLInputElement | null>(null);
+  const airportSuggestionsRef = useRef<HTMLUListElement | null>(null);
 
   const airportData = useSelector((state: RootState) => state.airport.data);
   const airportStatus = useSelector((state: RootState) => state.airport.status);
@@ -62,6 +72,14 @@ const FlightComponent = () => {
   const [airportsLoading, setAirportsLoading] = useState<boolean>(false);
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
+  const [resetDatePicker, setResetDatePicker] = useState<boolean>(false);
+ 
+  const [dropdownPosition, setDropdownPosition] = useState<{
+    top: number;
+    left: number;
+    width: number;
+  } | null>(null);
+
   const togglePassengerSelector = () => setIsPassengerListOpen((prev) => !prev);
   const incrementAdults = () => setAdults((prev) => Math.min(prev + 1, 10));
   const decrementAdults = () => setAdults((prev) => Math.max(prev - 1, 0));
@@ -69,9 +87,7 @@ const FlightComponent = () => {
   const decrementChildren = () => setChildren((prev) => Math.max(prev - 1, 0));
 
   const departure = useSelector((state: RootState) => state.flights.departure);
-  const destination = useSelector(
-    (state: RootState) => state.flights.destination
-  );
+  const destination = useSelector((state: RootState) => state.flights.destination);
   const dateFrom = useSelector((state: RootState) => state.flights.dateFrom);
   const dateTo = useSelector((state: RootState) => state.flights.dateTo);
   useSelector((state: RootState) => state.flights);
@@ -119,6 +135,7 @@ const FlightComponent = () => {
       }
     }
     setAirportSuggestions([]);
+    setDropdownPosition(null);
   };
 
   const debouncedFetchAirports = useCallback(
@@ -139,9 +156,7 @@ const FlightComponent = () => {
 
   useEffect(() => {
     if (Array.isArray(airportData)) {
-      const suggestions = airportData.map(
-        (airport) => airport.displayname || ""
-      );
+      const suggestions = airportData.map((airport) => airport.displayname || "");
       setAirportSuggestions(suggestions);
       setShowSuggestions(true);
     } else {
@@ -170,8 +185,53 @@ const FlightComponent = () => {
     }
   };
 
-  const handleFocus = (inputType: "departure" | "destination") => {
+  const SuggestionsDropdown: React.FC<SuggestionsDropdownProps> = ({
+    suggestions,
+    onSelect,
+    position,
+  }) => {
+    const dropDownStyle = {
+      position: "absolute" as const,
+      top: `${position.top + 8}px`,
+      left: `${position.left}px`,
+      width: `${position.width}px`,
+      zIndex: 5,
+    };
+  
+    return ReactDOM.createPortal(
+      <div 
+        style={dropDownStyle}
+        className="bg-white border border-gray-300 rounded-lg shadow-lg">
+          <ul className="max-h-60 overflow-y-auto" ref={airportSuggestionsRef}>
+            {suggestions.map((suggestion, index) => (
+              <li 
+                key={index}
+                className="p-2 cursor-pointer hover:bg-gray-100" 
+                onClick={() => onSelect(suggestion)}
+                >
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        </div>,
+        document.body
+    );
+  }
+
+  const handleInputFocus = (
+    inputRef: React.RefObject<HTMLInputElement>,
+    inputType: "departure" | "destination"
+  ) => {
     setActiveInput(inputType);
+
+    if (inputRef.current) {
+      const rect = inputRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+        width: rect.width,
+      });
+    }
   };
 
   const handleSearch = async () => {
@@ -179,13 +239,29 @@ const FlightComponent = () => {
     const departure = state.flights.departure;
     const destination = state.flights.destination;
 
-    // if (!departure) {
-    //   alert("Please select a valid departure location.");
-    // }
+    // No values
+    console.log(dateFrom);
+    console.log(dateTo);
 
-    // if (!departure) {
-    //   alert("Please select a valid departure location.");
-    // }
+    if (!departure) {
+      alert(departure);
+    }
+
+    if (!destination) {
+      alert(destination);
+    }
+
+    if (!dateFrom) {
+      alert(dateFrom);
+    }
+
+    if (!dateTo) {
+      alert(dateTo);
+    }
+
+    if (!adults) {
+      alert(adults);
+    }
 
     const requestParams = {
       tripType,
@@ -204,6 +280,34 @@ const FlightComponent = () => {
     }
   };
 
+  const handleResetSearch = () => {
+    setLocalDeparture("");
+    setLocalDestination("");
+    setDepartureCity(null);
+    setDestinationCity(null);
+    setAdults(0);
+    setChildren(0);
+    setHasSelectedDeparture(false);
+    setHasSelectedDestination(false);
+    setShowSuggestions(false);
+    setDropdownPosition(null);
+    setDateFrom("");
+    setDateTo("");
+    
+
+    dispatch(clearDeparture());
+    dispatch(clearDestination());
+    dispatch(setDateFrom(""));
+    dispatch(setDateTo(""));
+
+    setIsPassengerListOpen(false);
+
+    if (departureInputRef.current) departureInputRef.current.focus();
+
+    setResetDatePicker(true);
+    setTimeout(() => setResetDatePicker(false), 0);
+  }
+
   const passengerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -219,9 +323,28 @@ const FlightComponent = () => {
     };
   }, []);
 
+
+  useEffect(() => {
+    const handleClickOutsideInput = (event: MouseEvent) => {
+      if (
+        event.target instanceof Node &&
+        airportSuggestionsRef.current &&
+        !airportSuggestionsRef.current?.contains(event.target)
+      ) {
+        setDropdownPosition(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutsideInput);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideInput);
+    }
+  }, []);
+
   return (
     <>
-      <div className="space-y-4">
+      <div className="space-y-4 relative">
         <Select
           containerClass="relative"
           selectClass="border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-4 py-1 cursor-pointer"
@@ -231,70 +354,88 @@ const FlightComponent = () => {
         </Select>
 
         <div className="flex flex-col gap-4 md:flex-row md:gap-4">
-          <Input
-            ref={departureInputRef}
-            onFocus={() => handleFocus("departure")}
-            onChange={handleDepartureChange}
-            containerClass="relative"
-            inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
-            type="text"
-            placeholder="Departure"
-            value={localDeparture}
-          >
-            <div className="absolute text-white top-4 left-3">
-              <AirplaneTakeoff size={20} color="slateGray" weight="regular" />
-            </div>
-
-            {hasSelectedDeparture && localDeparture && (
-              <div className="absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] overflow-hidden">
-                <span className="text-slateGray text-ellipsis overflow-hidden whitespace-nowrap">
-                  {localDeparture.length > 20
-                    ? `${localDeparture.slice(0, 25)}...`
-                    : localDeparture}
-                </span>
-                <button
-                  onClick={handleClearDeparture}
-                  className="text-slateGray text-sm cursor-pointer"
-                >
-                  &times;
-                </button>
+          <div className="relative">
+            <Input
+              ref={departureInputRef}
+              onFocus={() => handleInputFocus(departureInputRef, "departure")}
+              onChange={handleDepartureChange}
+              containerClass="relative"
+              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
+              type="text"
+              placeholder="Departure (min 3 letters)"
+              value={localDeparture}
+            >
+              <div className="absolute text-white top-4 left-3">
+                <AirplaneTakeoff size={20} color="slateGray" weight="regular" />
               </div>
+
+              {hasSelectedDeparture && localDeparture && (
+                <div className="absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] overflow-hidden">
+                  <span className="text-slateGray text-ellipsis overflow-hidden whitespace-nowrap">
+                    {localDeparture.length > 20
+                      ? `${localDeparture.slice(0, 25)}...`
+                      : localDeparture}
+                  </span>
+                  <button
+                    onClick={handleClearDeparture}
+                    className="text-slateGray text-sm cursor-pointer"
+                  >
+                    &times;
+                  </button>
+                </div>
+              )}
+            </Input>
+            {airportSuggestions.length > 0 && dropdownPosition && activeInput === "departure" && (
+              <SuggestionsDropdown
+                suggestions={airportSuggestions}
+                onSelect={handleAirportSelect}
+                position={dropdownPosition}
+              />
             )}
-          </Input>
+          </div>
 
-          <Input
-            ref={destinationInputRef}
-            onFocus={() => handleFocus("destination")}
-            onChange={handleDestinationChange}
-            containerClass="relative"
-            inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
-            type="text"
-            placeholder="Destination"
-            value={localDestination}
-          >
-            <div className="absolute text-white top-4 left-3">
-              <AirplaneLanding size={20} color="slateGray" weight="regular" />
-            </div>
-
-            {hasSelectedDestination && localDestination && (
-              <div className="absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[100%] overflow-hidden">
-                <span className="text-slateGray text-ellipsis overflow-hidden whitespace-nowrap">
-                  {localDestination.length > 20
-                    ? `${localDestination.slice(0, 25)}...`
-                    : localDestination}
-                </span>
-                <button
-                  onClick={handleClearDestination}
-                  className="text-slateGray text-sm cursor-pointer"
-                >
-                  &times;
-                </button>
+          <div className="relative">
+            <Input
+              ref={destinationInputRef}
+              onFocus={() => handleInputFocus(destinationInputRef, "destination")}
+              onChange={handleDestinationChange}
+              containerClass="relative"
+              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
+              type="text"
+              placeholder="Destination (min 3 letters)"
+              value={localDestination}
+            >
+              <div className="absolute text-white top-4 left-3">
+                <AirplaneLanding size={20} color="slateGray" weight="regular" />
               </div>
+
+              {hasSelectedDestination && localDestination && (
+                <div className="absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[100%] overflow-hidden">
+                  <span className="text-slateGray text-ellipsis overflow-hidden whitespace-nowrap">
+                    {localDestination.length > 20
+                      ? `${localDestination.slice(0, 25)}...`
+                      : localDestination}
+                  </span>
+                  <button
+                    onClick={handleClearDestination}
+                    className="text-slateGray text-sm cursor-pointer"
+                  >
+                    &times;
+                  </button>
+                </div>
+              )}
+            </Input>
+            {airportSuggestions.length > 0 && dropdownPosition && activeInput === "destination" && (
+              <SuggestionsDropdown
+                suggestions={airportSuggestions}
+                onSelect={handleAirportSelect}
+                position={dropdownPosition}
+              />
             )}
-          </Input>
+          </div>
 
           <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
-            <DatePickerComponent onDateChange={handleDateChange} />
+            <DatePickerComponent reset={resetDatePicker} onDateChange={handleDateChange} />
           </div>
           <div ref={passengerRef} className="relative">
             <Button
@@ -316,7 +457,7 @@ const FlightComponent = () => {
                 className={`absolute top-full left-0 border border-slateGray rounded-lg outline-none lg:w-[300px] mt-2 w-full bg-white text-slateGray p-4 space-y-3 transition-all duration-800 ease-in-out ${
                   isPassengerListOpen
                     ? "opacity-100 max-h-[300px] -translate-y-0 duration-500 ease-out"
-                    : "opacity-0 max-h-0 -translate-y-2 duration-300 ease-in"
+                    : "opacity-0 hidden pointer-events-none max-h-0 -translate-y-2 duration-300 ease-in"
                 }     overflow-hidden transition-all z-20`}
                 >
                 <div className="z-10 flex items-center justify-between">
@@ -360,25 +501,16 @@ const FlightComponent = () => {
             </div>
           </div>
         </div>
-
-        {airportStatus === "succeeded" && airportSuggestions.length > 0 && (
-          <div className="mt-4 transition-all duration-300 ease-in-out">
-            <ul className="bg-white border rounded-lg border-slateGray max-h-60 overflow-y-auto opacity-0 animate-fade-in">
-              {airportSuggestions.map((airportName, index) => (
-                <li
-                  key={index}
-                  className="p-2 cursor-pointer hover:bg-slateGray/10 transform transition-transform duration-200 ease-in-out"
-                  onClick={() => handleAirportSelect(airportName)}
-                >
-                  <h2 className="text-slateGray">{airportName}</h2>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {airportError && <p className="text-red-500">{airportError}</p>}
       </div>
-      <div className="flex justify-end">
+      <div className="flex gap-4 justify-end">
+      <Button
+          type="button"
+          className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
+          onClick={handleResetSearch}
+        >
+          <Trash size={20} />
+        </Button>
+
         <Button
           type="button"
           className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"

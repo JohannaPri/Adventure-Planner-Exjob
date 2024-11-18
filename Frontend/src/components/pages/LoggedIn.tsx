@@ -74,7 +74,7 @@ const LoggedIn = () => {
               Weather
             </ButtonWIcon>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 relative">
             {searchType === "flight" && (
                 <FlightComponent />
             )}

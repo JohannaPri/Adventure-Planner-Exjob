@@ -26,9 +26,6 @@ const config = {
         deepSlate: "#2F4A6E",
       },
       backgroundImage: {
-        'bgMapMix': "url('./assets/background/search-home.jpg')",
-        'bgFin': "url('./assets/search/fin.png')",
-        'bgCar': "url('./assets/search/carSearch.jpg')",
         'bgCarOpacity': "url('./assets/background/carSearchOpacity.jpg')",
       },
       keyframes: {

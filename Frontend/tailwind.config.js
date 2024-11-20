@@ -1,5 +1,17 @@
 /** @type {import('tailwindcss').Config} */
-import { keepTheme } from "keep-react/keepTheme";
+import { keepTheme, colors } from "keep-react/keepTheme";
+
+const colorsPalette = {
+  ...colors,
+  primary: {
+   ...colors.primary,
+   500: '#3C3F4E',
+   600: '#94A3B9',
+   700: 'slate-400',
+   800: 'slate-400',
+   900: 'slate-400',
+  }
+}
 
 const config = {
   content: [
@@ -42,4 +54,4 @@ const config = {
   plugins: [],
 };
 
-export default keepTheme(config);
+export default keepTheme(config, colorsPalette);

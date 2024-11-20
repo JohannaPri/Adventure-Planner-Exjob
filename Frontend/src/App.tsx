@@ -15,17 +15,19 @@ import CookieConsent from './components/CookieConsent';
 
 function App() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <CookieConsent />
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/loggedIn" element={<LoggedIn />} />
-        <Route path="/faq" element={<AccordionComponent />} />
-        <Route path="*" element={<ErrorPage /> } />
-      </Routes>
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/loggedIn" element={<LoggedIn />} />
+          <Route path="/faq" element={<AccordionComponent />} />
+          <Route path="*" element={<ErrorPage /> } />
+        </Routes>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -123,6 +123,11 @@ const flightSlice = createSlice({
     clearDestination(state) {
       state.destination = null;
     },
+    resetFlights(state) {
+      state.data = null;
+      state.status = "idle";
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -148,6 +153,7 @@ export const {
   clearDestination,
   setDateFrom,
   setDateTo,
+  resetFlights,
 } = flightSlice.actions;
 
 export default flightSlice.reducer;

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
 
 import {
   UserList,
   House,
+  Info,
+  Trash,
 } from "@phosphor-icons/react";
 import { DatePickerComponent } from "./DatePickerComponent";
 
@@ -52,9 +54,26 @@ const AccommodationComponent = () => {
     console.log(value);
   };
 
+  const passengerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (event.target instanceof Node && passengerRef.current && !passengerRef.current.contains(event.target)) {
+        setIsPassengerListOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+  
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
-    <div className="flex flex-col gap-4 md:flex-row md:gap-4">
+      <div className="space-y-4 relative w-full">
+      <div className="flex flex-col gap-4 md:flex-row md:gap-4">
+      <div className="relative">
       <Input
         containerClass="relative"
         inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
@@ -69,93 +88,84 @@ const AccommodationComponent = () => {
           />
         </div>
       </Input>
+      </div>
       <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
         <DatePickerComponent />
-        {/* <Datepicker
-          value={value}
-          onChange={handleChange}
-          primaryColor={"sky"}
-          separator={"→"}
-          startFrom={START_FROM}
-          popoverDirection="down"
-          minDate={MIN_DATE}
-          displayFormat={"MM/DD/YYYY"}
-          readOnly
-          inputClassName="border border-slateGray cursior-pointer rounded-lg outline-none w-[300px] h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1"
-        />  */}
       </div>
-      <div>
-        <Button
-          onClick={togglePassengerSelector}
-          className="border border-slateGray bg-white text-slateGray rounded-lg lg:w-[300px] w-full h-[50px] p-2 flex items-center justify-start"
-        >
-          <div className="mr-2">
-            <UserList
-              size={20}
-              color="slateGray"
-              weight="regular"
-            />
-          </div>
-          <span className="text-slate-500">
-            {adults > 0 || children > 0
-              ? `Adults: ${adults} , Children: ${children}`
-              : "Travelers"}
-          </span>
-        </Button>
+      <div ref={passengerRef} className="relative">
+            <Button
+              onClick={togglePassengerSelector}
+              className="border border-slateGray bg-white text-slateGray rounded-lg lg:w-[300px] w-full h-[50px] p-2 flex items-center justify-start"
+            >
+              <div className="mr-2">
+                <UserList size={20} color="slateGray" weight="regular" />
+              </div>
+              <span className="text-slate-500">
+                {adults > 0 || children > 0
+                  ? `Adults: ${adults} , Children: ${children}`
+                  : "Guests"}
+              </span>
+            </Button>
 
-        <div className="relative">
-          <div
-            className={`absolute top-full left-0 border border-slateGray rounded-lg outline-none lg:w-[300px] mt-2 w-full bg-white text-slateGray p-4 space-y-3 transition-all duration-300 ease-in-out ${
-              isPassengerListOpen
-                ? "opacity-100 max-h-[300px]"
-                : "opacity-0 max-h-0"
-            } overflow-hidden z-20`}
-          >
-            <div className="z-10 flex items-center justify-between">
-              <label className="text-sm">Adults:</label>
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={decrementAdults}
-                  className="flex items-center justify-center w-8 h-8 transition rounded-full cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black"
+            <div className="relative">
+              <div
+                className={`absolute top-full left-0 border border-slateGray rounded-lg outline-none lg:w-[300px] mt-2 w-full bg-white text-slateGray p-4 space-y-3 transition-all duration-800 ease-in-out ${
+                  isPassengerListOpen
+                    ? "opacity-100 max-h-[300px] -translate-y-0 duration-500 ease-out"
+                    : "opacity-0 hidden pointer-events-none max-h-0 -translate-y-2 duration-300 ease-in"
+                }     overflow-hidden transition-all z-20`}
                 >
-                  -
-                </button>
-                <span className="w-5 text-sm text-center">
-                  {adults}
-                </span>
-                <button
-                  onClick={incrementAdults}
-                  className="flex items-center justify-center w-8 h-8 transition rounded-full cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <label className="text-sm">Children:</label>
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={decrementChildren}
-                  className="flex items-center justify-center w-8 h-8 transition rounded-full cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black"
-                >
-                  -
-                </button>
-                <span className="w-5 text-sm text-center">
-                  {children}
-                </span>
-                <button
-                  onClick={incrementChildren}
-                  className="flex items-center justify-center w-8 h-8 transition rounded-full cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black"
-                >
-                  +
-                </button>
+                <div className="z-10 flex items-center justify-between">
+                  <label className="text-sm">Adults:</label>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={decrementAdults}
+                      className="flex items-center justify-center w-8 h-8 transition rounded-full cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black"
+                    >
+                      -
+                    </button>
+                    <span className="w-5 text-sm text-center">{adults}</span>
+                    <button
+                      onClick={incrementAdults}
+                      className="flex items-center justify-center w-8 h-8 transition rounded-full cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <label className="text-sm">Children:</label>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={decrementChildren}
+                      className="flex items-center justify-center w-8 h-8 transition rounded-full cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black"
+                    >
+                      -
+                    </button>
+                    <span className="w-5 text-sm text-center">{children}</span>
+
+                    <button
+                      onClick={incrementChildren}
+                      className="flex items-center justify-center w-8 h-8 transition rounded-full cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
-    <div className="flex justify-end">
+    </div>
+    <div className="mt-[50px]"></div>
+    <div className="flex gap-4 justify-end">
+      <Button
+          type="button"
+          className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
+          
+        >
+          <Trash size={20} />
+        </Button>
       <Button
         type="button"
         className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
@@ -163,6 +173,13 @@ const AccommodationComponent = () => {
         Search
       </Button>
     </div>
+    <div>
+    <Button 
+          className="fixed bottom-6 cursor-pointer right-6 bg-slateGray w-14 h-14 shadow-sm shadow-slateGray text-white rounded-full flex items-center justify-center shadow-lg z-30 hover:bg-slate-400"
+          >
+            <Info size={48} />
+        </Button>
+      </div>
   </>
 )
 };

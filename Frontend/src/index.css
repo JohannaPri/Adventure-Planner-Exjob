@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import "keep-react/css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,20 +24,13 @@ option {
     opacity: 1 !important;
 }
 
-/* .rdp-root {
-    --rdp-accent-color {
-        color: red !important;
-        background-color: red !important;
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
     }
-    
-    --rdp-button_reset {
-        color: red !important;
-        background-color: red !important;
-    }
-    
-    --rdp-button {
-        color: red !important;
-        background-color: red !important;
-    }
-} */
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+  }
+}
 

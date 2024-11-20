@@ -31,11 +31,11 @@ export const NavLinks = [
 
 export const NavButtons = [
   {
-    name: "Login",
-    url: "/login",
+    name: "Sign in",
+    url: "/signin",
   },
   {
-    name: "Signup",
+    name: "Sign up",
     url: "/signup",
   },
 ];
@@ -102,11 +102,11 @@ export const FooterTexts = {
         url: "contact",
       },
       { 
-        name: "Login",
-        url: "/login",
+        name: "Sign in",
+        url: "/signin",
       },
       {
-        name: "Signup",
+        name: "Sign up",
         url: "/signup",
       }
     ]

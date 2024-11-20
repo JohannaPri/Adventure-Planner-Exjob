@@ -37,8 +37,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ onDate
     <Popover>
       <PopoverAction asChild>
         <Button
-          color="secondary"
-          size="lg"
+          color="primary"      
           className="border border-slateGray bg-white text-slateGray rounded-lg lg:w-[300px] w-full h-[50px] p-2 flex items-center justify-start hover:bg-white hover:text-slateGray"
           variant="outline"
         >

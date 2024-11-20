@@ -17,6 +17,7 @@ import {
   clearDestination,
   setDateFrom,
   setDateTo,
+  resetFlights,
 } from "../redux/slices/flightSlice";
 import debounce from "lodash/debounce";
 import { Input } from "./Input";
@@ -27,10 +28,16 @@ import {
   AirplaneLanding,
   UserList,
   Trash,
+  Path,
+  Warning,
+  Info,
 } from "@phosphor-icons/react";
 import { DatePickerComponent } from "./DatePickerComponent";
 import FlightResults from "./FlightResults";
 import { toast } from 'keep-react';
+import { SelectComponent } from "./SelectComponent";
+import { ModalComponent } from "./ModalComponent";
+import { NotificationComponent } from "./NotificationComponent";
 
 interface SuggestionsDropdownProps {
   suggestions: string[];
@@ -60,6 +67,7 @@ const FlightComponent = () => {
   const airportData = useSelector((state: RootState) => state.airport.data);
   const airportStatus = useSelector((state: RootState) => state.airport.status);
   const airportError = useSelector((state: RootState) => state.airport.error);
+  const flightDataStatus = useSelector((state: RootState) => state.flights.status);
 
   const [departureCity, setDepartureCity] = useState<string | null>(null);
   const [destinationCity, setDestinationCity] = useState<string | null>(null);
@@ -73,6 +81,28 @@ const FlightComponent = () => {
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
   const [resetDatePicker, setResetDatePicker] = useState<boolean>(false);
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalContent, setModalContent] = useState<{
+    title: string;
+    description: string;
+    confirmText: string;
+  } | null>(null);
+
+  const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
+  const [notificationContent, setNotificationContent] = useState<{
+    title: string;
+    description: string;
+  } | null>(null);
+
+  const openNotification = (title: string, description: string) => {
+    setNotificationContent({ title, description });
+    setIsNotificationOpen(true);
+  };
+
+  const handleNotification = () => {
+    openNotification('Heads up, fellow traveler! 🌍', 'This is a demo app powered by a test API, which means we can’t fetch data for every destination. For the full experience, make sure to search for London or New York—these are the stars of our show! 🌟 Some locations are still playing hard to get, but we’re working to bring them into the mix soon. On the bright side, we can fetch weather updates for any city or country, so you’ll always know what to pack. Thanks for your patience, and happy adventuring! 🗺️✨');
+  }
  
   const [dropdownPosition, setDropdownPosition] = useState<{
     top: number;
@@ -239,28 +269,25 @@ const FlightComponent = () => {
     const departure = state.flights.departure;
     const destination = state.flights.destination;
 
-    // No values
-    console.log(dateFrom);
-    console.log(dateTo);
+    const requiredFields = [
+      { field: departure, name: "Departure" },
+      { field: destination, name: "Destination" },
+      { field: dateFrom, name: "Start Date" },
+      { field: dateTo, name: "End Date" },
+      { field: adults > 0, name: "Adults" },
+    ];
 
-    if (!departure) {
-      alert(departure);
-    }
+    const missingFields = requiredFields.filter((f) => !f.field);
 
-    if (!destination) {
-      alert(destination);
-    }
+    const openModal = (title: string, description: string, confirmText: string) => {
+      setModalContent({ title, description, confirmText });
+      setIsModalOpen(true);
+    };
 
-    if (!dateFrom) {
-      alert(dateFrom);
-    }
-
-    if (!dateTo) {
-      alert(dateTo);
-    }
-
-    if (!adults) {
-      alert(adults);
+    if (missingFields.length > 0) {
+      openModal('Oops! Your adventure needs some details!', `Missing fields: ${missingFields.map((f) => f.name).join(", ")}`, 'Okay, I got it!');
+      console.log(`Missing fields: ${missingFields.map((f) => f.name).join(", ")}`);
+      return;
     }
 
     const requestParams = {
@@ -293,12 +320,14 @@ const FlightComponent = () => {
     setDropdownPosition(null);
     setDateFrom("");
     setDateTo("");
+    setAirportSuggestions([]);
     
 
     dispatch(clearDeparture());
     dispatch(clearDestination());
     dispatch(setDateFrom(""));
     dispatch(setDateTo(""));
+    dispatch(resetFlights());
 
     setIsPassengerListOpen(false);
 
@@ -342,16 +371,34 @@ const FlightComponent = () => {
     }
   }, []);
 
+  const isLoadingData = flightDataStatus === "loading" ? true : false;
+
+  const tripChoices = [
+    { value: 'round-trip', label: 'Round-Trip' },
+    { value: 'one-way-trip', label: 'One-Way-Trip'},
+  ];
+
   return (
     <>
-      <div className="space-y-4 relative">
+      <div className="space-y-4 relative w-full">
+        {/* <SelectComponent items={tripChoices} defaultValue="round-trip" /> */}
         <Select
           containerClass="relative"
-          selectClass="border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-4 py-1 cursor-pointer"
+          selectClass="focus:outline-none pl-9 border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-8 pl-4 py-1 cursor-pointer appearance-none"
         >
           <option value="round-trip">Round-Trip</option>
           <option value="one-way-trip">One-Way-Trip</option>
         </Select>
+
+        <div className="absolute left-3 top-2 transform -translate-y-1/2 pointer-events-none">
+          <Path size={20} color="slateGray" weight="regular" />
+        </div>
+
+        <div id="pil" className="absolute left-64 top-2.5 transform -translate-y-1/2 pointer-events-none">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
 
         <div className="flex flex-col gap-4 md:flex-row md:gap-4">
           <div className="relative">
@@ -370,7 +417,7 @@ const FlightComponent = () => {
               </div>
 
               {hasSelectedDeparture && localDeparture && (
-                <div className="absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] overflow-hidden">
+                <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] justify-between overflow-hidden">
                   <span className="text-slateGray text-ellipsis overflow-hidden whitespace-nowrap">
                     {localDeparture.length > 20
                       ? `${localDeparture.slice(0, 25)}...`
@@ -410,7 +457,7 @@ const FlightComponent = () => {
               </div>
 
               {hasSelectedDestination && localDestination && (
-                <div className="absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[100%] overflow-hidden">
+                <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] justify-between overflow-hidden">
                   <span className="text-slateGray text-ellipsis overflow-hidden whitespace-nowrap">
                     {localDestination.length > 20
                       ? `${localDestination.slice(0, 25)}...`
@@ -513,12 +560,40 @@ const FlightComponent = () => {
 
         <Button
           type="button"
-          className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
+          className={`mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base ${isLoadingData ? "opacity-50 cursor-not-allowed" : ""}`}
           onClick={handleSearch}
         >
           Search
         </Button>
       </div>
+      {isModalOpen && modalContent && (
+        <ModalComponent
+          title={modalContent.title}
+          description={modalContent.description}
+          confirmText={modalContent.confirmText}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={() => setIsModalOpen(false)}
+          icon={<Warning size={60} />}
+        />
+      )}
+      <div>
+        <Button 
+          className="fixed bottom-6 cursor-pointer right-6 bg-slateGray w-14 h-14 shadow-sm shadow-slateGray text-white rounded-full flex items-center justify-center shadow-lg z-30 hover:bg-slate-400"
+          onClick={() => handleNotification()}
+          >
+            <Info size={48} />
+        </Button>
+      </div>
+      {isNotificationOpen && notificationContent && (
+        <NotificationComponent
+          title={notificationContent.title}
+          description={notificationContent.description}
+          isOpen={isNotificationOpen}
+          onClose={() => setIsNotificationOpen(false)}
+          icon={<Info size={60} />}
+        />
+      )}
     </>
   );
 };

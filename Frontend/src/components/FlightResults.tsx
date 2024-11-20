@@ -38,12 +38,12 @@ const FlightResults: React.FC = () => {
 
   
   return (
-    <div className="space-y-4 w-screen max-h-[0px] mt-10">
+    <div className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5">
     {formattedFlightData.map((flight, index) => (
     <div className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg" key={index}>
       <div className="grid items-center grid-cols-12 gap-4">
         {/* Outbound and Return Flights */}
-        <div className="col-span-8 space-y-4">
+        <div className="col-span-8 space-y-2">
           {/* Outbound Flight */}
           <div className="flex items-center gap-2">
             <AirplaneTilt size={24} className="text-black mr-4" />
@@ -82,7 +82,7 @@ const FlightResults: React.FC = () => {
         {/* Price and Save Button (Centered vertically) */}
         <div className="ml-12 flex flex-col items-center justify-center col-span-4 space-y-4">
           <p className="text-lg font-bold text-black text-center">{flight.price}</p>
-          <button className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-extralight bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black">
+          <button className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black">
             Save
           </button>
         </div>
@@ -91,59 +91,6 @@ const FlightResults: React.FC = () => {
     ))}
     </div>
   );
-
-
-
-  // return (
-  //   <section className="space-y-4">
-  //     <div className="p-4 space-y-3 bg-gray-900 ">
-  //       {formattedFlightData.map((flight, index) => (
-  //         <div
-  //           key={index}
-  //           className="flex items-center justify-between max-w-xl p-4 mx-auto transition-shadow bg-white border rounded-lg shadow hover:shadow-lg"
-  //         >
-  //           <div className="flex items-center space-x-2">
-  //             <div className="p-1 bg-white rounded-md">
-  //               <AirplaneTilt size={24} className="text-red-600" />
-  //             </div>
-  //             <div>
-  //               <p className="text-base font-semibold text-gray-800">
-  //                 {flight.outbound.departure} - {flight.outbound.arrival}
-  //               </p>
-  //               <p className="text-xs text-gray-500">
-  //                 {flight.outbound.carrier}
-  //               </p>
-  //             </div>
-  //           </div>
-
-  //           <div className="text-center">
-  //             <p className="text-sm font-semibold text-gray-800">
-  //               {flight.outbound.departureTime} – {flight.outbound.arrivalTime}
-  //             </p>
-  //             <p className="text-xs text-gray-500">{flight.outbound.duration} {flight.outbound.stops}</p>
-  //           </div>
-
-  //           <div className="text-center">
-  //             <p className="text-sm font-semibold text-gray-800">
-  //               {flight.return.departureTime} – {flight.return.arrivalTime}
-  //             </p>
-  //             <p className="text-xs text-gray-500">{flight.return.duration} {flight.return.stops}</p>
-  //           </div>
-
-  //           <div className="text-right">
-  //             <p className="text-xl font-semibold text-purple-700">
-  //               {flight.price}
-  //             </p>
-  //             <p className="text-xs text-gray-500">Economy</p>
-  //             <button className="px-4 py-1 mt-3 text-sm font-semibold text-white transition duration-200 bg-green-600 rounded-md hover:bg-green-700">
-  //               Save
-  //             </button>
-  //           </div>
-  //         </div>
-  //       ))}
-  //     </div>
-  //   </section>
-  // );
 };
 
 export default FlightResults;

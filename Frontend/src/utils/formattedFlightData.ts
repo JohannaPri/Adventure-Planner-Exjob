@@ -65,7 +65,7 @@ function formatDuration(duration: string): string {
 
 export function formatFlightData(data: FlightData[]): FormattedFlightData[] {
   return data.map(flight => {
-    const price = `${flight.price.total} ${flight.price.currency}`;
+    const price = `€${flight.price.total}`;
 
     const outbound = flight.travel[0]?.segments[0];
     const outboundCarrier = outbound?.airplane?.carrierName || "Unknown Carrier";

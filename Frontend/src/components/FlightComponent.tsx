@@ -300,12 +300,40 @@ const FlightComponent = () => {
       children,
     };
 
+    const modifiedRequestParams = {
+      ...requestParams,
+      departureInput: localDeparture,
+      destinationInput: localDestination,
+    };
+
+    localStorage.setItem("storedFlightData", JSON.stringify(modifiedRequestParams));
+  
     try {
       await dispatch(fetchFlights(requestParams)).unwrap();
     } catch (error: any) {
       console.error(error.message || "An error occured while fetching flights");
     }
   };
+
+  useEffect(() => {
+    const storedFlightData = localStorage.getItem("storedFlightData");
+    if (storedFlightData) {
+      const data = JSON.parse(storedFlightData);
+      // handleDateChange(data.dateFrom, data.dateTo);
+      // dispatch(setDateFrom(data.dateFrom));
+      // dispatch(setDateTo(data.dateTo));
+      setLocalDeparture(data.departureInput);
+      dispatch(setDeparture(data.departure));
+      dispatch(fetchAirports(data.departure));
+      setLocalDestination(data.destinationInput);
+      dispatch(setDestination(data.destination));
+      dispatch(fetchAirports(data.destination));
+      setAdults(data.adults);
+      setChildren(data.children);
+      setHasSelectedDeparture(true);
+      setHasSelectedDestination(true);
+    }
+  },[]);
 
   const handleResetSearch = () => {
     setLocalDeparture("");
@@ -328,6 +356,7 @@ const FlightComponent = () => {
     dispatch(setDateFrom(""));
     dispatch(setDateTo(""));
     dispatch(resetFlights());
+    localStorage.removeItem("storedFlightData");
 
     setIsPassengerListOpen(false);
 
@@ -378,10 +407,10 @@ const FlightComponent = () => {
     { value: 'one-way-trip', label: 'One-Way-Trip'},
   ];
 
+
   return (
     <>
       <div className="space-y-4 relative w-full">
-        {/* <SelectComponent items={tripChoices} defaultValue="round-trip" /> */}
         <Select
           containerClass="relative"
           selectClass="focus:outline-none pl-9 border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-8 pl-4 py-1 cursor-pointer appearance-none"
@@ -396,7 +425,7 @@ const FlightComponent = () => {
 
         <div id="pil" className="absolute left-64 top-2.5 transform -translate-y-1/2 pointer-events-none">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
           </svg>
         </div>
 

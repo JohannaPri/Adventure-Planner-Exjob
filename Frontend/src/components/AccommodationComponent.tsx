@@ -1,15 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
-
-import {
-  UserList,
-  House,
-  Info,
-  Trash,
-} from "@phosphor-icons/react";
 import { DatePickerComponent } from "./DatePickerComponent";
-import { NotificationComponent } from "./NotificationComponent";
+import {
+  House,
+  Trash,
+  UserList
+} from "@phosphor-icons/react";
 
 
 const AccommodationComponent = () => {
@@ -25,21 +22,6 @@ const AccommodationComponent = () => {
   const decrementChildren = () => setChildren((prev) => Math.max(prev - 1, 0));
 
   const togglePassengerSelector = () => setIsPassengerListOpen((prev) => !prev);
-
-  const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
-  const [notificationContent, setNotificationContent] = useState<{
-    title: string;
-    description: string;
-  } | null>(null);
-
-  const openNotification = (title: string, description: string) => {
-    setNotificationContent({ title, description });
-    setIsNotificationOpen(true);
-  };
-
-  const handleNotification = () => {
-    openNotification('Heads up, fellow traveler! 🌍', 'This is a demo app powered by a test API, which means we can’t fetch data for every destination. For the full experience, make sure to search for London or New York—these are the stars of our show! 🌟 Some locations are still playing hard to get, but we’re working to bring them into the mix soon. On the bright side, we can fetch weather updates for any city or country, so you’ll always know what to pack. Thanks for your patience, and happy adventuring! 🗺️✨');
-  }
 
   const START_FROM = new Date();
   START_FROM.setMonth(START_FROM.getMonth() + 1);
@@ -189,22 +171,6 @@ const AccommodationComponent = () => {
         Search
       </Button>
     </div>
-    <div>
-    <Button 
-          className="fixed bottom-6 cursor-pointer right-6 bg-slateGray w-14 h-14 shadow-sm shadow-slateGray text-white rounded-full flex items-center justify-center shadow-lg z-30 hover:bg-slate-400"
-          >
-            <Info size={48} />
-        </Button>
-      </div>
-      {isNotificationOpen && notificationContent && (
-        <NotificationComponent
-          title={notificationContent.title}
-          description={notificationContent.description}
-          isOpen={isNotificationOpen}
-          onClose={() => setIsNotificationOpen(false)}
-          icon={<Info size={60} />}
-        />
-      )}
   </>
 )
 };

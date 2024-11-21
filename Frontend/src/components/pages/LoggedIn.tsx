@@ -7,6 +7,14 @@ type SearchType = "flight" | "accommodation" | "activities" | "weather";
 import bgCarOpacity from "../../assets/background/carSearchOpacity.jpg";
 import ActivityComponent from "../ActivityComponent";
 import WeatherComponent from "../WeatherComponent";
+import { Button } from "../Button";
+import { NotificationComponent } from "../NotificationComponent";
+import {
+  UserList,
+  House,
+  Info,
+  Trash,
+} from "@phosphor-icons/react";
 
 const LoggedIn = () => {
   const [searchType, setSearchType] = useState<SearchType>("flight");
@@ -19,6 +27,22 @@ const LoggedIn = () => {
   };
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+
+  const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
+  const [notificationContent, setNotificationContent] = useState<{
+    title: string;
+    description: string;
+  } | null>(null);
+
+  const openNotification = (title: string, description: string) => {
+    console.log('Notificion heey!');
+    setNotificationContent({ title, description });
+    setIsNotificationOpen(true);
+  };
+
+  const handleNotification = () => {
+    openNotification('Heads up, fellow traveler! 🌍', 'This is a demo app powered by a test API, which means we can’t fetch data for every destination. For the full experience, make sure to search for London or New York—these are the stars of our show! 🌟 Some locations are still playing hard to get, but we’re working to bring them into the mix soon. On the bright side, we can fetch weather updates for any city or country, so you’ll always know what to pack. Thanks for your patience, and happy adventuring! 🗺️✨');
+  }
 
   useEffect(() => {
     const img = new Image();
@@ -99,6 +123,23 @@ const LoggedIn = () => {
     </section>
     {searchType === "flight" && (<FlightResults />)}
     <div className="mt-28"></div>
+    <div>
+        <Button 
+          className="fixed bottom-6 cursor-pointer right-6 bg-slateGray w-14 h-14 shadow-sm shadow-slateGray text-white rounded-full flex items-center justify-center shadow-lg z-30 hover:bg-slate-400"
+          onClick={() => handleNotification()}
+          >
+            <Info size={48} />
+        </Button>
+      </div>
+      {isNotificationOpen && notificationContent && (
+        <NotificationComponent
+          title={notificationContent.title}
+          description={notificationContent.description}
+          isOpen={isNotificationOpen}
+          onClose={() => setIsNotificationOpen(false)}
+          icon={<Info size={60} />}
+        />
+      )}
     </>
   );
 };

@@ -5,6 +5,8 @@ import AccommodationComponent from "../AccommodationComponent";
 import FlightResults from "../FlightResults";
 type SearchType = "flight" | "accommodation" | "activities" | "weather";
 import bgCarOpacity from "../../assets/background/carSearchOpacity.jpg";
+import ActivityComponent from "../ActivityComponent";
+import WeatherComponent from "../WeatherComponent";
 
 const LoggedIn = () => {
   const [searchType, setSearchType] = useState<SearchType>("flight");
@@ -88,25 +90,17 @@ const LoggedIn = () => {
           <div className="flex flex-col gap-4 w-[1280px] px-4">
             {searchType === "flight" && (<FlightComponent />)}
             {searchType === "accommodation" && ( <AccommodationComponent /> )}
+            {searchType === "activities" && ( <ActivityComponent /> )}
+            {searchType === "weather" && ( <WeatherComponent /> )}
           </div>
         </div>
       </section>
-        <FlightResults />
         </div>
     </section>
+    {searchType === "flight" && (<FlightResults />)}
     <div className="mt-28"></div>
     </>
   );
 };
 
 export default LoggedIn;
-
-
-
-// Activities
-// Country / City
-// What to do?
-// Participant
-
-// Weather
-// Country / City

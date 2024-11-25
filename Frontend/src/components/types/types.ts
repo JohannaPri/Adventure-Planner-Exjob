@@ -8,6 +8,26 @@ export interface DisplayType {
   displayName: string;
 }
 
+export interface Hotel {
+  id: string;
+  name: string;
+  location: string;
+  city: string;
+  rating: number;
+  total_price: string;
+  currency: string;
+  checkin: string;
+  checkout: string;
+  adult: number;
+  child: number;
+}
+
+export interface City {
+  id: string;
+  city: string;
+  city_full: string;
+}
+
 export interface Airport {
   id: string;
   displayname: string;

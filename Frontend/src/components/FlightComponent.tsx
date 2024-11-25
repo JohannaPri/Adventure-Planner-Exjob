@@ -333,7 +333,6 @@ const FlightComponent = () => {
     setDateFrom("");
     setDateTo("");
     setAirportSuggestions([]);
-    
 
     dispatch(clearDeparture());
     dispatch(clearDestination());
@@ -365,7 +364,6 @@ const FlightComponent = () => {
     };
   }, []);
 
-
   useEffect(() => {
     const handleClickOutsideInput = (event: MouseEvent) => {
       if (
@@ -390,7 +388,6 @@ const FlightComponent = () => {
     { value: 'round-trip', label: 'Round-Trip' },
     { value: 'one-way-trip', label: 'One-Way-Trip'},
   ];
-
 
   return (
     <>
@@ -424,6 +421,7 @@ const FlightComponent = () => {
               type="text"
               placeholder="Departure (min 3 letters)"
               value={localDeparture}
+              onClick={() => setAirportSuggestions([])}
             >
               <div className="absolute text-white top-4 left-3">
                 <AirplaneTakeoff size={20} color="slateGray" weight="regular" />
@@ -464,6 +462,7 @@ const FlightComponent = () => {
               type="text"
               placeholder="Destination (min 3 letters)"
               value={localDestination}
+              onClick={() => setAirportSuggestions([])}
             >
               <div className="absolute text-white top-4 left-3">
                 <AirplaneLanding size={20} color="slateGray" weight="regular" />

@@ -28,6 +28,20 @@ export interface City {
   city_full: string;
 }
 
+export interface Activity {
+  id: string;
+  category: string;
+  city: string;
+  type: string;
+  rating: number;
+  maxRating: number;
+  price: string;
+  durationHours: number;
+  date: string;
+  adults: string;
+  children: string;
+}
+
 export interface Airport {
   id: string;
   displayname: string;

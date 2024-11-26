@@ -3,6 +3,7 @@ import { ButtonWIcon } from "../ButtonWIcon";
 import FlightComponent from "../FlightComponent";
 import AccommodationComponent from "../AccommodationComponent";
 import FlightResults from "../FlightResults";
+import Hotelresults from "../HotelResults";
 type SearchType = "flight" | "accommodation" | "activities" | "weather";
 import bgCarOpacity from "../../assets/background/carSearchOpacity.jpg";
 import ActivityComponent from "../ActivityComponent";
@@ -15,6 +16,7 @@ import {
   Info,
   Trash,
 } from "@phosphor-icons/react";
+import ActivityResults from "../ActivityResults";
 
 const LoggedIn = () => {
   const [searchType, setSearchType] = useState<SearchType>("flight");
@@ -122,10 +124,12 @@ const LoggedIn = () => {
         </div>
     </section>
     {searchType === "flight" && (<FlightResults />)}
+    {searchType === "accommodation" && (<Hotelresults />)}
+    {searchType === "activities" && (<ActivityResults />)}
     <div className="mt-28"></div>
     <div>
         <Button 
-          className="fixed bottom-6 cursor-pointer right-6 bg-slateGray w-14 h-14 shadow-sm shadow-slateGray text-white rounded-full flex items-center justify-center shadow-lg z-30 hover:bg-slate-400"
+          className="fixed bottom-6 cursor-pointer right-6 bg-slateGray w-14 h-14 shadow-slateGray text-white rounded-full flex items-center justify-center shadow-lg z-30 hover:bg-slate-400"
           onClick={() => handleNotification()}
           >
             <Info size={48} />

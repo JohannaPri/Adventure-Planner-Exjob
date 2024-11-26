@@ -3,6 +3,7 @@ import airportReducer from './slices/airportSlice';
 import flightReducer from './slices/flightSlice';
 import hotelReducer from './slices/hotelSlice';
 import cityReducer from './slices/citySlice';
+import activityReducer from './slices/activitySlice';
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         flights: flightReducer,
         hotel: hotelReducer,
         city: cityReducer,
+        activity: activityReducer,
     },
 });
 

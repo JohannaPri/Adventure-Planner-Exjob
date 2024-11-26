@@ -17,7 +17,7 @@ import { CityQuery } from '../redux/slices/citySlice';
 import { debounce } from "lodash";
 
 import { fetchHotels } from "../redux/slices/hotelSlice";
-import { setDestination, setAdults, setChildren } from "../redux/slices/hotelSlice";
+import { setDestination, setAdults, setChildren, setCheckin, setCheckout, resetHotels, clearDestination } from "../redux/slices/hotelSlice";
 import { HotelQuery } from '../redux/slices/hotelSlice';
 import { ModalComponent } from "./ModalComponent";
 
@@ -27,7 +27,13 @@ interface SuggestionsDropdownProps {
   position: { top: number; left: number; width: number; };
 }
 
-const AccommodationComponent = () => {
+const AccommodationComponent: React.FC = () => {
+  const { data: hotelData, status, error } = useSelector(
+    (state: RootState) => state.hotel
+  );
+
+  console.log('HotelData: ', hotelData);
+
   const dispatch = useDispatch<AppDispatch>();
 
   const [adultsLocal, setAdultsLocal] = useState<number>(0);
@@ -39,6 +45,8 @@ const AccommodationComponent = () => {
   const [citySuggestions, setCitySuggestions] = useState<string[]>([]);
   const [cityLoading, setCityLoading] = useState<boolean>(false);
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
+
+  const [resetDatePicker, setResetDatePicker] = useState<boolean>(false);
 
   const [hasSelectedDestination, setHasSelectedDestination] = useState<boolean>(false);
 
@@ -110,6 +118,7 @@ const AccommodationComponent = () => {
   };
 
   const handleCitySelect = (cityName: string) => {
+    console.log('City Naaaaaaaaaaaaaaame: ', cityName);
     const matchedCity = cityData?.find((city) => city.city_full === cityName);
 
     if (matchedCity) {
@@ -148,6 +157,13 @@ const AccommodationComponent = () => {
     }, 500),
     [dispatch]
   );
+
+  const handleDateChange = (fromDate: string, toDate: string) => {
+    console.log(fromDate, toDate);
+    dispatch(setCheckin(fromDate));
+    dispatch(setCheckout(toDate));
+  };
+
 
   useEffect(() => {
     if (Array.isArray(cityData)) {
@@ -297,12 +313,62 @@ const AccommodationComponent = () => {
       checkout,
     };
 
+    const modifiedRequestParams = {
+      ...requestParams,
+      destinationInput: selectedCityName,
+    };
+
+    localStorage.setItem("storedHotelData", JSON.stringify(modifiedRequestParams));
+
     try {
       await dispatch(fetchHotels(requestParams)).unwrap();
     } catch (error: any) {
       console.error(error.message || "An error occured while fetching flights");
     }
   };
+
+  useEffect(() => {
+    const storedHotelData = localStorage.getItem("storedHotelData");
+    if (storedHotelData) {
+      const data = JSON.parse(storedHotelData);
+      setSelectedCityName(data.destinationInput);
+      setAdultsLocal(data.adults);
+      setChildren(data.children);
+      
+      dispatch(setCity(data.destination));
+      dispatch(setDestination(data.destination));
+      dispatch(setAdults(data.adults));
+      dispatch(setChildren(data.children));
+
+      setHasSelectedDestination(true);
+    }
+  },[]);
+
+  const handleResetSearch = () => {
+    setAdultsLocal(0);
+    setChildrenLocal(0);
+    setIsPassengerListOpen(false);
+    dispatch(setAdults(0));
+    dispatch(setChildren(0));
+    setSelectedCityName("");
+    setHasSelectedDestination(false);
+
+    dispatch(clearDestination());
+    dispatch(resetHotels());
+    
+    localStorage.removeItem("storedHotelData");
+
+    setIsPassengerListOpen(false);
+    setCitySuggestions([]);
+
+
+    if (cityInputRef.current) cityInputRef.current.focus();
+
+    setResetDatePicker(true);
+    setTimeout(() => setResetDatePicker(false), 0);
+  }
+
+  const isLoadingData = status === "loading" ? true : false;
 
   return (
     <>
@@ -348,7 +414,7 @@ const AccommodationComponent = () => {
               )}
           </div>
           <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
-            <DatePickerComponent />
+          <DatePickerComponent reset={resetDatePicker} onDateChange={handleDateChange} />
           </div>
           <div ref={passengerRef} className="relative">
             <Button
@@ -420,13 +486,14 @@ const AccommodationComponent = () => {
         <Button
           type="button"
           className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
+          onClick={handleResetSearch}
         >
           <Trash size={20} />
         </Button>
         <Button
           type="button"
           onClick={handleSearch}
-          className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
+          className={`mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base ${isLoadingData ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           Search
         </Button>

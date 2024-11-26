@@ -14,7 +14,7 @@ const fetchHotelData = async (query: HotelQuery) => {
   
   try {
     const response = await axios.get(
-      `https://m2.eeazy.se/rapapi/hotel/hotels?city=${destination}&adult=${adults}&${children}`
+      `https://m2.eeazy.se/rapapi/hotel/hotels?city=${destination}&adult=${adults}&child=${children}`
     );
     console.log('API RESPONSE: ', response.data);
     return response.data;

@@ -59,6 +59,14 @@ const hotelSlice = createSlice({
       setCheckout(state, action: PayloadAction<string>) {
         state.checkout = action.payload;
       },
+      clearDestination(state) {
+        state.destination = null;
+      },
+      resetHotels(state) {
+        state.data = null;
+        state.status = "idle";
+        state.error = null;
+      },
     },
     extraReducers: (builder) => {
       builder
@@ -78,5 +86,5 @@ const hotelSlice = createSlice({
   });
 
 
-export const { setDestination, setAdults, setChildren, setCheckin, setCheckout } = hotelSlice.actions;
+export const { setDestination, setAdults, setChildren, setCheckin, setCheckout, resetHotels, clearDestination } = hotelSlice.actions;
 export default hotelSlice.reducer;

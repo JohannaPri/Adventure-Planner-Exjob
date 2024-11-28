@@ -42,6 +42,62 @@ export interface Activity {
   children: string;
 }
 
+export interface Weather {
+  coordLon: number;
+  coordLat: number;
+  weatherId: number;
+  weatherMain: string;
+  weatherDescription: string;
+  weatherIcon: string;
+  base: string;
+  temp: number;
+  feelsLike: number;
+  tempMin: number;
+  tempMax: number;
+  pressure: number;
+  humidity: number;
+  seaLevel?: number; // Optional
+  grndLevel?: number; // Optional
+  visibility: number;
+  windSpeed: number;
+  windDeg: number;
+  windGust?: number; // Optional
+  cloudsAll: number;
+  dt: number; // Timestamp
+  sysType: number;
+  sysId: number;
+  sysCountry: string;
+  sunrise: number;
+  sunset: number;
+  timezone: number;
+  id: number;
+  cityName: string;
+  responseCode: number;
+  name: string;
+
+  weather: {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
+  }
+
+  main: {
+    temp: number;
+    humidity: number;
+  }
+
+  sys: {
+    country: string;
+  }
+
+  wind: {
+    speed: number;
+    deg: number;
+    gust: number;
+  }
+}
+
 export interface Airport {
   id: string;
   displayname: string;

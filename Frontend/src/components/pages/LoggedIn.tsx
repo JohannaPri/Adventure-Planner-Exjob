@@ -4,6 +4,7 @@ import FlightComponent from "../FlightComponent";
 import AccommodationComponent from "../AccommodationComponent";
 import FlightResults from "../FlightResults";
 import Hotelresults from "../HotelResults";
+import WeatherResults from "../WeatherResults";
 type SearchType = "flight" | "accommodation" | "activities" | "weather";
 import bgCarOpacity from "../../assets/background/carSearchOpacity.jpg";
 import ActivityComponent from "../ActivityComponent";
@@ -54,7 +55,7 @@ const LoggedIn = () => {
 
   return (
     <>
-    <section className="relative flex flex-col items-center justify-center w-full h-fit my-25 md:px-20 bg-white mt-28 transition-all duration-2000">
+    <section className="animate-fade-in-long relative flex flex-col items-center justify-center w-full h-fit my-25 md:px-20 bg-white mt-28 transition-all duration-2000">
       <div className="md:min-h-0 min-h-0 w-screen bg-black"></div>
       <div className="w-full max-w-screen-xl mx-auto">
       <section className="flex justify-center items-center w-fit h-auto max-w-screen-xl mx-auto overflow-hidden relative shadow-sm shadow-black rounded-lg">
@@ -126,6 +127,7 @@ const LoggedIn = () => {
     {searchType === "flight" && (<FlightResults />)}
     {searchType === "accommodation" && (<Hotelresults />)}
     {searchType === "activities" && (<ActivityResults />)}
+    {searchType === "weather" && (<div className="h-[80px]"></div>)}
     <div className="mt-28"></div>
     <div>
         <Button 

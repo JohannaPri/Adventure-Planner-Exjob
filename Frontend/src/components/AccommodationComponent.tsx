@@ -355,6 +355,11 @@ const AccommodationComponent: React.FC = () => {
 
     dispatch(clearDestination());
     dispatch(resetHotels());
+
+    dispatch(setCity(""));
+    dispatch(setDestination(""));
+    dispatch(setAdults(0));
+    dispatch(setChildren(0));
     
     localStorage.removeItem("storedHotelData");
 
@@ -370,9 +375,15 @@ const AccommodationComponent: React.FC = () => {
 
   const isLoadingData = status === "loading" ? true : false;
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setIsVisible(true), 200);
+  }, []);
+
   return (
     <>
-      <div className="space-y-4 relative w-full">
+      <div className={`space-y-4 relative w-full transition-all ease-in-out ${isVisible ? "animate-fade-in-long" : "opacity-0"}`}>
         <div className="flex flex-col gap-4 md:flex-row md:gap-4">
           <div className="relative">
             <Input

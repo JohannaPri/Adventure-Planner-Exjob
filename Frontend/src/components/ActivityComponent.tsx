@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import store, { AppDispatch, RootState } from "../redux/store";
 import { Input } from "./Input";
 import { Button } from "./Button";
-import { DatePickerComponent } from "./DatePickerComponent";
-import { UserList, City, Mountains, Info, Trash } from "@phosphor-icons/react";
+import { DatePickerSingleComponent } from "./DatePickerSingleComponent";
+import { UserList, City, Mountains, Info, Trash, Warning } from "@phosphor-icons/react";
 import { fetchCities } from "../redux/slices/citySlice";
 import { setCity } from "../redux/slices/citySlice";
 import { CityQuery } from '../redux/slices/citySlice';
@@ -264,16 +264,17 @@ const ActivityComponent: React.FC = () => {
 
   const handleSearch = async () => {
     const state = store.getState();
-    const destination = state.city.destination ?? "";
-    const date = state.activity.date ?? "";
+    const destination = state.city.destination || "";
+    const date = state.activity.date || "";
     const adults = state.activity.adults ?? 0;
     const children = state.activity.children ?? 0;
+
+    console.log('destination: ', destination);
 
     const requiredFields = [
       { field: destination, name: "City" },
       { field: date, name: "Date" },
       { field: adults > 0, name: "Adults" },
-      { field: children > 0, name: "Children" },
     ];
 
     const missingFields = requiredFields.filter((f) => !f.field);
@@ -334,10 +335,14 @@ const ActivityComponent: React.FC = () => {
     dispatch(setAdults(0));
     dispatch(setChildren(0));
     setSelectedCityName("");
-    setHasSelectedDestination(false);
 
     dispatch(clearDestination());
     dispatch(resetActivites());
+
+    dispatch(setCity(""));
+    dispatch(setDestination(""));
+    dispatch(setAdults(0));
+    dispatch(setChildren(0));
     
     localStorage.removeItem("storedActivityData");
 
@@ -349,13 +354,20 @@ const ActivityComponent: React.FC = () => {
 
     setResetDatePicker(true);
     setTimeout(() => setResetDatePicker(false), 0);
+    setHasSelectedDestination(false);
   }
 
   const isLoadingData = status === "loading" ? true : false;
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setIsVisible(true), 200);
+  }, []);
+
   return (
     <>
-      <div className="space-y-4 relative w-full">
+      <div className={`space-y-4 relative w-full transition-all ease-in-out ${isVisible ? "animate-fade-in-long" : "opacity-0"}`}>
         <div className="flex flex-col gap-4 md:flex-row md:gap-4">
           <div className="relative">
             <Input
@@ -401,6 +413,7 @@ const ActivityComponent: React.FC = () => {
               containerClass="relative"
               inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
               type="text"
+              disabled={true}
               placeholder="Find Activity"
             >
               <div className="absolute text-white top-3.5 left-3">
@@ -409,7 +422,7 @@ const ActivityComponent: React.FC = () => {
             </Input>
           </div>
           <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
-          <DatePickerComponent reset={resetDatePicker} onDateChange={handleDateChange} />
+          <DatePickerSingleComponent reset={resetDatePicker} onDateChange={handleDateChange} />
           </div>
           <div ref={passengerRef} className="relative">
             <Button
@@ -493,6 +506,17 @@ const ActivityComponent: React.FC = () => {
           Search
         </Button>
       </div>
+      {isModalOpen && modalContent && (
+        <ModalComponent
+          title={modalContent.title}
+          description={modalContent.description}
+          confirmText={modalContent.confirmText}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={() => setIsModalOpen(false)}
+          icon={<Warning size={60} />}
+        />
+      )}
     </>
   );
 };

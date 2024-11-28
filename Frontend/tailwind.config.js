@@ -45,13 +45,32 @@ const config = {
           '0%': { opacity: '0', transform: 'translateY(2px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        'fade-in-long': {
+          '0%': { opacity: '0' },
+          '25%': { opacity: '0.25' },
+          '50%': { opacity: '0.5' },
+          '75%': { opacity: '0.75' },
+          '100%': { opacity: '1' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 0.3s ease-in-out forwards',
+        'fade-in-long': 'fade-in-long .5s ease-in-out',
       },
+      boxShadow: {
+        'text': '1px 1px rgba(50, 50, 70, 0.5)',  // Add the custom text shadow
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.text-shadow': {
+          textShadow: '1px 1px rgba(50, 50, 70, 0.5)', // Custom utility class
+        }
+      }, ['responsive', 'hover']);
+    }
+  ],
 };
 
 export default keepTheme(config, colorsPalette);

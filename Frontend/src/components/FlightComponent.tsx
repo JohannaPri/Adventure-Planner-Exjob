@@ -389,15 +389,21 @@ const FlightComponent = () => {
     { value: 'one-way-trip', label: 'One-Way-Trip'},
   ];
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setIsVisible(true), 200);
+  }, []);
+
   return (
     <>
-      <div className="space-y-4 relative w-full">
+      <div className={`space-y-4 relative w-full transition-all ease-in-out ${isVisible ? "animate-fade-in-long" : "opacity-0"}`}>
         <Select
           containerClass="relative"
           selectClass="focus:outline-none pl-9 border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-8 pl-4 py-1 cursor-pointer appearance-none"
         >
           <option value="round-trip">Round-Trip</option>
-          <option value="one-way-trip">One-Way-Trip</option>
+          <option value="one-way-trip" disabled={true}>One-Way-Trip</option>
         </Select>
 
         <div className="absolute left-3 top-2 transform -translate-y-1/2 pointer-events-none">

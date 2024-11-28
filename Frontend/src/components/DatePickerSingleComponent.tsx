@@ -4,25 +4,25 @@ import { useState, useEffect } from 'react';
 import { Button, DatePicker, Popover, PopoverAction, PopoverContent } from 'keep-react';
 import { DateRange as DayPickerDateRange } from 'react-day-picker';
 
-type DatePickerComponentProps = {
-  onDateChange: (fromDate: string, toDate: string) => void;
+type DatePickerSingleComponentProps = {
+  onDateChange: (selectDate: string) => void;
   reset: boolean;
 };
 
-export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ onDateChange, reset }) => {
-  const [selected, setSelected] = useState<DayPickerDateRange | undefined>(undefined);
+export const DatePickerSingleComponent: React.FC<DatePickerSingleComponentProps> = ({ onDateChange, reset }) => {
+  const [selected, setSelected] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
     if (reset) {
       setSelected(undefined);
-      onDateChange("", "");
+      onDateChange("");
     }
   }, [reset, onDateChange])
 
-  const handleDateSelect = (range: DayPickerDateRange | undefined) => {
-    setSelected(range);
-    if (range?.from && range?.to) {
-      onDateChange(format(range.from, 'yyyy-MM-dd'), format(range.to, 'yyyy-MM-dd'));
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelected(date);
+    if (date) {
+      onDateChange(format(date, 'yyyy-MM-dd'));
     }
   };
 
@@ -43,10 +43,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ onDate
           <Calendar size={20} className="mr-1 text-slate-500" />
           <div className="font-normal text-slate-500">
             {selected ? (
-              <>
-                {format(selected.from ?? new Date(), 'LLL dd, y')} -{' '}
-                {format(selected.to ?? new Date(), 'LLL dd, y')}
-              </>
+                format(selected, 'LLL dd, y')
             ) : (
               <span className="font-normal text-slate-500">Select Your Date</span>
             )}
@@ -55,8 +52,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ onDate
       </PopoverAction>
       <PopoverContent align="start" className="border-0 max-w-min">
         <DatePicker
-          mode="range"
-          numberOfMonths={2}
+          mode="single"
           selected={selected}
           onSelect={handleDateSelect}
           showOutsideDays={true}

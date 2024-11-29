@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Mountains, UsersThree } from "@phosphor-icons/react";
+import StarRating from "./StarRating";
 
 const ActivityResult: React.FC = () => {
 
@@ -34,7 +35,7 @@ const ActivityResult: React.FC = () => {
   }
   
   return (
-    <div className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5">
+    <div className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
     {activityData?.map((activity, index) => (
     <div className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg" key={index}>
       <div className="grid items-center grid-cols-12 gap-4">
@@ -64,7 +65,7 @@ const ActivityResult: React.FC = () => {
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-bold text-center">Rating</p>
-                  <p className="text-xs text-gray-600 text-center">{activity.rating}</p>
+                  <p className="text-xs text-gray-600 text-center"><StarRating value={activity.rating} maxStars={5} size={16} color="yellow-500" /></p>
                 </div>
               </div>
             </div>

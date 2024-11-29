@@ -37,7 +37,7 @@ const HotelResults: React.FC = () => {
 
   
   return (
-    <div className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5">
+    <div className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
     {hotelData?.map((hotel, index) => (
     <div className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg" key={index}>
       <div className="grid items-center grid-cols-12 gap-4">

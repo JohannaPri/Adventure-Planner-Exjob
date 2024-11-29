@@ -127,11 +127,11 @@ const LoggedIn = () => {
     {searchType === "flight" && (<FlightResults />)}
     {searchType === "accommodation" && (<Hotelresults />)}
     {searchType === "activities" && (<ActivityResults />)}
-    {searchType === "weather" && (<div className="h-[80px]"></div>)}
+    {searchType === "weather" && (<div className="h-[120px]"></div>)}
     <div className="mt-28"></div>
     <div>
         <Button 
-          className="fixed bottom-6 cursor-pointer right-6 bg-slateGray w-14 h-14 shadow-slateGray text-white rounded-full flex items-center justify-center shadow-lg z-30 hover:bg-slate-400"
+          className="fixed bottom-6 cursor-pointer right-6 bg-slateGray w-14 h-14 shadow-slateGray text-white rounded-full flex items-center justify-center shadow-md z-30 hover:bg-slate-400"
           onClick={() => handleNotification()}
           >
             <Info size={48} />

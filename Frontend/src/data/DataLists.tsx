@@ -16,6 +16,10 @@ export const NewsLetterTexts = {
 
 export const NavLinks = [
   {
+    name: "Search",
+    url: "/loggedIn"
+  },
+  {
     name: "Services",
     url: "services",
   },
@@ -32,7 +36,7 @@ export const NavLinks = [
 export const NavButtons = [
   {
     name: "Sign in",
-    url: "/signin",
+    url: "/login",
   },
   {
     name: "Sign up",
@@ -44,6 +48,10 @@ export const NavLoggedIn = [
   {
     name: "Home",
     url: "/",
+  },
+  {
+    name: "Search",
+    url: "loggedIn"
   },
   {
     name: "My Destinations",

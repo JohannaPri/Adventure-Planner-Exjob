@@ -14,55 +14,6 @@ export const NewsLetterTexts = {
   buttonText: "Subscribe"
 }
 
-export const NavLinks = [
-  {
-    name: "Search",
-    url: "/loggedIn"
-  },
-  {
-    name: "Services",
-    url: "services",
-  },
-  {
-    name: "Top Destinations",
-    url: "top-destinations",
-  },
-  {
-    name: "Contact",
-    url: "footer",
-  }
-];
-
-export const NavButtons = [
-  {
-    name: "Sign in",
-    url: "/login",
-  },
-  {
-    name: "Sign up",
-    url: "/signup",
-  },
-];
-
-export const NavLoggedIn = [
-  {
-    name: "Home",
-    url: "/",
-  },
-  {
-    name: "Search",
-    url: "loggedIn"
-  },
-  {
-    name: "My Destinations",
-    url: "/my-destinations",
-  },
-  {
-    name: "Profile",
-    url: "/profile",
-  },
-]
-
 export const TopDestinationTexts = {
   cards: [
     {
@@ -110,11 +61,11 @@ export const FooterTexts = {
         url: "contact",
       },
       { 
-        name: "Sign in",
+        name: "Sign In",
         url: "/signin",
       },
       {
-        name: "Sign up",
+        name: "Sign Up",
         url: "/signup",
       }
     ]

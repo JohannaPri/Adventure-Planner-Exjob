@@ -17,46 +17,31 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleGoogleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      dispatch(
-        setUser({
-          uid: user.uid,
-          email: user.email || "",
-          displayName: user.displayName,
-        })
-      );
-
-      navigate("/profile");
-    } catch (error) {
-      setError("Failed to log in with Google.");
+      setLoading(true);
+      await signInWithPopup(auth, provider);
+      navigate("/");
+      //close modal
+    } catch (err:any) {
+      setError(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      dispatch(
-        setUser({
-          uid: user.uid,
-          email: user.email || "",
-          displayName: user.displayName || "",
-        })
-      );
-      navigate("/profile");
-    } catch (error) {
-      setError("Failed to log in with email/password.");
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/");
+    } catch (err:any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,14 +88,14 @@ const Login: React.FC = () => {
             type="submit"
             className="w-full py-3 font-bold text-gray-500 transition duration-300 rounded-md bg-gray-200 hover:bg-cloudGray shadow-md shadow-gray-400 backdrop-blur-sm space-x-3"
           >
-            Login with Email
+            Sign In with Email
           </button>
         </form>
         <div className="flex flex-row justify-between items-center px-2">
           <div className="text-sm text-gray-600 mt-3">
             Don't have an account yet?{" "}
             <span className="hover:underline hover:cursor-pointer font-medium">
-              Sign up
+              Sign Up
             </span>
           </div>
           <div className="text-sm text-gray-600 mt-3 hover:underline hover:cursor-pointer font-medium">
@@ -122,7 +107,7 @@ const Login: React.FC = () => {
           <button 
             onClick={handleGoogleLogin}
             className="w-full py-3 font-bold text-gray-500 transition duration-300 rounded-md bg-gray-200 hover:bg-cloudGray flex justify-center items-center space-x-3 shadow-md shadow-gray-400 backdrop-blur-sm">
-            <GoogleLogo size={22} className="mr-1" /> Login with Google
+            <GoogleLogo size={22} className="mr-1" /> Sign In with Google
           </button>
         </div>
 

@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
 const ProtectedRoute: React.FC = () => {
-    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+    const { user, loading } = useSelector((state: RootState) => state.auth);
 
-    if (!isAuthenticated) {
-        return <Navigate to="/" replace />
+    if (loading) {
+        return <div>Loading...</div>;
     }
 
-    return <Outlet />;
+    return user ? <Outlet /> : <Navigate to="/" />
 };
 
 export default ProtectedRoute;

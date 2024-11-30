@@ -6,17 +6,8 @@ import cityReducer from './slices/citySlice';
 import activityReducer from './slices/activitySlice';
 import weatherReducer from './slices/weatherSlice';
 import authReducer from './slices/authSlice';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
-const persistConfig = {
-    key: 'root',
-    storage,
-  };
-
-const persistedReducer = persistReducer(persistConfig, authReducer);
-
-const store = configureStore({
+export const store = configureStore({
     reducer: {
         airport: airportReducer,
         flights: flightReducer,
@@ -24,11 +15,9 @@ const store = configureStore({
         city: cityReducer,
         activity: activityReducer,
         weather: weatherReducer,
-        auth: persistedReducer,
+        auth: authReducer,
     },
 });
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export const persistor = persistStore(store);
-export default store;

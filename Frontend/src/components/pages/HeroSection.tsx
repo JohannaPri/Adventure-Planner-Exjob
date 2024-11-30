@@ -3,8 +3,12 @@ import { Text } from "../Text";
 import { Fade, Slide } from "react-awesome-reveal";
 import { Button } from "../Button";
 import { HeroTexts, Countries } from "../../data/DataLists";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const HeroSection = () => {
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+  console.log('IS LOGGED IN: ', isLoggedIn);
   const [randomCountry, setRandomCountry] = useState<string>('');
   const heroText = HeroTexts[0];
 
@@ -144,12 +148,15 @@ const HeroSection = () => {
             </Fade>
           </Text>
           <div className="flex items-center justify-between w-full gap-0 md:justify-start lg:gap-12 md:gap-6">
+            {!isLoggedIn ? (
             <Button
-              type="button"
-              className="shadow-md px-5 py-3 text-white border-none rounded-1 outline-none lg:px-7 font-semibold bg-slateGray hover:shadow-none hover:bg-black hover:text-white hover:border-gray-950 transition-all duration-300 ease-in"
-            >
-              Sign up
-            </Button>
+            type="button"
+            className="shadow-md px-5 py-3 text-white border-none rounded-1 outline-none lg:px-7 font-semibold bg-slateGray hover:shadow-none hover:bg-black hover:text-white hover:border-gray-950 transition-all duration-300 ease-in"
+          >
+            Sign up
+          </Button>
+            ) : null}
+
           </div>
         </div>
       </main>

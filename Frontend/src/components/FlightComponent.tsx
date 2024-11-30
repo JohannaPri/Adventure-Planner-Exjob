@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import store, { AppDispatch, RootState } from "../redux/store";
+import { AppDispatch, RootState, store } from "../redux/store";
 import { fetchAirports } from "../redux/slices/airportSlice";
 import {
   fetchFlights,

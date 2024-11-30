@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
 import { useDispatch, useSelector } from "react-redux";
-import store, { AppDispatch, RootState } from "../redux/store";
+import { store, AppDispatch, RootState } from "../redux/store";
 import { fetchWeather, setDestination, clearDestination, resetWeather } from "../redux/slices/weatherSlice";
 
 import { Info, Trash, Sun, Warning } from "@phosphor-icons/react";

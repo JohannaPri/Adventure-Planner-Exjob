@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import store, { AppDispatch, RootState } from "../redux/store";
+import { store, AppDispatch, RootState } from "../redux/store";
 import { Input } from "./Input";
 import { Button } from "./Button";
 import { DatePickerSingleComponent } from "./DatePickerSingleComponent";

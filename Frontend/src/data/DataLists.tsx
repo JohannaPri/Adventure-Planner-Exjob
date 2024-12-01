@@ -56,27 +56,11 @@ export const FooterTexts = {
         name: "Top Destinations",
         url: "top-destinations",
       },
-      {
-        name: "Contact",
-        url: "contact",
-      },
-      { 
-        name: "Sign In",
-        url: "/signin",
-      },
-      {
-        name: "Sign Up",
-        url: "/signup",
-      }
     ]
   },
   contacts: {
     caption: "Contacts",
     links: [
-      {
-        name: "FAQs",
-        url: "/faq"
-      },
       {
         name: "Help",
         url: "/help"

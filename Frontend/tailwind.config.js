@@ -52,10 +52,20 @@ const config = {
           '75%': { opacity: '0.75' },
           '100%': { opacity: '1' },
         },
+        'slideInRight': {
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        'slideOutLeft': {
+          '0%': { transform: 'translateX(0)', opacity: '1' },
+          '100%': { transform: 'translateX(-100%)', opacity: '0' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 0.3s ease-in-out forwards',
         'fade-in-long': 'fade-in-long .5s ease-in-out',
+        'slide-in-right': 'slideInRight 0.5s ease-out',
+        'slide-out-left': 'slideInLeft 0.5s ease-in',
       },
       boxShadow: {
         'text': '1px 1px rgba(50, 50, 70, 0.5)',  // Add the custom text shadow

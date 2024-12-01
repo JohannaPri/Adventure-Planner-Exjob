@@ -5,12 +5,15 @@ import { Button } from "../Button";
 import { HeroTexts, Countries } from "../../data/DataLists";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { opensignupmodal } from "../../redux/slices/modalSignupSlice";
 
 const HeroSection = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   console.log('IS LOGGED IN: ', isLoggedIn);
   const [randomCountry, setRandomCountry] = useState<string>('');
   const heroText = HeroTexts[0];
+
+  const dispatch = useDispatch();
 
   const getRandomCountry = () => {
   const randomIndex = Math.floor(Math.random() * Countries.length);
@@ -23,6 +26,11 @@ const HeroSection = () => {
 
     return () => clearInterval(intervalId);
   },[])
+
+  const handleSignUpModal = () => {
+    console.log("Sign-up Modal");
+    dispatch(opensignupmodal());
+  }
 
   return (
     <>
@@ -150,6 +158,9 @@ const HeroSection = () => {
           <div className="flex items-center justify-between w-full gap-0 md:justify-start lg:gap-12 md:gap-6">
             {!isLoggedIn ? (
             <Button
+            onClick={() => {
+              handleSignUpModal();
+            }}
             type="button"
             className="shadow-md px-5 py-3 text-white border-none rounded-1 outline-none lg:px-7 font-semibold bg-slateGray hover:shadow-none hover:bg-black hover:text-white hover:border-gray-950 transition-all duration-300 ease-in"
           >

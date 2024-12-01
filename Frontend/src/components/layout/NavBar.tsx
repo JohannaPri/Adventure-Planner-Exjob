@@ -11,6 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { getAuth, signOut } from 'firebase/auth';
 import { signOutUser } from '../../redux/slices/authSlice';
+import { opensignupmodal, closesignupmodal } from "../../redux/slices/modalSignupSlice";
+import { opensigninmodal, closesigninmodal } from "../../redux/slices/modalSigninSlice";
+import Signup from "../Auth/Signup";
+import Signin from "../Auth/Signin";
 
 type NavLinkItem = {
   name: string;
@@ -26,36 +30,14 @@ interface NavBarProps {
   isLoggedIn: boolean;
 }
 
-const NavLinks: NavLinkItem[] = [
-  { name: "Home", url: "home" },
-  { name: "Services", url: "services" },
-  { name: "Top Destinations", url: "top-destinations" },
-  { name: "Contact", url: "footer"}
-];
-
-const NavButtons: NavButtonItem[] = [
-  { name: "Sign Up", url: "/signup" },
-  { name: "Sign In", url: "/signin" },
-];
-
-const NavLinksLoggedIn: NavLinkItem[] = [
-  { name: "Home", url: "/" },
-  { name: "Search", url: "/search" },
-  { name: "My Destinations", url: "/my-destinations" },
-  { name: "Contact", url: "footer" },
-];
-
-const NavButtonsLoggedIn: NavButtonItem[] = [
-  { name: "My Profile", url: "/profile" },
-  { name: "Sign Out", url: "/" },
-];
-
 const NavBar: React.FC<NavBarProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = getAuth();
 
   const [open, setOpen] = useState<boolean>(false);
+
+  const [activeSection, setActiveSection] = useState<string>("");
 
   const { username, email, isLoggedIn } = useSelector((state: RootState) => state.auth);
 
@@ -69,6 +51,16 @@ const NavBar: React.FC<NavBarProps> = () => {
     }
   };
 
+  const handleSignInModal = () => {
+    console.log("Sign-in modal");
+    dispatch(opensigninmodal());
+  }
+
+  const handleSignUpModal = () => {
+    console.log("Sign-up Modal");
+    dispatch(opensignupmodal());
+  }
+
   const handleToggleMenu = () => {
     setOpen(!open);
   }
@@ -78,12 +70,39 @@ const NavBar: React.FC<NavBarProps> = () => {
     scrollToSection(item);
   }
 
+  const scrollToSectionMobile = (id: string) => {
+    setActiveSection(id);
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      handleToggleMenu();
+    }
+  };
+
   const scrollToSection = (id: string) => {
+    setActiveSection(id);
     const section = document.getElementById(id);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  const scrollToTopMobile = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    handleToggleMenu();
+  }
+
+  
 
   const [navBarColor, setNavBarColor] = useState<boolean>(false);
 
@@ -98,9 +117,6 @@ const NavBar: React.FC<NavBarProps> = () => {
     }
   }, []);
 
-  const navLinksRender = isLoggedIn ? NavLinksLoggedIn : NavLinks;
-  const navButtonsRender = isLoggedIn ? NavButtonsLoggedIn : NavButtons;
-
   const handleOnClickLink = () => {
     isLoggedIn ? navigate("/") : scrollToSection("home");
   };
@@ -114,41 +130,144 @@ const NavBar: React.FC<NavBarProps> = () => {
             navBarColor ? "bg-white" : "bg-white bg-opacity-70"
           } lg:px-24 md:px-12 px-8 flex justify-between items-center`}
         >
-          <Image
-            as="a"
-            onClick={handleOnClickLink}
-            className="h-8 md:h-10 cursor-pointer"
-            image={Logo}
-            alt="Logo"
-          />
+          {isLoggedIn ? (
+            <Image
+              as="a"
+              onClick={() => {
+                navigate("/");
+                scrollToTop(); 
+              }}
+              className="h-8 md:h-10 cursor-pointer"
+              image={Logo}
+              alt="Logo"
+            />
+          ) : (
+            <Image
+              as="a"
+              onClick={() => { 
+                scrollToSection("home");
+                scrollToTop(); 
+              }}
+              className="h-8 md:h-10 cursor-pointer"
+              image={Logo}
+              alt="Logo"
+            />
+          )}
           <div className="items-center hidden gap-20 lg:flex font-poppins font-light">
-            <ul className="flex items-center justify-center gap-8">
-              {navLinksRender.map((navlink, index) => (
-                <List className="w-full text-base" key={index}>
-                  <NavLink
-                    to={
-                      isLoggedIn
-                        ? navlink.name === "Contact"
-                          ? ""
-                          : navlink.url
-                        : ""
-                    }
-                    onClick={() => {
-                      if (isLoggedIn) {
-                        if (navlink.name === "Contact") {
-                          scrollToSection("footer");
-                        }
-                      } else {
-                        navigate(`/${navlink.url}`);
-                      }
-                    }}
-                    className="relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b"
-                  >
-                    {navlink.name}
-                  </NavLink>
-                </List>
-              ))}
-            </ul>
+            {isLoggedIn ? (
+              <>
+                <ul className="flex items-center justify-center gap-8">
+                  <li className="w-full text-base">
+                    <NavLink
+                      to="/"
+                      onClick={scrollToTop}
+                      className="relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b"
+                    >
+                      Home
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to="/search"
+                      onClick={scrollToTop}
+                      className="relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b"
+                    >
+                      Search
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to="/my-destinations"
+                      onClick={scrollToTop}
+                      className="relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b"
+                    >
+                      My Destinations
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to="footer"
+                      className="relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("footer");
+                      }}
+                    >
+                      Contact
+                    </NavLink>
+                  </li>
+                </ul>
+              </>
+            ) : (
+              <>
+                <ul className="flex items-center justify-center gap-8">
+                  <li className="w-full text-base">
+                    <NavLink
+                      to="#"
+                      className={`relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b ${
+                        activeSection === "home" ? "font-medium" : ""
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("home");
+                      }}
+                    >
+                      Home
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to="#"
+                      className={`relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b ${
+                        activeSection === "services" ? "font-medium" : ""
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("services");
+                      }}
+                    >
+                      Services
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to="#"
+                      className={`relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b ${
+                        activeSection === "top-destinations"
+                          ? "font-medium"
+                          : ""
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("top-destinations");
+                      }}
+                    >
+                      Top Destinations
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to="#"
+                      className={`relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b ${
+                        activeSection === "footer" ? "font-medium" : ""
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("footer");
+                      }}
+                    >
+                      Contact
+                    </NavLink>
+                  </li>
+                </ul>
+              </>
+            )}
             <ul className="flex items-center justify-center gap-6">
               {isLoggedIn ? (
                 <>
@@ -172,37 +291,19 @@ const NavBar: React.FC<NavBarProps> = () => {
               ) : (
                 <>
                   <button
-                    onClick={() => {
-                      navigate("/signup");
-                    }}
+                    onClick={handleSignUpModal}
                     className="w-[139px] h-[44px] before:bottom-0 border-b-2 border-transparent hover:border-gray-950 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-cloudGray before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
                   >
                     Sign Up
                   </button>
                   <button
-                    onClick={() => {
-                      navigate("/signin");
-                    }}
+                    onClick={handleSignInModal}
                     className="w-[139px] h-[44px] whitespace-nowrap border-2 border-gray-950 before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-cloudGray before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
                   >
                     Sign In
                   </button>
                 </>
               )}
-
-              {/* {
-                  navButtonsRender.map((navbutton, index) => (
-                    <List className="w-full" key={index}>
-                      <Button onClick={() => {
-                        if (navbutton.name === "Sign Out") {
-                          handleSignOut();
-                        } else {
-                          navigate(navbutton.url);
-                        }
-                      }} type="button" className={`${navbutton.name == "Sign In" ? "relative whitespace-nowrap border-2 border-gray-950 before:top-0" : "before:bottom-0 border-b-2 border-transparent hover:border-gray-950"} py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-cloudGray before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base`}>{navbutton.name}</Button>
-                    </List>
-                  ))
-                } */}
             </ul>
           </div>
           <div className="flex items-center gap-4 lg:hidden">
@@ -214,41 +315,8 @@ const NavBar: React.FC<NavBarProps> = () => {
             </div>
           </div>
         </nav>
-
-        {/* <nav className={`w-full md:h-24 h-20 ${navBarColor ? "bg-white" : "bg-white bg-opacity-70"} lg:px-24 md:px-12 px-8 flex justify-between items-center`}>
-          <Image
-            as="a"
-            onClick={() => scrollToSection("home")}
-            className="h-8 md:h-10 cursor-pointer"
-            image={Logo}
-            alt="Logo"
-          />
-          <div className="items-center hidden gap-20 lg:flex font-poppins font-light">
-            <ul className="flex items-center justify-center gap-8">
-                {
-                  NavLinksLoggedIn.map((navlink, index) => (
-                    <List className="w-full text-base" key={index}>
-                        <NavLink to={''} onClick={() => scrollToSection(navlink.url)} className="relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b">{navlink.name}</NavLink>
-                    </List>
-                  ))
-                }
-            </ul>
-            <ul className="flex items-center justify-center gap-6">
-                {
-                  NavButtonsLoggedIn.map((navbutton, index) => (
-                    <List className="w-full" key={index}>
-                      <Button onClick={() => navigate(navbutton.url)} type="button" className={`${navbutton.name == "Log Out" ? "relative whitespace-nowrap border-2 border-gray-950 before:top-0" : "before:bottom-0 border-b-2 border-transparent hover:border-gray-950"} py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-cloudGray before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base`}>{navbutton.name}</Button>
-                    </List>
-                  ))
-                }
-            </ul>
-          </div>
-          <div className="flex items-center gap-4 lg:hidden">
-            <div className="cursor-pointer hamburger text-slateGray" onClick={handleToggleMenu}>
-              <CirclesFour size={30} color="slateGray" weight="fill" /></div>
-          </div>
-        </nav> */}
       </Slide>
+
       {/* Mobile Nav */}
       <nav
         className={`font-poppins flex justify-end lg:hidden h-screen w-full bg-slateGray/90 fixed top-0 ${
@@ -277,35 +345,137 @@ const NavBar: React.FC<NavBarProps> = () => {
               </div>
             </div>
             <ul className="flex flex-col gap-3 pl-2">
-              {NavLinks.map((navlink, index) => (
-                <List className="w-full text-base" key={index}>
-                  <NavLink
-                    to={""}
-                    onClick={() => handleClickMenuItem(navlink.url)}
-                    className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
-                  >
-                    {navlink.name}
-                  </NavLink>
-                </List>
-              ))}
+              {isLoggedIn ? (
+                <>
+                  <li className="w-full text-base">
+                    <NavLink
+                      to={"/"}
+                      onClick={() => scrollToTopMobile()}
+                      className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
+                    >
+                      Home
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to={"/search"}
+                      onClick={() => scrollToTopMobile()}
+                      className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
+                    >
+                      Search
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to={"/my-destinations"}
+                      onClick={() => scrollToTopMobile()}
+                      className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
+                    >
+                      My Destinations
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to={"#"}
+                      onClick={() => scrollToSectionMobile("footer")}
+                      className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
+                    >
+                      Contact
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="w-full text-base">
+                    <NavLink
+                      to={"#"}
+                      onClick={() => scrollToSectionMobile("home")}
+                      className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
+                    >
+                      Home
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to={"#"}
+                      onClick={() => scrollToSectionMobile("services")}
+                      className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
+                    >
+                      Services
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to={"#"}
+                      onClick={() => scrollToSectionMobile("top-destinations")}
+                      className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
+                    >
+                      Top Destinations
+                    </NavLink>
+                  </li>
+
+                  <li className="w-full text-base">
+                    <NavLink
+                      to={"#"}
+                      onClick={() => scrollToSectionMobile("footer")}
+                      className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
+                    >
+                      Contact
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </section>
           <ul className="flex items-center justify-center w-full gap-4 pb-24">
-            {NavButtons.map((navbutton, index) => (
-              <List className="w-auto" key={index}>
-                <Button
-                  onClick={() => navigate(navbutton.url)}
-                  type="button"
-                  className={`${
-                    navbutton.name == "Sign In"
-                      ? "border-2 border-gray-950 before:top-0"
-                      : "before:bottom-0 border-b-2 border-transparent hover:border-gray-950"
-                  } py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-cloudGray before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base`}
+            {isLoggedIn ? (
+              <>
+                <button
+                  onClick={() => {
+                    navigate("/profile");
+                    handleToggleMenu();
+                  }}
+                  className="text-sm w-[139px] h-[44px] before:bottom-0 border-b-2 border-transparent hover:border-gray-950 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-cloudGray before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in"
                 >
-                  {navbutton.name}
-                </Button>
-              </List>
-            ))}
+                  My Profile
+                </button>
+                <button
+                  onClick={() => {
+                    handleSignOut();
+                    handleToggleMenu();
+                  }}
+                  className="text-sm w-[139px] h-[44px] whitespace-nowrap border-2 border-gray-950 before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-cloudGray before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    handleSignUpModal();
+                    handleToggleMenu();
+                  }}
+                  className="text-sm w-[139px] h-[44px] before:bottom-0 border-b-2 border-transparent hover:border-gray-950 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-cloudGray before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in"
+                >
+                  Sign Up
+                </button>
+                <button
+                  onClick={() => {
+                    handleSignInModal();
+                    handleToggleMenu();
+                  }}
+                  className="text-sm w-[139px] h-[44px] whitespace-nowrap border-2 border-gray-950 before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-cloudGray before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in"
+                >
+                  Sign In
+                </button>
+              </>
+            )}
           </ul>
         </div>
       </nav>

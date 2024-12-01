@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/firebase-config';
 import { setUser } from './redux/slices/authSlice';
@@ -20,13 +20,30 @@ import { AccordionComponent } from './components/AccordionComponent';
 import LoggedIn from './components/pages/LoggedIn';
 import ErrorPage from './components/pages/ErrorPage';
 import CookieConsent from './components/CookieConsent';
+import SignUp from './components/Auth/Signup';
+import SignIn from './components/Auth/Signin';
 
-import Login from './components/Auth/Login';
+import Login from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
+import Faq from './components/AccordionComponent';
 import Profile from './components/pages/Profile';
+import { RootState } from "./redux/store";
+import { hideToast, showToast } from "./redux/slices/toastSlice";
+import ToastComponent from "./components/ToastComponent";
 
 function App() {
   const dispatch = useDispatch();
+
+  const toast = useSelector((state: RootState) => state.toast);
+
+  // For testing only.
+  // const handleShowToast = () => {
+  //   dispatch(showToast({ message: 'Toast incoooming!', type: 'success'}));
+  // }
+
+  const handleHideToast = () => {
+    dispatch(hideToast());
+  }
 
   return (
       <div className="flex flex-col min-h-screen">
@@ -38,9 +55,6 @@ function App() {
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home />} />
-                <Route path="/signin" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/faq" element={<AccordionComponent />} />
 
                 {/* Protected Routes */}
                 <Route element={<ProtectedRoute />}>
@@ -52,6 +66,16 @@ function App() {
               </Routes>
             </main>
             <Footer />
+            <SignIn />
+            <SignUp />
+            <Faq />
+            {toast.showToast && (
+              <ToastComponent 
+                message={toast.message} 
+                type={toast.type} 
+                onClose={handleHideToast} 
+              />
+            )}
           </Router>
         </AuthProvider>
       </div>

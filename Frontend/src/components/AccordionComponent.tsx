@@ -6,13 +6,37 @@ import {
   AccordionItem,
   AccordionTitle,
 } from "keep-react";
+import { useDispatch, useSelector } from "react-redux";
+import { closefaqmodal } from "../redux/slices/modalFaqSlice";
+import { X } from "@phosphor-icons/react";
+import { useEffect } from "react";
 
 export const AccordionComponent = () => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state: any) => state.faqmodal.isOpen);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = 'auto';
+      }
+    }
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+  console.log('isOpen: ', isOpen);
+
   return (
-    <section
-      id="home"
-      className="w-full max-w-4xl mx-auto mt-28 mb-12 px-8 py-6 font-poppins text-slateGray"
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div className="fixed w-[80%] h-[90%] z-10 p-8 text-white rounded-md shadow-lg bg-cloudGray2 overflow-hidden flex flex-col">
+      <button
+        onClick={() => dispatch(closefaqmodal())}
+        className="fixed top-[35px] right-20 text-gray-600 bg-cloudGray hover:bg-gray-200 p-4 hover:text-gray-500 rounded-md"
+        >
+        <X size={20} />
+      </button>
+      <div className="overflow-y-auto flex-grow">
       <Accordion flush={true} type="single" collapsible>
         <AccordionItem value="value-1">
           <AccordionAction>
@@ -153,6 +177,10 @@ export const AccordionComponent = () => {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-    </section>
+      </div>
+    </div>
+    </div>
   );
 };
+
+export default AccordionComponent;

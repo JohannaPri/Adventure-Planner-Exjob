@@ -11,8 +11,11 @@ import {
   LinkedinLogo,
   XLogo,
 } from "@phosphor-icons/react";
+import { closefaqmodal, openfaqmodal } from "../../redux/slices/modalFaqSlice";
+import { useDispatch } from "react-redux";
 
 const Footer = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const heroText = HeroTexts[0];
 
@@ -22,6 +25,10 @@ const Footer = () => {
       section.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const openFAQ = () => {
+    dispatch(openfaqmodal());
+  }
 
   return (
     <footer id="footer" className="flex flex-col w-full bg-cloudGray">
@@ -94,6 +101,14 @@ const Footer = () => {
             {FooterTexts.contacts.caption}
           </Text>
           <ul className="flex flex-col gap-2 md:ml-11 cursor-pointer">
+            <li className="text-sm">
+              <div 
+                className="transition-all duration-300 text-slateGray hover:underline"
+                onClick={() => openFAQ()}
+                >
+                FAQs
+              </div>
+            </li>
             {FooterTexts.contacts.links.map((link, index) => (
               <List key={index} className="text-sm">
                 <div

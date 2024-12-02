@@ -12,7 +12,9 @@ Wondering how it works? Clear instructions and helpful tips are available on the
 
 ## 🌐 Live Demo
 
-**Experience Adventure Planner in action! Click the link below to explore the app and start planning your next adventure.**
+**Experience Adventure Planner in action!**
+
+**Click the link below to explore the app and start planning your next adventure.**
 
  #### https://adventure-planner-exjob.vercel.app/
 ---

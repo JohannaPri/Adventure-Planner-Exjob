@@ -183,7 +183,7 @@ Visit http://localhost:`<your_port_number>` in your browser to start using Adven
 
 ## 👩‍💻 Created By
 
-**This project was developed by Your Name. Feel free to connect with me on GitHub or LinkedIn!**
+**This project was developed by Johanna Prinz. Feel free to connect with me on GitHub or LinkedIn!**
 
 [![LinkdIn](https://img.shields.io/badge/Johanna%20Prinz-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/johanna-prinz-246b45165/)
 

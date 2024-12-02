@@ -181,7 +181,7 @@ Visit http://localhost:`<your_port_number>` in your browser to start using Adven
 
 --- 
 
-## 👩‍💻 Created by
+## 👩‍💻 Created By
 
 **This project was developed by Your Name. Feel free to connect with me on GitHub or LinkedIn!**
 

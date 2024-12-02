@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../../redux/slices/authSlice";
 import { auth } from "../../firebase/firebase-config";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,31 +8,25 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { GoogleLogo, X } from "@phosphor-icons/react";
-
-import ToastComponent from "../ToastComponent";
-
 import { closesigninmodal } from "../../redux/slices/modalSigninSlice";
-import { RootState } from "../../redux/store";
 import { showToast } from "../../redux/slices/toastSlice";
 
 const Login: React.FC = () => {
   const isOpen = useSelector((state: any) => state.signinmodal.isOpen);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  //@ts-expect-error: Unused variable warning
   const [error, setError] = useState("");
-
-  const [toastMessage, setToastMessage] = useState<string>('');
-  const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('info');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  //@ts-expect-error: Unused variable warning
   const [loading, setLoading] = useState<boolean>(false);
 
   const clearInputs = () => {
     setEmail("");
     setPassword("");
-  }
+  };
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
@@ -41,8 +34,8 @@ const Login: React.FC = () => {
       await signInWithPopup(auth, provider);
       navigate("/");
       dispatch(closesigninmodal());
-      dispatch(showToast({ message: 'Sign-in successful!', type: 'success' }));
-    } catch (err:any) {
+      dispatch(showToast({ message: "Sign-in successful!", type: "success" }));
+    } catch (err: any) {
       setError(err);
     } finally {
       setLoading(false);
@@ -56,11 +49,16 @@ const Login: React.FC = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
       dispatch(closesigninmodal());
-      dispatch(showToast({ message: 'Sign-in successful!', type: 'success' }));
+      dispatch(showToast({ message: "Sign-in successful!", type: "success" }));
     } catch (err: any) {
       clearInputs();
       setError(err.message);
-      dispatch(showToast({ message: 'Something went wrong, please try again.', type: 'error' }));
+      dispatch(
+        showToast({
+          message: "Something went wrong, please try again.",
+          type: "error",
+        })
+      );
     } finally {
       clearInputs();
       setLoading(false);
@@ -68,16 +66,16 @@ const Login: React.FC = () => {
   };
 
   if (!isOpen) return null;
-  console.log('isOpen: ', isOpen);
+  console.log("isOpen: ", isOpen);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div className="relative z-10 w-full max-w-xl p-8 text-white rounded-md shadow-lg bg-cloudGray2">
-        <button 
+        <button
           onClick={() => dispatch(closesigninmodal())}
           className="absolute top-4 right-4 text-gray-600 hover:text-gray-500"
-          >
-            <X size={20}/>
+        >
+          <X size={20} />
         </button>
         <form onSubmit={handleEmailLogin}>
           <div className="mb-4">
@@ -134,9 +132,10 @@ const Login: React.FC = () => {
         </div>
         <div className="w-full h-px mt-6 mb-6 bg-gray-500"></div>
         <div className="flex flex-col w-full text-center justify-center items-center">
-          <button 
+          <button
             onClick={handleGoogleLogin}
-            className="w-full py-3 font-bold text-gray-500 transition duration-300 rounded-md bg-gray-200 hover:bg-cloudGray flex justify-center items-center space-x-3 shadow-md shadow-gray-400 backdrop-blur-sm">
+            className="w-full py-3 font-bold text-gray-500 transition duration-300 rounded-md bg-gray-200 hover:bg-cloudGray flex justify-center items-center space-x-3 shadow-md shadow-gray-400 backdrop-blur-sm"
+          >
             <GoogleLogo size={22} className="mr-1" /> Sign In with Google
           </button>
         </div>

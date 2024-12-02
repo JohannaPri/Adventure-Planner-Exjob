@@ -88,7 +88,7 @@ export const fetchFlights = createAsyncThunk<Flight[], FetchFlightsParams>(
       console.log("API RESPONSE: ", response.data);
       console.log("Axios Response: ", response);
       console.log("API Response: ", response.data);
-      return response.data.data
+      return response.data.data;
     } catch (error) {
       const AxiosError = error as AxiosError;
       const errorMessage =

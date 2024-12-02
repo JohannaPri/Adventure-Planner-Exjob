@@ -11,7 +11,7 @@ import {
   LinkedinLogo,
   XLogo,
 } from "@phosphor-icons/react";
-import { closefaqmodal, openfaqmodal } from "../../redux/slices/modalFaqSlice";
+import { openfaqmodal } from "../../redux/slices/modalFaqSlice";
 import { useDispatch } from "react-redux";
 
 const Footer = () => {
@@ -28,7 +28,7 @@ const Footer = () => {
 
   const openFAQ = () => {
     dispatch(openfaqmodal());
-  }
+  };
 
   return (
     <footer id="footer" className="flex flex-col w-full bg-cloudGray">
@@ -102,10 +102,10 @@ const Footer = () => {
           </Text>
           <ul className="flex flex-col gap-2 md:ml-11 cursor-pointer">
             <li className="text-sm">
-              <div 
+              <div
                 className="transition-all duration-300 text-slateGray hover:underline"
                 onClick={() => openFAQ()}
-                >
+              >
                 FAQs
               </div>
             </li>

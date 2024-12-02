@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  useReducer,
-} from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState, store } from "../redux/store";
@@ -30,18 +24,14 @@ import {
   Trash,
   Path,
   Warning,
-  Info,
 } from "@phosphor-icons/react";
 import { DatePickerComponent } from "./DatePickerComponent";
-import FlightResults from "./FlightResults";
-import { toast } from 'keep-react';
-import { SelectComponent } from "./SelectComponent";
 import { ModalComponent } from "./ModalComponent";
 
 interface SuggestionsDropdownProps {
   suggestions: string[];
   onSelect: (value: string) => void;
-  position: { top: number; left: number; width: number; };
+  position: { top: number; left: number; width: number };
 }
 
 const FlightComponent = () => {
@@ -64,19 +54,21 @@ const FlightComponent = () => {
   const airportSuggestionsRef = useRef<HTMLUListElement | null>(null);
 
   const airportData = useSelector((state: RootState) => state.airport.data);
-  const airportStatus = useSelector((state: RootState) => state.airport.status);
-  const airportError = useSelector((state: RootState) => state.airport.error);
-  const flightDataStatus = useSelector((state: RootState) => state.flights.status);
-
+  const flightDataStatus = useSelector(
+    (state: RootState) => state.flights.status
+  );
+  //@ts-expect-error: Unused variable warning
   const [departureCity, setDepartureCity] = useState<string | null>(null);
+  //@ts-expect-error: Unused variable warning
   const [destinationCity, setDestinationCity] = useState<string | null>(null);
 
   const [adults, setAdults] = useState<number>(0);
   const [children, setChildren] = useState<number>(0);
   const [isPassengerListOpen, setIsPassengerListOpen] =
     useState<boolean>(false);
-
+  //@ts-expect-error: Unused variable warning  
   const [airportsLoading, setAirportsLoading] = useState<boolean>(false);
+  //@ts-expect-error: Unused variable warning
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
   const [resetDatePicker, setResetDatePicker] = useState<boolean>(false);
@@ -87,7 +79,7 @@ const FlightComponent = () => {
     description: string;
     confirmText: string;
   } | null>(null);
- 
+
   const [dropdownPosition, setDropdownPosition] = useState<{
     top: number;
     left: number;
@@ -100,12 +92,10 @@ const FlightComponent = () => {
   const incrementChildren = () => setChildren((prev) => Math.min(prev + 1, 10));
   const decrementChildren = () => setChildren((prev) => Math.max(prev - 1, 0));
 
-  const departure = useSelector((state: RootState) => state.flights.departure);
-  const destination = useSelector((state: RootState) => state.flights.destination);
   const dateFrom = useSelector((state: RootState) => state.flights.dateFrom);
   const dateTo = useSelector((state: RootState) => state.flights.dateTo);
   useSelector((state: RootState) => state.flights);
-
+  //@ts-expect-error: Unused variable warning
   const [tripType, setTripType] = useState<"round-trip" | "one-way">(
     "round-trip"
   );
@@ -170,7 +160,9 @@ const FlightComponent = () => {
 
   useEffect(() => {
     if (Array.isArray(airportData)) {
-      const suggestions = airportData.map((airport) => airport.displayname || "");
+      const suggestions = airportData.map(
+        (airport) => airport.displayname || ""
+      );
       setAirportSuggestions(suggestions);
       setShowSuggestions(true);
     } else {
@@ -211,26 +203,27 @@ const FlightComponent = () => {
       width: `${position.width}px`,
       zIndex: 5,
     };
-  
+
     return ReactDOM.createPortal(
-      <div 
+      <div
         style={dropDownStyle}
-        className="bg-white border border-gray-300 rounded-lg shadow-lg">
-          <ul className="max-h-60 overflow-y-auto" ref={airportSuggestionsRef}>
-            {suggestions.map((suggestion, index) => (
-              <li 
-                key={index}
-                className="p-2 cursor-pointer hover:bg-gray-100" 
-                onClick={() => onSelect(suggestion)}
-                >
-                {suggestion}
-              </li>
-            ))}
-          </ul>
-        </div>,
-        document.body
+        className="bg-white border border-gray-300 rounded-lg shadow-lg"
+      >
+        <ul className="max-h-60 overflow-y-auto" ref={airportSuggestionsRef}>
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              className="p-2 cursor-pointer hover:bg-gray-100"
+              onClick={() => onSelect(suggestion)}
+            >
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      </div>,
+      document.body
     );
-  }
+  };
 
   const handleInputFocus = (
     inputRef: React.RefObject<HTMLInputElement>,
@@ -263,14 +256,24 @@ const FlightComponent = () => {
 
     const missingFields = requiredFields.filter((f) => !f.field);
 
-    const openModal = (title: string, description: string, confirmText: string) => {
+    const openModal = (
+      title: string,
+      description: string,
+      confirmText: string
+    ) => {
       setModalContent({ title, description, confirmText });
       setIsModalOpen(true);
     };
 
     if (missingFields.length > 0) {
-      openModal('Oops! Your adventure needs some details!', `Missing fields: ${missingFields.map((f) => f.name).join(", ")}`, 'Okay, I got it!');
-      console.log(`Missing fields: ${missingFields.map((f) => f.name).join(", ")}`);
+      openModal(
+        "Oops! Your adventure needs some details!",
+        `Missing fields: ${missingFields.map((f) => f.name).join(", ")}`,
+        "Okay, I got it!"
+      );
+      console.log(
+        `Missing fields: ${missingFields.map((f) => f.name).join(", ")}`
+      );
       return;
     }
 
@@ -290,8 +293,11 @@ const FlightComponent = () => {
       destinationInput: localDestination,
     };
 
-    localStorage.setItem("storedFlightData", JSON.stringify(modifiedRequestParams));
-  
+    localStorage.setItem(
+      "storedFlightData",
+      JSON.stringify(modifiedRequestParams)
+    );
+
     try {
       await dispatch(fetchFlights(requestParams)).unwrap();
     } catch (error: any) {
@@ -303,9 +309,6 @@ const FlightComponent = () => {
     const storedFlightData = localStorage.getItem("storedFlightData");
     if (storedFlightData) {
       const data = JSON.parse(storedFlightData);
-      // handleDateChange(data.dateFrom, data.dateTo);
-      // dispatch(setDateFrom(data.dateFrom));
-      // dispatch(setDateTo(data.dateTo));
       setLocalDeparture(data.departureInput);
       dispatch(setDeparture(data.departure));
       dispatch(fetchAirports(data.departure));
@@ -317,7 +320,7 @@ const FlightComponent = () => {
       setHasSelectedDeparture(true);
       setHasSelectedDestination(true);
     }
-  },[]);
+  }, []);
 
   const handleResetSearch = () => {
     setLocalDeparture("");
@@ -347,18 +350,22 @@ const FlightComponent = () => {
 
     setResetDatePicker(true);
     setTimeout(() => setResetDatePicker(false), 0);
-  }
+  };
 
   const passengerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (event.target instanceof Node && passengerRef.current && !passengerRef.current.contains(event.target)) {
+      if (
+        event.target instanceof Node &&
+        passengerRef.current &&
+        !passengerRef.current.contains(event.target)
+      ) {
         setIsPassengerListOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-  
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -379,14 +386,14 @@ const FlightComponent = () => {
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideInput);
-    }
+    };
   }, []);
 
   const isLoadingData = flightDataStatus === "loading" ? true : false;
-
+  //@ts-expect-error: Unused variable warning
   const tripChoices = [
-    { value: 'round-trip', label: 'Round-Trip' },
-    { value: 'one-way-trip', label: 'One-Way-Trip'},
+    { value: "round-trip", label: "Round-Trip" },
+    { value: "one-way-trip", label: "One-Way-Trip" },
   ];
 
   const [isVisible, setIsVisible] = useState(false);
@@ -397,22 +404,42 @@ const FlightComponent = () => {
 
   return (
     <>
-      <div className={`space-y-4 relative w-full transition-all ease-in-out ${isVisible ? "animate-fade-in-long" : "opacity-0"}`}>
+      <div
+        className={`space-y-4 relative w-full transition-all ease-in-out ${
+          isVisible ? "animate-fade-in-long" : "opacity-0"
+        }`}
+      >
         <Select
           containerClass="relative"
           selectClass="focus:outline-none pl-9 border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-8 pl-4 py-1 cursor-pointer appearance-none"
         >
           <option value="round-trip">Round-Trip</option>
-          <option value="one-way-trip" disabled={true}>One-Way-Trip</option>
+          <option value="one-way-trip" disabled={true}>
+            One-Way-Trip
+          </option>
         </Select>
 
         <div className="absolute left-3 top-2 transform -translate-y-1/2 pointer-events-none">
           <Path size={20} color="slateGray" weight="regular" />
         </div>
 
-        <div id="pil" className="absolute left-64 top-2.5 transform -translate-y-1/2 pointer-events-none">
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+        <div
+          id="pil"
+          className="absolute left-64 top-2.5 transform -translate-y-1/2 pointer-events-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-4 h-4 text-slate-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            ></path>
           </svg>
         </div>
 
@@ -449,19 +476,23 @@ const FlightComponent = () => {
                 </div>
               )}
             </Input>
-            {airportSuggestions.length > 0 && dropdownPosition && activeInput === "departure" && (
-              <SuggestionsDropdown
-                suggestions={airportSuggestions}
-                onSelect={handleAirportSelect}
-                position={dropdownPosition}
-              />
-            )}
+            {airportSuggestions.length > 0 &&
+              dropdownPosition &&
+              activeInput === "departure" && (
+                <SuggestionsDropdown
+                  suggestions={airportSuggestions}
+                  onSelect={handleAirportSelect}
+                  position={dropdownPosition}
+                />
+              )}
           </div>
 
           <div className="relative">
             <Input
               ref={destinationInputRef}
-              onFocus={() => handleInputFocus(destinationInputRef, "destination")}
+              onFocus={() =>
+                handleInputFocus(destinationInputRef, "destination")
+              }
               onChange={handleDestinationChange}
               containerClass="relative"
               inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
@@ -490,17 +521,22 @@ const FlightComponent = () => {
                 </div>
               )}
             </Input>
-            {airportSuggestions.length > 0 && dropdownPosition && activeInput === "destination" && (
-              <SuggestionsDropdown
-                suggestions={airportSuggestions}
-                onSelect={handleAirportSelect}
-                position={dropdownPosition}
-              />
-            )}
+            {airportSuggestions.length > 0 &&
+              dropdownPosition &&
+              activeInput === "destination" && (
+                <SuggestionsDropdown
+                  suggestions={airportSuggestions}
+                  onSelect={handleAirportSelect}
+                  position={dropdownPosition}
+                />
+              )}
           </div>
 
           <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
-            <DatePickerComponent reset={resetDatePicker} onDateChange={handleDateChange} />
+            <DatePickerComponent
+              reset={resetDatePicker}
+              onDateChange={handleDateChange}
+            />
           </div>
           <div ref={passengerRef} className="relative">
             <Button
@@ -524,7 +560,7 @@ const FlightComponent = () => {
                     ? "opacity-100 max-h-[300px] -translate-y-0 duration-500 ease-out"
                     : "opacity-0 hidden pointer-events-none max-h-0 -translate-y-2 duration-300 ease-in"
                 }     overflow-hidden transition-all z-20`}
-                >
+              >
                 <div className="z-10 flex items-center justify-between">
                   <label className="text-sm">Adults:</label>
                   <div className="flex items-center space-x-2">
@@ -568,7 +604,7 @@ const FlightComponent = () => {
         </div>
       </div>
       <div className="flex gap-4 justify-end">
-      <Button
+        <Button
           type="button"
           className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"
           onClick={handleResetSearch}
@@ -578,7 +614,9 @@ const FlightComponent = () => {
 
         <Button
           type="button"
-          className={`mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base ${isLoadingData ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base ${
+            isLoadingData ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           onClick={handleSearch}
         >
           Search

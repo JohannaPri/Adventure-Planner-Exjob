@@ -4,15 +4,16 @@ export const HeroTexts = [
     bigText: "Let us create your adventure of a lifetime.",
     secondText1: "We ensure you have everything you need in one place,",
     secondText2: "from planning to traveling.",
-  }
+  },
 ];
 
 export const NewsLetterTexts = {
-  firstText1: "Join our adventure!", 
-  firstText2: "Subscribe for exclusive travel tips, updates, and inspiration straight to your inbox.",
+  firstText1: "Join our adventure!",
+  firstText2:
+    "Subscribe for exclusive travel tips, updates, and inspiration straight to your inbox.",
   placeholderText: "Your email",
-  buttonText: "Subscribe"
-}
+  buttonText: "Subscribe",
+};
 
 export const TopDestinationTexts = {
   cards: [
@@ -56,14 +57,14 @@ export const FooterTexts = {
         name: "Top Destinations",
         url: "top-destinations",
       },
-    ]
+    ],
   },
   contacts: {
     caption: "Contacts",
     links: [
       {
         name: "Help",
-        url: "/help"
+        url: "/help",
       },
       {
         name: "Policies",
@@ -71,9 +72,9 @@ export const FooterTexts = {
       },
       {
         name: "Terms & Conditions",
-        url: "/tos"
-      }
-    ]
+        url: "/tos",
+      },
+    ],
   },
   more: {
     caption: "More",
@@ -93,10 +94,10 @@ export const FooterTexts = {
       {
         name: "Community",
         url: "/community",
-      }
-    ]
+      },
+    ],
   },
-}
+};
 
 export const Countries: string[] = [
   "France",
@@ -133,5 +134,5 @@ export const Countries: string[] = [
   "Thailand",
   "USA",
   "Alaska",
-  "Singapore"
+  "Singapore",
 ];

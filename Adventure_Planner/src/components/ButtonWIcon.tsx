@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Suspense } from 'react';
-import * as PhosphorIcons from '@phosphor-icons/react';
+import React, { useState, useEffect, Suspense } from "react";
+import * as PhosphorIcons from "@phosphor-icons/react";
 
 type IconName = keyof typeof PhosphorIcons;
 
@@ -11,12 +11,19 @@ type ButtonProps = {
   children: string | React.ReactNode;
 } & Omit<React.ComponentProps<"button">, "children">;
 
-export const ButtonWIcon = ({ className, iconName, size, selected = false, children, ...rest }: ButtonProps) => {
+export const ButtonWIcon = ({
+  className,
+  iconName,
+  size,
+  selected = false,
+  children,
+  ...rest
+}: ButtonProps) => {
   const [Icon, setIcon] = useState<React.ElementType | null>(null);
 
   const loadIcon = async (name: IconName) => {
     try {
-      const iconModule = await import('@phosphor-icons/react');
+      const iconModule = await import("@phosphor-icons/react");
       const IconComponent = iconModule[name] as React.FC<{ size?: number }>;
       return IconComponent;
     } catch (error) {
@@ -32,7 +39,12 @@ export const ButtonWIcon = ({ className, iconName, size, selected = false, child
   }, [iconName]);
 
   return (
-    <button {...rest} className={`rounded-none flex flex-col items-center border-b-2 ${selected ? 'border-slateGray' : 'border-transparent'} ${className}`}>
+    <button
+      {...rest}
+      className={`rounded-none flex flex-col items-center border-b-2 ${
+        selected ? "border-slateGray" : "border-transparent"
+      } ${className}`}
+    >
       <Suspense fallback={<span>Loading icon...</span>}>
         {Icon && <Icon size={size} />}
       </Suspense>

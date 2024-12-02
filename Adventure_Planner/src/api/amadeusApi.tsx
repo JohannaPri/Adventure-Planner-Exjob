@@ -32,10 +32,11 @@ const AmadeusAPI: React.FC<AmadeusApiProps> = ({ endpoint, children }) => {
 
       const token = response.data.access_token;
       setAccessToken(token);
-      
     } catch (err) {
       console.error("Error fetching access token: ", err);
-      setError((err as any).response?.data?.message || "Failed to fetch access token");
+      setError(
+        (err as any).response?.data?.message || "Failed to fetch access token"
+      );
     } finally {
       setLoading(false);
     }

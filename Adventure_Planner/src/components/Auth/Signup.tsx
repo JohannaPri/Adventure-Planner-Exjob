@@ -4,12 +4,8 @@ import { signUpWithEmail } from "../../firebase/auth";
 import { GoogleLogo, X } from "@phosphor-icons/react";
 import { auth } from "../../firebase/firebase-config";
 import { useNavigate } from "react-router-dom";
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-import ToastComponent from "../ToastComponent";
 import { showToast } from "../../redux/slices/toastSlice";
 
 import { closesignupmodal } from "../../redux/slices/modalSignupSlice";
@@ -19,8 +15,11 @@ const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  //@ts-expect-error: Unused variable warning
   const [error, setError] = useState("");
+  //@ts-expect-error: Unused variable warning
   const [loading, setLoading] = useState<boolean>(false);
+  //@ts-expect-error: Unused variable warning
   const [passwordMatchError, setPasswordMatchError] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -30,7 +29,7 @@ const Signup: React.FC = () => {
     setEmail("");
     setPassword("");
     setConfirmPassword("");
-  }
+  };
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
@@ -39,8 +38,8 @@ const Signup: React.FC = () => {
       await signInWithPopup(auth, provider);
       navigate("/");
       dispatch(closesignupmodal());
-      dispatch(showToast({ message: 'Sign-in successful!', type: 'success' }));
-    } catch (err:any) {
+      dispatch(showToast({ message: "Sign-in successful!", type: "success" }));
+    } catch (err: any) {
       setError(err);
     } finally {
       setLoading(false);
@@ -55,7 +54,12 @@ const Signup: React.FC = () => {
       setPasswordMatchError(true);
       setPassword("");
       setConfirmPassword("");
-      dispatch(showToast({ message: 'Passwords don’t match! Please try again.', type: 'error' }));
+      dispatch(
+        showToast({
+          message: "Passwords don’t match! Please try again.",
+          type: "error",
+        })
+      );
       console.error("Passwords does not match!");
       return;
     }
@@ -66,15 +70,18 @@ const Signup: React.FC = () => {
       navigate("/");
       dispatch(closesignupmodal());
       clearInputs();
-      dispatch(showToast({ message: 'Sign-up successful!', type: 'success' }));
-      
+      dispatch(showToast({ message: "Sign-up successful!", type: "success" }));
     } catch (error) {
       clearInputs();
-      dispatch(showToast({ message: 'Something went wrong, please try again.', type: 'error' }));
+      dispatch(
+        showToast({
+          message: "Something went wrong, please try again.",
+          type: "error",
+        })
+      );
     }
     setPasswordMatchError(false);
   };
-
 
   if (!isOpen) return null;
 
@@ -84,7 +91,7 @@ const Signup: React.FC = () => {
         <button
           onClick={() => dispatch(closesignupmodal())}
           className="absolute top-4 right-4 text-gray-600 hover:text-gray-500"
-          >
+        >
           <X size={20} />
         </button>
         <form onSubmit={handleSignup}>

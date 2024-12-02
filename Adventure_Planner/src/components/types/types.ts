@@ -80,22 +80,22 @@ export interface Weather {
     main: string;
     description: string;
     icon: string;
-  }
+  };
 
   main: {
     temp: number;
     humidity: number;
-  }
+  };
 
   sys: {
     country: string;
-  }
+  };
 
   wind: {
     speed: number;
     deg: number;
     gust: number;
-  }
+  };
 }
 
 export interface Airport {

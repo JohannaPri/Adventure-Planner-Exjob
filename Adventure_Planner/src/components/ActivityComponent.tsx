@@ -5,46 +5,60 @@ import { store, AppDispatch, RootState } from "../redux/store";
 import { Input } from "./Input";
 import { Button } from "./Button";
 import { DatePickerSingleComponent } from "./DatePickerSingleComponent";
-import { UserList, City, Mountains, Info, Trash, Warning } from "@phosphor-icons/react";
+import {
+  UserList,
+  City,
+  Mountains,
+  Trash,
+  Warning,
+} from "@phosphor-icons/react";
 import { fetchCities } from "../redux/slices/citySlice";
 import { setCity } from "../redux/slices/citySlice";
-import { CityQuery } from '../redux/slices/citySlice';
+import { CityQuery } from "../redux/slices/citySlice";
 import { debounce } from "lodash";
 
 import { fetchActivites } from "../redux/slices/activitySlice";
-import { setDestination, setDate, setAdults, setChildren, clearDestination, resetActivites } from "../redux/slices/activitySlice";
-import { ActivityQuery } from '../redux/slices/activitySlice';
+import {
+  setDestination,
+  setDate,
+  setAdults,
+  setChildren,
+  clearDestination,
+  resetActivites,
+} from "../redux/slices/activitySlice";
 import { ModalComponent } from "./ModalComponent";
 
 interface SuggestionsDropdownProps {
   suggestions: string[];
   onSelect: (value: string) => void;
-  position: { top: number; left: number; width: number; };
+  position: { top: number; left: number; width: number };
 }
 
 const ActivityComponent: React.FC = () => {
-  const { data: activityData, status, error } = useSelector(
+  const { data: activityData, status } = useSelector(
     (state: RootState) => state.activity
   );
 
-  console.log('ActivityData: ', activityData);
+  console.log("ActivityData: ", activityData);
 
   const dispatch = useDispatch<AppDispatch>();
 
   const [adultsLocal, setAdultsLocal] = useState<number>(0);
   const [childrenLocal, setChildrenLocal] = useState<number>(0);
-  const [isPassengerListOpen, setIsPassengerListOpen] = useState<boolean>(false);
+  const [isPassengerListOpen, setIsPassengerListOpen] =
+    useState<boolean>(false);
 
   const cityInputRef = useRef<HTMLInputElement | null>(null);
 
   const [citySuggestions, setCitySuggestions] = useState<string[]>([]);
-  const [cityLoading, setCityLoading] = useState<boolean>(false);
+  //@ts-expect-error: Unused variable warning
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
   const [resetDatePicker, setResetDatePicker] = useState<boolean>(false);
 
-  const [hasSelectedDestination, setHasSelectedDestination] = useState<boolean>(false);
-  
+  const [hasSelectedDestination, setHasSelectedDestination] =
+    useState<boolean>(false);
+
   const citySuggestionsRef = useRef<HTMLUListElement | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -57,30 +71,29 @@ const ActivityComponent: React.FC = () => {
   const incrementAdults = () => {
     setAdultsLocal((prev) => Math.min(prev + 1, 10));
     dispatch(setAdults(adultsLocal + 1));
-  }
+  };
   const decrementAdults = () => {
     setAdultsLocal((prev) => Math.max(prev - 1, 0));
     dispatch(setAdults(adultsLocal - 1));
-  }
+  };
 
   const incrementChildren = () => {
     setChildrenLocal((prev) => Math.min(prev + 1, 10));
     dispatch(setChildren(childrenLocal + 1));
-  }
+  };
 
   const decrementChildren = () => {
     setChildrenLocal((prev) => Math.max(prev - 1, 0));
     dispatch(setChildren(childrenLocal - 1));
-  }
+  };
 
   const togglePassengerSelector = () => setIsPassengerListOpen((prev) => !prev);
 
   const [selectedCityName, setSelectedCityName] = useState<string>("");
+  //@ts-expect-error: Unused variable warning
   const [citiesLoading, setCitiesLoading] = useState<boolean>(false);
 
   const cityData = useSelector((state: RootState) => state.city.data);
-  const cityStatus = useSelector((state: RootState) => state.city.status);
-  const cityError = useSelector((state: RootState) => state.city.error);
   const [activeInput, setActiveInput] = useState<"destination" | null>(null);
 
   const [dropdownPosition, setDropdownPosition] = useState<{
@@ -110,15 +123,15 @@ const ActivityComponent: React.FC = () => {
 
     if (matchedCity) {
       if (activeInput === "destination") {
-        setSelectedCityName(cityName)
+        setSelectedCityName(cityName);
         setHasSelectedDestination(true);
-        console.log('City Name: ', matchedCity.city);
+        console.log("City Name: ", matchedCity.city);
         dispatch(setCity(matchedCity.city));
       }
     }
-      setCitySuggestions([]);
-      setDropdownPosition(null);
-  }
+    setCitySuggestions([]);
+    setDropdownPosition(null);
+  };
 
   const handleDestinationChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -135,7 +148,7 @@ const ActivityComponent: React.FC = () => {
       if (input) {
         setCitiesLoading(true);
         const cityQuery: CityQuery = {
-          destination: input
+          destination: input,
         };
         await dispatch(fetchCities(cityQuery));
         dispatch(setCity(input));
@@ -176,7 +189,7 @@ const ActivityComponent: React.FC = () => {
     startDate: new Date(),
     endDate: null,
   });
-
+  //@ts-expect-error: Unused variable warning
   const handleChange = (newValue: DateRange | null) => {
     if (newValue) {
       setValue(newValue);
@@ -194,12 +207,16 @@ const ActivityComponent: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (event.target instanceof Node && passengerRef.current && !passengerRef.current.contains(event.target)) {
+      if (
+        event.target instanceof Node &&
+        passengerRef.current &&
+        !passengerRef.current.contains(event.target)
+      ) {
         setIsPassengerListOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-  
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -216,7 +233,7 @@ const ActivityComponent: React.FC = () => {
       }
     };
     document.addEventListener("mousedown", handleClickOutsideInput);
-  
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideInput);
     };
@@ -269,7 +286,7 @@ const ActivityComponent: React.FC = () => {
     const adults = state.activity.adults ?? 0;
     const children = state.activity.children ?? 0;
 
-    console.log('destination: ', destination);
+    console.log("destination: ", destination);
 
     const requiredFields = [
       { field: destination, name: "City" },
@@ -279,14 +296,24 @@ const ActivityComponent: React.FC = () => {
 
     const missingFields = requiredFields.filter((f) => !f.field);
 
-    const openModal = (title: string, description: string, confirmText: string) => {
+    const openModal = (
+      title: string,
+      description: string,
+      confirmText: string
+    ) => {
       setModalContent({ title, description, confirmText });
       setIsModalOpen(true);
     };
 
     if (missingFields.length > 0) {
-      openModal('Oops! Your adventure needs some details!', `Missing fields: ${missingFields.map((f) => f.name).join(", ")}`, 'Okay, I got it!');
-      console.log(`Missing fields: ${missingFields.map((f) => f.name).join(", ")}`);
+      openModal(
+        "Oops! Your adventure needs some details!",
+        `Missing fields: ${missingFields.map((f) => f.name).join(", ")}`,
+        "Okay, I got it!"
+      );
+      console.log(
+        `Missing fields: ${missingFields.map((f) => f.name).join(", ")}`
+      );
       return;
     }
 
@@ -302,7 +329,10 @@ const ActivityComponent: React.FC = () => {
       destinationInput: selectedCityName,
     };
 
-    localStorage.setItem("storedActivityData", JSON.stringify(modifiedRequestParams));
+    localStorage.setItem(
+      "storedActivityData",
+      JSON.stringify(modifiedRequestParams)
+    );
 
     try {
       await dispatch(fetchActivites(requestParams)).unwrap();
@@ -318,7 +348,7 @@ const ActivityComponent: React.FC = () => {
       setSelectedCityName(data.destinationInput);
       setAdultsLocal(data.adults);
       setChildrenLocal(data.children);
-      
+
       dispatch(setCity(data.destination));
       dispatch(setDestination(data.destination));
       dispatch(setAdults(data.adults));
@@ -326,7 +356,7 @@ const ActivityComponent: React.FC = () => {
 
       setHasSelectedDestination(true);
     }
-  },[]);
+  }, []);
 
   const handleResetSearch = () => {
     setAdultsLocal(0);
@@ -343,19 +373,18 @@ const ActivityComponent: React.FC = () => {
     dispatch(setDestination(""));
     dispatch(setAdults(0));
     dispatch(setChildren(0));
-    
+
     localStorage.removeItem("storedActivityData");
 
     setIsPassengerListOpen(false);
     setCitySuggestions([]);
-
 
     if (cityInputRef.current) cityInputRef.current.focus();
 
     setResetDatePicker(true);
     setTimeout(() => setResetDatePicker(false), 0);
     setHasSelectedDestination(false);
-  }
+  };
 
   const isLoadingData = status === "loading" ? true : false;
 
@@ -367,7 +396,11 @@ const ActivityComponent: React.FC = () => {
 
   return (
     <>
-      <div className={`space-y-4 relative w-full transition-all ease-in-out ${isVisible ? "animate-fade-in-long" : "opacity-0"}`}>
+      <div
+        className={`space-y-4 relative w-full transition-all ease-in-out ${
+          isVisible ? "animate-fade-in-long" : "opacity-0"
+        }`}
+      >
         <div className="flex flex-col gap-4 md:flex-row md:gap-4">
           <div className="relative">
             <Input
@@ -379,28 +412,32 @@ const ActivityComponent: React.FC = () => {
               onChange={handleDestinationChange}
               value={selectedCityName}
               onFocus={() => handleInputFocus(cityInputRef, "destination")}
-              onClick={() => {setCitySuggestions([])}}
+              onClick={() => {
+                setCitySuggestions([]);
+              }}
             >
               <div className="absolute text-white top-3.5 left-3">
                 <City size={20} color="slateGray" weight="regular" />
               </div>
               {hasSelectedDestination && selectedCityName && (
-                  <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] justify-between overflow-hidden">
-                    <span className="overflow-hidden text-slateGray text-ellipsis whitespace-nowrap">
-                      {selectedCityName.length > 20
-                        ? `${selectedCityName.slice(0, 25)}...`
-                        : selectedCityName}
-                    </span>
-                    <button
-                      onClick={handleClearCity}
-                      className="text-sm cursor-pointer text-slateGray"
-                    >
-                      &times;
-                    </button>
-                  </div>
-                )}
+                <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] justify-between overflow-hidden">
+                  <span className="overflow-hidden text-slateGray text-ellipsis whitespace-nowrap">
+                    {selectedCityName.length > 20
+                      ? `${selectedCityName.slice(0, 25)}...`
+                      : selectedCityName}
+                  </span>
+                  <button
+                    onClick={handleClearCity}
+                    className="text-sm cursor-pointer text-slateGray"
+                  >
+                    &times;
+                  </button>
+                </div>
+              )}
             </Input>
-            {citySuggestions.length > 0 && dropdownPosition && activeInput === "destination" && (
+            {citySuggestions.length > 0 &&
+              dropdownPosition &&
+              activeInput === "destination" && (
                 <SuggestionsDropdown
                   suggestions={citySuggestions}
                   onSelect={handleCitySelect}
@@ -422,7 +459,10 @@ const ActivityComponent: React.FC = () => {
             </Input>
           </div>
           <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
-          <DatePickerSingleComponent reset={resetDatePicker} onDateChange={handleDateChange} />
+            <DatePickerSingleComponent
+              reset={resetDatePicker}
+              onDateChange={handleDateChange}
+            />
           </div>
           <div ref={passengerRef} className="relative">
             <Button
@@ -456,7 +496,9 @@ const ActivityComponent: React.FC = () => {
                     >
                       -
                     </button>
-                    <span className="w-5 text-sm text-center">{adultsLocal}</span>
+                    <span className="w-5 text-sm text-center">
+                      {adultsLocal}
+                    </span>
                     <button
                       onClick={incrementAdults}
                       className="flex items-center justify-center w-8 h-8 transition rounded-full cursor-pointer bg-cloudGray text-slateGray hover:bg-cloudGray2 hover:text-black"
@@ -474,7 +516,9 @@ const ActivityComponent: React.FC = () => {
                     >
                       -
                     </button>
-                    <span className="w-5 text-sm text-center">{childrenLocal}</span>
+                    <span className="w-5 text-sm text-center">
+                      {childrenLocal}
+                    </span>
 
                     <button
                       onClick={incrementChildren}
@@ -500,7 +544,9 @@ const ActivityComponent: React.FC = () => {
         </Button>
         <Button
           type="button"
-          className={`mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base ${isLoadingData ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base ${
+            isLoadingData ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           onClick={handleSearch}
         >
           Search

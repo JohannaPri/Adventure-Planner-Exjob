@@ -3,28 +3,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Slide } from "react-awesome-reveal";
 import Logo from "../../assets/logo/logo.svg";
 import { Image } from "../Image";
-import { Button } from "../Button";
-//import { NavButtons, NavButtonsLoggedIn, NavLinks, NavLinksLoggedIn, NavLoggedIn } from "../../data/DataLists";
-import { List } from "../List";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { getAuth, signOut } from 'firebase/auth';
-import { signOutUser } from '../../redux/slices/authSlice';
-import { opensignupmodal, closesignupmodal } from "../../redux/slices/modalSignupSlice";
-import { opensigninmodal, closesigninmodal } from "../../redux/slices/modalSigninSlice";
-import Signup from "../Auth/Signup";
-import Signin from "../Auth/Signin";
-
-type NavLinkItem = {
-  name: string;
-  url: string;
-}
-
-type NavButtonItem = {
-  name: string;
-  url: string;
-}
+import { getAuth, signOut } from "firebase/auth";
+import { signOutUser } from "../../redux/slices/authSlice";
+import { opensignupmodal } from "../../redux/slices/modalSignupSlice";
+import { opensigninmodal } from "../../redux/slices/modalSigninSlice";
 
 interface NavBarProps {
   isLoggedIn: boolean;
@@ -39,7 +24,7 @@ const NavBar: React.FC<NavBarProps> = () => {
 
   const [activeSection, setActiveSection] = useState<string>("");
 
-  const { username, email, isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   const handleSignOut = async () => {
     try {
@@ -54,21 +39,16 @@ const NavBar: React.FC<NavBarProps> = () => {
   const handleSignInModal = () => {
     console.log("Sign-in modal");
     dispatch(opensigninmodal());
-  }
+  };
 
   const handleSignUpModal = () => {
     console.log("Sign-up Modal");
     dispatch(opensignupmodal());
-  }
+  };
 
   const handleToggleMenu = () => {
     setOpen(!open);
-  }
-
-  const handleClickMenuItem = (item: string) => {
-    handleToggleMenu();
-    scrollToSection(item);
-  }
+  };
 
   const scrollToSectionMobile = (id: string) => {
     setActiveSection(id);
@@ -92,7 +72,7 @@ const NavBar: React.FC<NavBarProps> = () => {
       top: 0,
       behavior: "smooth",
     });
-  }
+  };
 
   const scrollToTopMobile = () => {
     window.scrollTo({
@@ -100,27 +80,20 @@ const NavBar: React.FC<NavBarProps> = () => {
       behavior: "smooth",
     });
     handleToggleMenu();
-  }
-
-  
+  };
 
   const [navBarColor, setNavBarColor] = useState<boolean>(false);
 
   const listenScrollEvent = () => {
     window.scrollY < 10 ? setNavBarColor(false) : setNavBarColor(true);
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", listenScrollEvent);
     return () => {
       window.removeEventListener("scroll", listenScrollEvent);
-    }
+    };
   }, []);
-
-  const handleOnClickLink = () => {
-    isLoggedIn ? navigate("/") : scrollToSection("home");
-  };
-
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full h-auto overflow-x-hidden bg-transparent">
@@ -135,7 +108,7 @@ const NavBar: React.FC<NavBarProps> = () => {
               as="a"
               onClick={() => {
                 navigate("/");
-                scrollToTop(); 
+                scrollToTop();
               }}
               className="h-8 md:h-10 cursor-pointer"
               image={Logo}
@@ -144,9 +117,9 @@ const NavBar: React.FC<NavBarProps> = () => {
           ) : (
             <Image
               as="a"
-              onClick={() => { 
+              onClick={() => {
                 scrollToSection("home");
-                scrollToTop(); 
+                scrollToTop();
               }}
               className="h-8 md:h-10 cursor-pointer"
               image={Logo}

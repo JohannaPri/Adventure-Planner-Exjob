@@ -14,8 +14,7 @@ Wondering how it works? Clear instructions and helpful tips are available on the
 
 **Experience Adventure Planner in action! Click the link below to explore the app and start planning your next adventure.**
 
-#### adventure-planner-exjob.vercel.app
-
+ #### https://adventure-planner-exjob.vercel.app/
 ---
 
 ## 📝 About the Project

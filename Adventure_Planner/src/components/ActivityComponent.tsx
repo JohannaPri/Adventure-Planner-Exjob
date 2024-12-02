@@ -317,7 +317,7 @@ const ActivityComponent: React.FC = () => {
       const data = JSON.parse(storedActivityData);
       setSelectedCityName(data.destinationInput);
       setAdultsLocal(data.adults);
-      setChildren(data.children);
+      setChildrenLocal(data.children);
       
       dispatch(setCity(data.destination));
       dispatch(setDestination(data.destination));

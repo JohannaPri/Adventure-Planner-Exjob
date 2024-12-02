@@ -73,7 +73,7 @@ const ActivityResult: React.FC = () => {
         </div>
   
         <div className="ml-12 flex flex-col items-center justify-center col-span-4 space-y-4">
-          <p className="text-lg font-bold text-black text-center">€{activity.price}</p>    
+          <p className="text-lg font-bold text-black text-center">€{activity.price}</p>
           <button className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black">
             Save
           </button>

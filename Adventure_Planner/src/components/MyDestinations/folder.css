@@ -1,0 +1,9 @@
+#folder {
+  transition: filter 0.3s ease 0.1s, opacity 0.3s ease;
+}
+
+#folder:hover {
+  filter: drop-shadow(0 0 2em #fed7aa);
+  opacity: 0.8;
+  cursor: pointer;
+}

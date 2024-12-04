@@ -23,6 +23,7 @@ import Profile from "./components/pages/Profile";
 import { RootState } from "./redux/store";
 import { hideToast } from "./redux/slices/toastSlice";
 import ToastComponent from "./components/ToastComponent";
+import MyDestinations from "./components/MyDestinations/MyDestinations";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/search" element={<LoggedIn />} />
+                <Route path="/my-destinations" element={<MyDestinations />} />
               </Route>
 
               <Route path="*" element={<ErrorPage />} />

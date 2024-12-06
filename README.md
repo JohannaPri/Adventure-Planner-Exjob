@@ -232,6 +232,18 @@ Visit http://localhost:`<your_port_number>` in your browser to start using Adven
 
 ![My Profile](assets/flight_search.png)
 
+**Search flights for your next adventure!**
+
+![My Profile](assets/flight_search.png)
+
+**Search flights for your next adventure!**
+
+![My Profile](assets/flight_search.png)
+
+**Search flights for your next adventure!**
+
+![My Profile](assets/flight_search.png)
+
 
 #### These images showcase the app's functionality and design. Enjoy exploring!
 

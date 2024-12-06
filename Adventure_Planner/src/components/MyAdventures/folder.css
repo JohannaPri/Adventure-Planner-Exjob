@@ -3,7 +3,7 @@
 }
 
 #folder:hover {
-  filter: drop-shadow(0 0 2em #fed7aa);
+  filter: drop-shadow(0 0 1.5em #fed7aa);
   opacity: 0.8;
   cursor: pointer;
 }

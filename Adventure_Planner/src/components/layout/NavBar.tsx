@@ -152,11 +152,11 @@ const NavBar: React.FC<NavBarProps> = () => {
 
                   <li className="w-full text-base">
                     <NavLink
-                      to="/my-destinations"
+                      to="/my-adventures"
                       onClick={scrollToTop}
                       className="relative inline-block overflow-hidden mt-2 whitespace-nowrap ml-4 hover:border-b-gray-950 hover:border-b"
                     >
-                      My Destinations
+                      My Adventures
                     </NavLink>
                   </li>
 

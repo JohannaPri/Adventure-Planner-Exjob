@@ -23,7 +23,8 @@ import Profile from "./components/pages/Profile";
 import { RootState } from "./redux/store";
 import { hideToast } from "./redux/slices/toastSlice";
 import ToastComponent from "./components/ToastComponent";
-import MyDestinations from "./components/MyDestinations/MyDestinations";
+import MyAdventures from "./components/MyAdventures/MyAdventures";
+import AdventureDetails from "./components/MyAdventures/AdventureDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen w-auto">
       <AuthProvider>
         <CookieConsent />
         <Router>
@@ -49,7 +50,8 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/search" element={<LoggedIn />} />
-                <Route path="/my-destinations" element={<MyDestinations />} />
+                <Route path="/my-adventures" element={<MyAdventures />} />
+                <Route path="my-adventures/:id" element={<AdventureDetails />} />
               </Route>
 
               <Route path="*" element={<ErrorPage />} />

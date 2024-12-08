@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import type { Config } from 'tailwindcss'
+// @ts-ignore
 import { keepTheme, colors } from "keep-react/keepTheme";
 
 const colorsPalette = {

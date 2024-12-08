@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import type { Config } from 'tailwindcss'
 import { keepTheme, colors } from "keep-react/keepTheme";
 
 const colorsPalette = {
@@ -13,7 +14,7 @@ const colorsPalette = {
   }
 }
 
-const config = {
+const config: Config = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
@@ -68,7 +69,7 @@ const config = {
         'slide-out-left': 'slideInLeft 0.5s ease-in',
       },
       boxShadow: {
-        'text': '1px 1px rgba(50, 50, 70, 0.5)',  // Add the custom text shadow
+        'text': '1px 1px rgba(50, 50, 70, 0.5)', 
       }
     },
   },
@@ -76,7 +77,7 @@ const config = {
     function ({ addUtilities }) {
       addUtilities({
         '.text-shadow': {
-          textShadow: '1px 1px rgba(50, 50, 70, 0.5)', // Custom utility class
+          textShadow: '1px 1px rgba(50, 50, 70, 0.5)', 
         }
       }, ['responsive', 'hover']);
     }

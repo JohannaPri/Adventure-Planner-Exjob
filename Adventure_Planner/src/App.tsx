@@ -25,6 +25,7 @@ import { hideToast } from "./redux/slices/toastSlice";
 import ToastComponent from "./components/ToastComponent";
 import MyAdventures from "./components/MyAdventures/MyAdventures";
 import AdventureDetails from "./components/MyAdventures/AdventureDetails";
+import SubFolderDetails from "./components/MyAdventures/SubFolder/SubFolderDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-auto">
+    <div className="flex flex-col w-auto min-h-screen">
       <AuthProvider>
         <CookieConsent />
         <Router>
@@ -52,6 +53,7 @@ function App() {
                 <Route path="/search" element={<LoggedIn />} />
                 <Route path="/my-adventures" element={<MyAdventures />} />
                 <Route path="my-adventures/:id" element={<AdventureDetails />} />
+                <Route path="/my-adventures/:parentFolderId/subfolder/:subFolderId" element={<SubFolderDetails />} />
               </Route>
 
               <Route path="*" element={<ErrorPage />} />

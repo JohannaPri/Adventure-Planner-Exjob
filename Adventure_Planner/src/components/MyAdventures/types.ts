@@ -3,6 +3,7 @@ export interface Folder {
   title: string;
   description?: string;
   creationDate: string;
+  createdAt: any;
 }
 
 export interface SubFolder {

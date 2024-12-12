@@ -1,9 +1,8 @@
 import { getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { MapPin } from "@phosphor-icons/react"; // Import Phosphor Icon for the marker
+import { MapPinSimple } from "@phosphor-icons/react"; 
 import FavIconProfilePic from "../../assets/favicon/favicon.svg";
-// Import your map image here
-import ProfileMap from "../../assets/profile/profile-map.png"; // Lägg till din bilds sökväg här
+import ProfileMap from "../../assets/profile/profile-map.png"; 
 
 const Profile: React.FC = () => {
   const [aboutMe, setAboutMe] = useState<string>("");
@@ -54,22 +53,17 @@ const Profile: React.FC = () => {
     const lat = ((e.clientY - rect.top) / mapContainer.offsetHeight) * 100;
     const lng = ((e.clientX - rect.left) / mapContainer.offsetWidth) * 100;
 
-    // Toleransvärde för att avgöra när ett markeringsområde är tillräckligt nära för att tas bort
-    const tolerance = 2; 
-
-    // Hitta om det redan finns en markör nära den plats där användaren klickade
+    const tolerance = 1; 
     const existingMarkerIndex = markers.findIndex(
       (marker) =>
         Math.abs(marker.lat - lat) < tolerance && Math.abs(marker.lng - lng) < tolerance
     );
 
     if (existingMarkerIndex !== -1) {
-      // Om en marker finns inom toleransområdet, ta bort den
       const updatedMarkers = markers.filter((_, index) => index !== existingMarkerIndex);
       setMarkers(updatedMarkers);
       saveMarkers(updatedMarkers);
     } else {
-      // Om ingen marker finns, lägg till en ny
       const updatedMarkers = [...markers, { lat, lng }];
       setMarkers(updatedMarkers);
       saveMarkers(updatedMarkers);
@@ -149,18 +143,18 @@ const Profile: React.FC = () => {
               className="cursor-pointer flex-grow h-[350px] border-2 border-slate-600 rounded-lg relative"
               onClick={handleMapClick}
               style={{
-                backgroundImage: `url(${ProfileMap})`, // Use the imported image here
+                backgroundImage: `url(${ProfileMap})`, 
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                boxShadow: "inset 0 0 10px rgba(0, 0, 0, 0.2)", // Add subtle shadow to map
+                boxShadow: "inset 0 0 10px rgba(0, 0, 0, 0.2)",
               }}
             >
               {markers.map((marker, index) => (
-                <MapPin
+                <MapPinSimple
                   key={index}
                   size={24}
-                  color="#FEBF77" // Using darker teal for better contrast
+                  color="#FEBF77"
                   weight="fill"
                   style={{
                     position: "absolute",

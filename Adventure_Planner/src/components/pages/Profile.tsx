@@ -1,29 +1,40 @@
 import { getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { MapPin } from "@phosphor-icons/react"; // Import Phosphor Icon for the marker
-import favIconProfilePic from "../../assets/favicon/favicon.svg";
+import FavIconProfilePic from "../../assets/favicon/favicon.svg";
+// Import your map image here
+import ProfileMap from "../../assets/profile/profile-map.png"; // Lägg till din bilds sökväg här
 
 const Profile: React.FC = () => {
-  const [userId, setUserId] = useState<string | null>(null);
-  const [aboutMe, setAboutMe] = useState<string>(""); // State for 'About Me' text
-  const [adventures, setAdventures] = useState<string[]>([]); // Placeholder for adventures list
-  const [markers, setMarkers] = useState<{ lat: number; lng: number }[]>([]); // State for marker positions
+  const [aboutMe, setAboutMe] = useState<string>("");
+  const [adventures, setAdventures] = useState<string[]>([]);
+  const [markers, setMarkers] = useState<{ lat: number; lng: number }[]>([]);
 
   const auth = getAuth();
   const user = auth.currentUser;
 
   useEffect(() => {
     if (user) {
-      setUserId(userId);
-
-      // Get "About Me" from localStorage when the user logs in
       const savedAboutMe = localStorage.getItem(`aboutMe-${user.uid}`);
+      const savedMarkers = localStorage.getItem(`markers-${user.uid}`);
+
       if (savedAboutMe) {
-        setAboutMe(savedAboutMe); // Set the text if saved in localStorage
+        setAboutMe(savedAboutMe);
       }
 
-      // Example adventure data (replace with actual data later)
-      setAdventures(["Adventure 1", "Adventure 2", "Adventure 3"]);
+      if (savedMarkers) {
+        setMarkers(JSON.parse(savedMarkers));
+      }
+
+      setAdventures([
+        "Adventure 1",
+        "Adventure 2",
+        "Adventure 3",
+        "Adventure 4",
+        "Adventure 5",
+        "Adventure 6",
+        "Adventure 7",
+      ]);
     }
   }, [user]);
 
@@ -33,19 +44,42 @@ const Profile: React.FC = () => {
 
   const handleBlur = () => {
     if (user) {
-      // Save "About Me" in localStorage when the user clicks out of the box
       localStorage.setItem(`aboutMe-${user.uid}`, aboutMe);
     }
   };
 
-  // Handle click on the map to add a marker
   const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const mapContainer = e.currentTarget;
     const rect = mapContainer.getBoundingClientRect();
-    const lat = ((e.clientY - rect.top) / mapContainer.offsetHeight) * 100; // Calculate relative latitude
-    const lng = ((e.clientX - rect.left) / mapContainer.offsetWidth) * 100; // Calculate relative longitude
+    const lat = ((e.clientY - rect.top) / mapContainer.offsetHeight) * 100;
+    const lng = ((e.clientX - rect.left) / mapContainer.offsetWidth) * 100;
 
-    setMarkers((prevMarkers) => [...prevMarkers, { lat, lng }]);
+    // Toleransvärde för att avgöra när ett markeringsområde är tillräckligt nära för att tas bort
+    const tolerance = 2; 
+
+    // Hitta om det redan finns en markör nära den plats där användaren klickade
+    const existingMarkerIndex = markers.findIndex(
+      (marker) =>
+        Math.abs(marker.lat - lat) < tolerance && Math.abs(marker.lng - lng) < tolerance
+    );
+
+    if (existingMarkerIndex !== -1) {
+      // Om en marker finns inom toleransområdet, ta bort den
+      const updatedMarkers = markers.filter((_, index) => index !== existingMarkerIndex);
+      setMarkers(updatedMarkers);
+      saveMarkers(updatedMarkers);
+    } else {
+      // Om ingen marker finns, lägg till en ny
+      const updatedMarkers = [...markers, { lat, lng }];
+      setMarkers(updatedMarkers);
+      saveMarkers(updatedMarkers);
+    }
+  };
+
+  const saveMarkers = (newMarkers: { lat: number; lng: number }[]) => {
+    if (user) {
+      localStorage.setItem(`markers-${user.uid}`, JSON.stringify(newMarkers));
+    }
   };
 
   if (!user) {
@@ -54,22 +88,22 @@ const Profile: React.FC = () => {
 
   return (
     <div className="mt-24 mb-12 mx-12">
-      <div className="flex flex-col md:flex-row justify-between gap-6 p-4">
-        {/* Left profile box with smaller shadow */}
-        <div className="flex flex-col items-center p-6 w-full md:w-1/4 bg-white border-2 border-slate-500 rounded-lg shadow-xl h-[450px]">
+      <div className="flex flex-col md:flex-row justify-between gap-4 p-4">
+        {/* Left profile box */}
+        <div className="flex flex-col items-center p-4 w-full md:w-1/4 bg-white border-2 border-slate-500 rounded-lg shadow-xl">
           <img
-            className="border-2 border-white rounded-full w-28 h-28 p-4 flex justify-center items-center ring-slateGray ring-2 bg-cloudGray"
-            src={user.photoURL || favIconProfilePic}
+            className="border-2 border-white rounded-full w-24 h-24 p-4 flex justify-center items-center ring-slateGray ring-2 bg-cloudGray"
+            src={user.photoURL || FavIconProfilePic}
             alt="Profile Picture"
           />
-          <h3 className="text-gray-800 text-xl font-medium mb-2 mt-6">
+          <h3 className="text-gray-800 text-xl font-medium mb-2 mt-4">
             {user.displayName || "Adventurer"}
           </h3>
           <p className="text-gray-600 text-sm">{user.email}</p>
 
-          {/* About Me - Textarea */}
+          {/* About Me Section */}
           <div className="mt-4 w-full">
-            <h4 className="text-gray-800 text-md font-medium mt-8 mb-2">
+            <h4 className="text-gray-800 text-md font-medium mt-10 mb-2">
               What's your story?
             </h4>
             <textarea
@@ -77,61 +111,66 @@ const Profile: React.FC = () => {
               onChange={handleAboutMeChange}
               onBlur={handleBlur}
               placeholder="Tell us about yourself..."
-              className="w-full h-24 p-3 border border-slate-300 rounded-lg bg-slate-50 focus:outline-none focus:border-slate-700 focus:ring-1 focus:ring-slate-700 resize-none"
+              className="w-full h-28 p-3 border border-slate-300 rounded-lg bg-slate-50 focus:outline-none focus:border-slate-700 focus:ring-1 focus:ring-slate-700 resize-none"
             />
           </div>
         </div>
 
-        {/* Right profile box with Adventures section and map */}
-        <div className="flex flex-col p-6 w-full md:w-3/4 bg-white border-2 border-slate-500 rounded-lg shadow-xl h-[450px]">
-          <h2 className="text-gray-800 text-xl font-semibold mb-4">
+        {/* Right profile box with Adventures and map */}
+        <div className="flex flex-col p-4 w-full md:w-3/4 bg-white border-2 border-slate-500 rounded-lg shadow-xl">
+          <h2 className="text-gray-800 text-xl font-semibold mb-2">
             Welcome, {user.displayName || "Adventurer"}!
           </h2>
           <p className="text-gray-500 text-sm">
-            Here you can manage your account settings, view your activities, and more!
+            Update your settings, get an overview of your adventures, share your story, and click on the map to mark the places you've visited!
           </p>
 
-          {/* Adventures heading with count on the same row */}
-          <div className="mt-6 flex items-center border border-slate-600 rounded-lg p-2 w-1/5">
-            <h4 className="text-gray-800 text-md font-medium mr-2">Adventures:</h4>
-            <span className="text-gray-600 text-sm">{adventures.length}</span>
-          </div>
+          <div className="mt-4 flex flex-row gap-4 h-full">
+            {/* Adventures section */}
+            <div className="flex flex-col w-1/3 gap-4 overflow-auto">
+              <div className="bg-gradient-to-r to-orange-50 from-orange-200 p-3 border-2 border-slate-600 rounded-lg">
+                <h4 className="text-gray-800 text-md font-medium">Adventures ({adventures.length})</h4>
+              </div>
+              <div className="bg-gradient-to-r to-orange-50 from-orange-200 flex flex-col gap-2 overflow-y-auto max-h-[283px] border-2 border-slate-600 rounded-lg p-2">
+                {adventures.map((adventure, index) => (
+                  <div
+                    key={index}
+                    className="p-3 border border-slate-400 rounded-lg bg-white shadow-sm transition duration-300 hover:shadow-md"
+                  >
+                    {adventure}
+                  </div>
+                ))}
+              </div>
+            </div>
 
-          {/* List of all adventures with a larger container */}
-          <div className="mt-4 w-1/5 border border-slate-600 rounded-lg p-2 h-32 overflow-auto">
-            <ul className="space-y-1 list-none pl-0">
-              {adventures.map((adventure, index) => (
-                <li key={index} className="text-gray-600 text-sm">
-                  {adventure}
-                </li>
+            {/* Interactive Map */}
+            <div
+              id="map"
+              className="cursor-pointer flex-grow h-[350px] border-2 border-slate-600 rounded-lg relative"
+              onClick={handleMapClick}
+              style={{
+                backgroundImage: `url(${ProfileMap})`, // Use the imported image here
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                boxShadow: "inset 0 0 10px rgba(0, 0, 0, 0.2)", // Add subtle shadow to map
+              }}
+            >
+              {markers.map((marker, index) => (
+                <MapPin
+                  key={index}
+                  size={24}
+                  color="#FEBF77" // Using darker teal for better contrast
+                  weight="fill"
+                  style={{
+                    position: "absolute",
+                    top: `${marker.lat}%`,
+                    left: `${marker.lng}%`,
+                    transform: "translate(-50%, -100%)",
+                  }}
+                />
               ))}
-            </ul>
-          </div>
-
-          {/* Static Map with Phosphor marker */}
-          <div
-            id="map"
-            className="w-full h-[300px] mt-4 border-2 border-slate-600 rounded-lg relative"
-            onClick={handleMapClick} // Add marker on click
-            style={{
-              backgroundImage: 'url("https://upload.wikimedia.org/wikipedia/commons/4/46/Blank_map_of_the_world_with_latitudes_and_longitudes.svg")',
-              backgroundSize: "cover",
-            }}
-          >
-            {markers.map((marker, index) => (
-              <MapPin
-                key={index}
-                size={32} // Set size for the marker
-                color="#FF0000" // Marker color
-                weight="regular" // Border width for the marker
-                style={{
-                  position: "absolute",
-                  top: `${marker.lat}%`,
-                  left: `${marker.lng}%`,
-                  transform: "translate(-50%, -100%)", // Adjust position for centering the marker
-                }}
-              />
-            ))}
+            </div>
           </div>
         </div>
       </div>
@@ -140,6 +179,15 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
+
+
+
+
+
+
+
+
+
 
 
 

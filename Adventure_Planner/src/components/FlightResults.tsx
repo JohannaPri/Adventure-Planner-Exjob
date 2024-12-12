@@ -9,11 +9,14 @@ import { AirplaneTilt } from "@phosphor-icons/react";
 import { getAuth } from "firebase/auth";
 import { saveFlightToDb } from "./MyAdventures/SavedData/SaveFlightToDb";
 import { fetchFolders } from "./MyAdventures/Folder/FetchFolders";
+import checkIfFlightExists from "./MyAdventures/SavedData/CheckFlightExists";
+import { removeFlightFromDb } from "./MyAdventures/SavedData/RemoveFlightFromDb";
 
 const FlightResults: React.FC = () => {
   const [folders, setFolders] = useState<any[]>([]);
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [flightExists, setFlightExists] = useState<{ [flight_id: string]: boolean }>({});
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -34,28 +37,6 @@ const FlightResults: React.FC = () => {
     fetchAndSetFolders();
   }, [userId]);
 
-  const handleSaveFlight = (
-    userId: string,
-    flight: FormattedFlightData,
-    selectedFolderId: string
-  ) => {
-    if (userId && flight && selectedFolderId) {
-      console.log(flight);
-      saveFlightToDb(flight, selectedFolderId);
-    }
-  };
-
-  const isFlightSaved = (
-    folderData: FormattedFlightData[] | undefined,
-    flight: FormattedFlightData
-  ): boolean => {
-    return folderData
-      ? folderData.some(
-          (item: FormattedFlightData) => item.flightId === flight.flightId
-        )
-      : false;
-  };
-
   const {
     data: flightData,
     status,
@@ -63,6 +44,36 @@ const FlightResults: React.FC = () => {
   } = useSelector((state: RootState) => state.flights);
   // @ts-ignore
   const formattedFlightData = flightData ? formatFlightData(flightData) : [];
+
+  useEffect(() => {
+    if (selectedFolderId) {
+      const checkAllFlightsExist = async () => {
+        const existsObj: { [flight_id: string]: boolean } = {};
+        for (const flight of formattedFlightData) {
+          const exists = await checkIfFlightExists(flight, selectedFolderId);
+          existsObj[flight.flight_id] = exists;
+        }
+        setFlightExists(existsObj);
+      };
+      checkAllFlightsExist();
+    }
+  }, [selectedFolderId, formattedFlightData]);
+
+  const handleSaveFlight = async (userId: string, flight: FormattedFlightData, selectedFolderId: string) => {
+    if (userId && flight && selectedFolderId) {
+      const exists = await checkIfFlightExists(flight, selectedFolderId);
+      setFlightExists((prevState) => ({
+        ...prevState,
+        [flight.flight_id]: exists,
+      }));
+  
+      if (!exists) {
+        await saveFlightToDb(flight, selectedFolderId);
+      } else {
+        await removeFlightFromDb(flight, selectedFolderId);
+      }
+    }
+  };
 
   if (status === "loading")
     return (
@@ -141,12 +152,6 @@ const FlightResults: React.FC = () => {
         </div>
       )}
       {formattedFlightData.map((flight, index) => {
-        const selectedFolder = folders.find(
-          (folder) => folder.id === selectedFolderId
-        );
-        const folderData = selectedFolder?.data || [];
-        const saved = isFlightSaved(folderData, flight);
-
         return (
           <div
             className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
@@ -214,31 +219,7 @@ const FlightResults: React.FC = () => {
                 <p className="text-lg font-bold text-black text-center">
                   {flight.price}
                 </p>
-                {saved ? (
-                  <button
-                    className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black"
-                    onClick={() => console.log("Remove")}
-                  >
-                    Remove
-                  </button>
-                ) : (
-                  <button
-                    className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black"
-                    onClick={() => {
-                      if (userId && selectedFolderId) {
-                        handleSaveFlight(userId, flight, selectedFolderId);
-                      } else {
-                        console.error(
-                          "UserId or selectedFolderId is null or undefined"
-                        );
-                      }
-                    }}
-                  >
-                    Save
-                  </button>
-                )}
-
-                {/* <button onClick={() => {
+                <button onClick={() => {
                 if (userId && selectedFolderId) {
                   handleSaveFlight(userId, flight, selectedFolderId);
                 } else {
@@ -246,8 +227,8 @@ const FlightResults: React.FC = () => {
                 }
               }}
               className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black">
-                Save
-              </button> */}
+                {flightExists[flight.flight_id] ? "Remove" : "Save"}
+              </button>
               </div>
             </div>
           </div>

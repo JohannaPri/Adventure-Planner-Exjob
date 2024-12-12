@@ -13,6 +13,7 @@ export type Segment = {
 };
 
 type Travel = {
+  flight_id: string;
   flightId: string;
   duration: string;
   segments: Segment[];
@@ -24,6 +25,7 @@ type Price = {
 };
 
 type Flight = {
+  flight_id: string;
   flightId: string;
   price: Price;
   travel: Travel[];
@@ -32,6 +34,7 @@ type Flight = {
 type FlightData = Flight;
 
 export type FormattedFlightData = {
+  flight_id: string;
   flightId: string;
   price: string;
   outbound: {
@@ -120,6 +123,7 @@ export function formatFlightData(data: FlightData[]): FormattedFlightData[] {
         : `${returnFlight?.numberOfStops} stops`;
 
     return {
+      flight_id: flight.flight_id,
       flightId: flight.flightId,
       price,
       outbound: {

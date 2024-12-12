@@ -255,7 +255,7 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
             />
             <button
               onClick={editingTodo ? handleSaveEdit : handleAddTodo}
-              className="text-gray-600 hover:text-gray-800 justify-center border h-[40px] lg:min-w-[120px] md:min-w-[90px] sm:w-[120px] w-[120px] pl-4 pr-4 rounded-md border-slateGray text-sm flex items-center space-x-2 cursor-pointer"
+              className="hover:shadow shadow-black text-gray-600 hover:text-gray-800 justify-center border h-[40px] lg:min-w-[120px] md:min-w-[90px] sm:w-[120px] w-[120px] pl-4 pr-4 rounded-md border-slateGray text-sm flex items-center space-x-2 cursor-pointer"
             >
               {editingTodo ? (
                 <CheckCircle size={32} weight="fill" />
@@ -279,8 +279,8 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
                             key={todo.id}
                             className={`flex w-full min-w-auto items-center justify-between px-4 py-3 rounded-md shadow-sm transition-all bg-white text-gray-800 ${
                               todo.completed
-                                ? "bg-gray-100 text-slateGray"
-                                : "bg-white text-gray-800"
+                                ? "bg-gray-100 border border-gray-200 text-slateGray shadow-inner shadow-gray-500"
+                                : "bg-white border border-gray-200 text-slateGray shadow-md shadow-gray-500 hover:border-gray-500"
                             }`}
                           >
                             <div
@@ -288,7 +288,7 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
                               onClick={() => toggleComplete(todo.id)}
                             >
                               {todo.completed && (
-                                <Check size={24} className="text-slateGray" />
+                                <Check size={24} weight="regular" className="text-slateGray" />
                               )}
                               <span
                                 className={`text-sm font-medium ${
@@ -300,10 +300,16 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
                             </div>
 
                             <div className="flex space-x-3">
-                              <button onClick={() => handleEdit(todo)}>
+                              <button 
+                                onClick={() => handleEdit(todo)}
+                                className="text-gray-600 hover:text-gray-800"
+                              >
                                 <Pencil size={20} />
                               </button>
-                              <button onClick={() => handleDelete(todo.id)}>
+                              <button 
+                                onClick={() => handleDelete(todo.id)}
+                                className="text-orange-400 hover:text-orange-500"
+                              >
                                 <Trash size={24} />
                               </button>
                             </div>
@@ -327,7 +333,7 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
               <div className="text-lg font-bold text-black text-center">
                 <button
                   onClick={handleClearAll}
-                  className="mt-6 px-4 py-3 mb-6 font-semibold text-gray-600 text-base rounded-md bg-gradient-to-r to-orange-50 from-orange-200 w-full max-w-[952px]"
+                  className="mt-6 px-4 py-3 mb-6 font-semibold text-gray-600 text-base rounded-md bg-gradient-to-r to-orange-50 from-orange-200 w-full max-w-[952px] hover:text-gray-800 hover:shadow-inner hover:shadow-gray-400"
                 >
                   Delete {title ? title : title2}
                 </button>

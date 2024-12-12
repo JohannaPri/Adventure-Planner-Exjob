@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 
 interface Flight {
+  flight_id: string;
   flightId: string;
   airplane: {
     carrierCode: string;

@@ -332,7 +332,7 @@ const AccommodationComponent: React.FC = () => {
     try {
       await dispatch(fetchHotels(requestParams)).unwrap();
     } catch (error: any) {
-      console.error(error.message || "An error occured while fetching flights");
+      console.error(error.message || "An error occured while fetching accommodations");
     }
   };
 

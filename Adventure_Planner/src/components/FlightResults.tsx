@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import {
@@ -17,6 +17,8 @@ const FlightResults: React.FC = () => {
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [flightExists, setFlightExists] = useState<{ [flight_id: string]: boolean }>({});
+
+  const listRef = useRef<HTMLDivElement | null>(null);
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -75,6 +77,15 @@ const FlightResults: React.FC = () => {
     }
   };
 
+  const handleScrollListToTop = () => {
+    if (listRef.current) {
+      console.log("Scroll to top");
+      listRef.current.scrollTop = 0;
+    } else {
+      console.error("listRef is not set");
+    }
+  }
+
   if (status === "loading")
     return (
       <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-lg max-w-lg mx-auto mt-20 text-center animate-pulse mb-20">
@@ -89,7 +100,6 @@ const FlightResults: React.FC = () => {
     );
   if (status === "failed") return <div>Error: {error}</div>;
 
-  console.log("FLIGHTDATA: ", status === "succeeded");
   const hasSearched = status === "succeeded";
 
   if (
@@ -111,9 +121,9 @@ const FlightResults: React.FC = () => {
   }
 
   return (
-    <div className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
+    <div ref={listRef} className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
       {formattedFlightData.length > 0 && (
-        <div className="relative transition duration-300 w-[40%] max-w-2xl p-6 mx-auto text-black bg-gray-100 border-2 border-white shadow-md shadow-gray-200 rounded-lg mb-6">
+        <div id="infoBox" className="relative transition duration-300 w-[40%] max-w-2xl p-6 mx-auto text-black bg-gray-100 border-2 border-white shadow-md shadow-gray-200 rounded-lg mb-6">
           <div className="mb-4">
             <p className="text-base font-semibold mb-2 text-gray-800">
               Select Your Adventure Folder.
@@ -140,7 +150,7 @@ const FlightResults: React.FC = () => {
                 {folders?.length ? (
                   folders.map((folder) => (
                     <option key={folder.id} value={folder.id}>
-                      {folder.title} ({folder.description})
+                      {folder.title} {folder.description ? `(${folder.description})` : null}
                     </option>
                   ))
                 ) : (
@@ -219,16 +229,29 @@ const FlightResults: React.FC = () => {
                 <p className="text-lg font-bold text-black text-center">
                   {flight.price}
                 </p>
+                <div
+                  className="w-full"
+                  onClick={() => {
+                    if (!selectedFolderId && listRef.current) {
+                      handleScrollListToTop();
+                    }
+                  }}
+                  >
                 <button onClick={() => {
-                if (userId && selectedFolderId) {
-                  handleSaveFlight(userId, flight, selectedFolderId);
-                } else {
-                  console.error("UserId or selectedFolderId is null or undefined");
-                }
+                  if (userId && selectedFolderId) {
+                    handleSaveFlight(userId, flight, selectedFolderId);
+                  } else {
+                    console.error("UserId or selectedFolderId is null or undefined");
+                  }
               }}
-              className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black">
+              className={`w-full text-center justify-center shadow-md px-4 py-1 text-white border rounded-lg outline-none lg:px-1 font-semibold ${
+                selectedFolderId 
+                ? "bg-slateGray border-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black" 
+                : "bg-slateGray border-gray-300 cursor-not-allowed opacity-50"
+              }`}>
                 {flightExists[flight.flight_id] ? "Remove" : "Save"}
               </button>
+              </div>
               </div>
             </div>
           </div>

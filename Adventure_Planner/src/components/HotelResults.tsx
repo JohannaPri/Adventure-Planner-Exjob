@@ -1,14 +1,93 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { fetchFolders } from "./MyAdventures/Folder/FetchFolders";
 import { House, UsersThree } from "@phosphor-icons/react";
+import { getAuth } from "firebase/auth";
+import { Hotel } from "./types/types";
+import checkIfAccommodationExists from "./MyAdventures/SavedData/CheckAccommodationExists";
+import { saveAccommodationToDb } from "./MyAdventures/SavedData/SaveAccommodationToDb";
+import { removeAccommodationFromDb } from "./MyAdventures/SavedData/RemoveAccommodationFromDb";
 
 const HotelResults: React.FC = () => {
+
+  const [accommodationExists, setAccommodationExists] = useState<{ [id: string]: boolean }>({});  const [folders, setFolders] = useState<any[]>([]); 
+  const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  const listRef = useRef<HTMLDivElement | null>(null);
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    if (user) {
+      setUserId(user.uid);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const fetchAndSetFolders = async () => {
+      if (userId) {
+        const fetchedFolders = await fetchFolders(userId);
+        setFolders(fetchedFolders);
+      }
+    };
+    fetchAndSetFolders();
+  }, [userId]);
+  
   const {
     data: hotelData,
     status,
     error,
+
   } = useSelector((state: RootState) => state.hotel);
+
+  useEffect(() => {
+    if (selectedFolderId) {
+      const checkAllAccommodationsExist = async () => {
+        const existsObj: { [id: string ]: boolean } = {};
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+        for (const accommodation of hotelData) {
+          const exists = await checkIfAccommodationExists(accommodation, selectedFolderId);
+          existsObj[accommodation.id] = exists;
+        }
+        setAccommodationExists(existsObj);
+      };
+      checkAllAccommodationsExist();
+    }
+  }, [selectedFolderId, hotelData]);
+
+  const handleSaveAccommodation = async (userId: string, accommodation: Hotel, selectedFolderId: string) => {
+    if (userId && accommodation && selectedFolderId) {
+      try {
+        const exists = accommodationExists[accommodation.id];
+        if (!exists) {
+          await saveAccommodationToDb(accommodation, selectedFolderId);
+        } else {
+          await removeAccommodationFromDb(accommodation, selectedFolderId);
+        }
+        setAccommodationExists((prevState) => ({
+          ...prevState,
+          [accommodation.id]: !exists,
+        }));
+      } catch (error) {
+        console.error("Error saving or removing accommodation: ", error);
+      }
+    } else {
+      console.error("UserId or selectedFolderId is null or undefined");
+    }
+  };
+
+  const handleScrollListToTop = () => {
+    if (listRef.current) {
+      console.log("Scroll to top");
+      listRef.current.scrollTop = 0;
+    } else {
+      console.error("listRef is not set");
+    }
+  }
 
   if (status === "loading")
     return (
@@ -25,7 +104,6 @@ const HotelResults: React.FC = () => {
     );
   if (status === "failed") return <div>Error: {error}</div>;
 
-  console.log("FLIGHDATA: ", status === "succeeded");
   const hasSearched = status === "succeeded";
 
   if (hasSearched && (!hotelData || hotelData.length === 0)) {
@@ -44,8 +122,47 @@ const HotelResults: React.FC = () => {
   }
 
   return (
-    <div className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
-      {hotelData?.map((hotel, index) => (
+    <div ref={listRef} className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
+      {hotelData && hotelData.length > 0 && (
+        <div className="relative transition duration-300 w-[40%] max-w-2xl p-6 mx-auto text-black bg-gray-100 border-2 border-white shadow-md shadow-gray-200 rounded-lg mb-6">
+          <div className="mb-4">
+            <p className="text-base font-semibold mb-2 text-gray-800">
+              Select Your Adventure Folder.
+            </p>
+            <p className="text-sm font-medium text-gray-800">
+              Choose the folder where you'd like to save your accommodation details.
+            </p>
+            <p className="text-sm font-medium text-gray-800">
+              Simply pick your Adventure folder and hit Save to store your
+              accommodations!
+            </p>
+          </div>
+          <div className="justify-end items-center flex space-y-4">
+            <div>
+              <select
+                id="folder-select"
+                className="mt-2 p-1 pl-2 border rounded-md"
+                onChange={(e) => setSelectedFolderId(e.target.value)}
+                value={selectedFolderId || ""}
+              >
+                <option value="" disabled>
+                  Select a folder
+                </option>
+                {folders?.length ? (
+                  folders.map((folder) => (
+                    <option key={folder.id} value={folder.id}>
+                      {folder.title} {folder.description ? `(${folder.description})` : null}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No folders available</option>
+                )}
+              </select>
+            </div>
+          </div>
+        </div>
+      )}
+      {hotelData && hotelData?.map((hotel, index) => (
         <div
           className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
           key={index}
@@ -93,9 +210,29 @@ const HotelResults: React.FC = () => {
               <p className="text-lg font-bold text-black text-center">
                 €{hotel.total_price}
               </p>
-              <button className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black">
-                Save
+              <div
+                  className="w-full"
+                  onClick={() => {
+                    if (!selectedFolderId && listRef.current) {
+                      handleScrollListToTop();
+                    }
+                  }}
+                  >
+              <button onClick={() => {
+                if (userId && selectedFolderId) {
+                  handleSaveAccommodation(userId, hotel, selectedFolderId);
+                } else {
+                  console.error("UserId or selectedFolderId is null or undefined");
+                }
+              }}
+              className={`w-full text-center justify-center shadow-md px-4 py-1 text-white border rounded-lg outline-none lg:px-1 font-semibold ${
+                selectedFolderId 
+                ? "bg-slateGray border-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black" 
+                : "bg-slateGray border-gray-300 cursor-not-allowed opacity-50"
+              }`}>
+                {accommodationExists[hotel.id] ? "Remove" : "Save"}
               </button>
+              </div>
             </div>
           </div>
         </div>

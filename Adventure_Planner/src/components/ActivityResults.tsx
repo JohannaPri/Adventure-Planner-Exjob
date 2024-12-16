@@ -1,15 +1,93 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Mountains, UsersThree } from "@phosphor-icons/react";
 import StarRating from "./StarRating";
+import { getAuth } from "firebase/auth";
+import { fetchFolders } from "./MyAdventures/Folder/FetchFolders";
+import { Activity } from "./types/types";
+import { removeActivityFromDb } from "./MyAdventures/SavedData/RemoveActivityFromDb";
+import { saveActivityToDb } from "./MyAdventures/SavedData/SaveActivityToDb";
+import checkIfActivityExists from "./MyAdventures/SavedData/CheckActivityExists";
 
 const ActivityResult: React.FC = () => {
+
+  const [activityExists, setActivityExists] = useState<{ [id: string]: boolean }>({});  const [folders, setFolders] = useState<any[]>([]); 
+  const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  const listRef = useRef<HTMLDivElement | null>(null);
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    if (user) {
+      setUserId(user.uid);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const fetchAndSetFolders = async () => {
+      if (userId) {
+        const fetchedFolders = await fetchFolders(userId);
+        setFolders(fetchedFolders);
+      }
+    };
+    fetchAndSetFolders();
+  }, [userId]);  
+
   const {
     data: activityData,
     status,
     error,
   } = useSelector((state: RootState) => state.activity);
+
+  useEffect(() => {
+    if (selectedFolderId) {
+      const checkAllActivitysExist = async () => {
+        const existsObj: { [id: string ]: boolean } = {};
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+        for (const activity of hotelData) {
+          const exists = await checkIfActivityExists(activity, selectedFolderId);
+          existsObj[activity.id] = exists;
+        }
+        setActivityExists(existsObj);
+      };
+      checkAllActivitysExist();
+    }
+  }, [selectedFolderId, activityData]);
+
+  const handleSaveActivity = async (userId: string, activity: Activity, selectedFolderId: string) => {
+    if (userId && activity && selectedFolderId) {
+      try {
+        const exists = activityExists[activity.id];
+        if (!exists) {
+          await saveActivityToDb(activity, selectedFolderId);
+        } else {
+          await removeActivityFromDb(activity, selectedFolderId);
+        }
+        setActivityExists((prevState) => ({
+          ...prevState,
+          [activity.id]: !exists,
+        }));
+      } catch (error) {
+        console.error("Error saving or removing activity: ", error);
+      }
+    } else {
+      console.error("UserId or selectedFolderId is null or undefined");
+    }
+  };
+
+  const handleScrollListToTop = () => {
+    if (listRef.current) {
+      console.log("Scroll to top");
+      listRef.current.scrollTop = 0;
+    } else {
+      console.error("listRef is not set");
+    }
+  }
 
   if (status === "loading")
     return (
@@ -26,7 +104,6 @@ const ActivityResult: React.FC = () => {
     );
   if (status === "failed") return <div>Error: {error}</div>;
 
-  console.log("FLIGHDATA: ", status === "succeeded");
   const hasSearched = status === "succeeded";
 
   if (hasSearched && (!activityData || activityData.length === 0)) {
@@ -44,8 +121,47 @@ const ActivityResult: React.FC = () => {
   }
 
   return (
-    <div className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
-      {activityData?.map((activity, index) => (
+    <div ref={listRef} className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
+      {activityData && activityData.length > 0 && (
+        <div className="relative transition duration-300 w-[40%] max-w-2xl p-6 mx-auto text-black bg-gray-100 border-2 border-white shadow-md shadow-gray-200 rounded-lg mb-6">
+          <div className="mb-4">
+            <p className="text-base font-semibold mb-2 text-gray-800">
+              Select Your Adventure Folder.
+            </p>
+            <p className="text-sm font-medium text-gray-800">
+              Choose the folder where you'd like to save your activity details.
+            </p>
+            <p className="text-sm font-medium text-gray-800">
+              Simply pick your Adventure folder and hit Save to store your
+              activities!
+            </p>
+          </div>
+          <div className="justify-end items-center flex space-y-4">
+            <div>
+              <select
+                id="folder-select"
+                className="mt-2 p-1 pl-2 border rounded-md"
+                onChange={(e) => setSelectedFolderId(e.target.value)}
+                value={selectedFolderId || ""}
+              >
+                <option value="" disabled>
+                  Select a folder
+                </option>
+                {folders?.length ? (
+                  folders.map((folder) => (
+                    <option key={folder.id} value={folder.id}>
+                      {folder.title} {folder.description ? `(${folder.description})` : null}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No folders available</option>
+                )}
+              </select>
+            </div>
+          </div>
+        </div>
+      )}
+      {activityData && activityData?.map((activity, index) => (
         <div
           className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
           key={index}
@@ -101,9 +217,29 @@ const ActivityResult: React.FC = () => {
               <p className="text-lg font-bold text-black text-center">
                 €{activity.price}
               </p>
-              <button className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black">
-                Save
+              <div
+                  className="w-full"
+                  onClick={() => {
+                    if (!selectedFolderId && listRef.current) {
+                      handleScrollListToTop();
+                    }
+                  }}
+                  >
+              <button onClick={() => {
+                if (userId && selectedFolderId) {
+                  handleSaveActivity(userId, activity, selectedFolderId);
+                } else {
+                  console.error("UserId or selectedFolderId is null or undefined");
+                }
+              }}
+              className={`w-full text-center justify-center shadow-md px-4 py-1 text-white border rounded-lg outline-none lg:px-1 font-semibold ${
+                selectedFolderId 
+                ? "bg-slateGray border-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black" 
+                : "bg-slateGray border-gray-300 cursor-not-allowed opacity-50"
+              }`}>
+                {activityExists[activity.id] ? "Remove" : "Save"}
               </button>
+              </div>
             </div>
           </div>
         </div>

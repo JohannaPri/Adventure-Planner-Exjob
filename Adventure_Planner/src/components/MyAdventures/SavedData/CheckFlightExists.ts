@@ -26,6 +26,8 @@ const checkIfFlightExists = async (flight: FormattedFlightData, folderId: string
       const subFolderData = docSnap.data();
       const data = subFolderData?.data || [];
 
+      console.log('DATA FROM CHECK FLIGH EXISTS: ', data);
+
       const flightExists = data.some((storedFlight: FormattedFlightData) => storedFlight.flight_id === flight.flight_id);
 
       if (flightExists) {

@@ -4,6 +4,9 @@ import { db } from "../../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import WanderListDetails from "../Wanderlist/WanderListDetails";
+import GetFlightsFromDb from "../SavedData/GetFlightsFromDb";
+import GetAccommodationsFromDb from "../SavedData/GetAccommodationsFromDb";
+import GetActivitiesFromDb from "../SavedData/GetActivitiesFromDb";
 
 interface SubFolder {
   id: string;
@@ -71,23 +74,36 @@ const SubFolderDetails: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center justify-center">
-      <p className="text-gray-500">
-        {subFolder.description || ""}
-      </p>
-      <div className="text-center flex justify-center items-center flex-col">
+    <div>
+      <div className="flex flex-col pb-20">
         {(() => {
           switch (subFolder.typeId) {
             case 1:
               return (
-                <div>
-                  <h2 className="text-xl font-semibold">This is a Type 1 Folder</h2>
+                <div className="flex flex-col items-center mt-28">
+                  <h1 className="text-2xl font-bold text-center">Saved Flights</h1>
+                  <GetFlightsFromDb folderId={parentFolderId} />
                 </div>
               );
             case 2:
               return (
+                <div className="flex flex-col items-center mt-28">
+                  <h1 className="text-2xl font-bold text-center">Saved Accommodations</h1>
+                  <GetAccommodationsFromDb folderId={parentFolderId} />
+                </div>
+              )
+            case 3: 
+              return (
+                <div className="flex flex-col items-center mt-28">
+                <h1 className="text-2xl font-bold text-center">Saved Activities</h1>
+                <GetActivitiesFromDb folderId={parentFolderId} />
+              </div>
+              );
+
+            case 4: 
+              return (
                 <div className="flex flex-col items-center justify-center">
-                  <WanderListDetails userId={user?.uid || ""} parentFolderId={parentFolderId} title={subFolder.typeId === 2 ? subFolder.title2 : subFolder.title1} title2={subFolder.title2} />
+                  <WanderListDetails userId={user?.uid || ""} parentFolderId={parentFolderId} title={subFolder.typeId === 4 ? subFolder.title2 : subFolder.title1} title2={subFolder.title2} />
                 </div>
               );
             default:

@@ -16,7 +16,6 @@ const MyAdventuresInput: React.FC<MyAdventuresInputProps> = ({ userId, onAddFold
 
   const handleAddFolder = async () => {
     if (!folderTitle.trim()) {
-      alert("Title cannot be empty!");
       return;
     }
 

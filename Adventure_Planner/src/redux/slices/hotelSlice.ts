@@ -3,6 +3,7 @@ import fetchHotelData from "../../api/getHotels";
 import { Hotel } from "../../components/types/types";
 
 interface HotelState {
+  id: string | null;
   data: Hotel[] | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
@@ -14,6 +15,7 @@ interface HotelState {
 }
 
 const initialState: HotelState = {
+  id: null,
   data: null,
   status: "idle",
   error: null,

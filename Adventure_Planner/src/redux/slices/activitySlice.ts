@@ -3,6 +3,7 @@ import fetchActivityData from "../../api/getActivities";
 import { Activity } from "../../components/types/types";
 
 interface ActivityState {
+  id: string | null;
   data: Activity[] | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
@@ -13,6 +14,7 @@ interface ActivityState {
 }
 
 const initialState: ActivityState = {
+  id: null,
   data: null,
   status: "idle",
   error: null,

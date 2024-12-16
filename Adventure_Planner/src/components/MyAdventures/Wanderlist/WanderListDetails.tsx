@@ -59,11 +59,11 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
       parentFolderId,
       "subFolders"
     );
-    const q = query(subFoldersRef, where("typeId", "==", 2));
+    const q = query(subFoldersRef, where("typeId", "==", 4));
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
-      console.error("No subfolder with typeId 2 found.");
+      console.error("No subfolder with typeId 4 found.");
       return null;
     }
 
@@ -270,14 +270,16 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
           {todos.length > 0 ? (
             <ul className="space-y-4 w-full max-w-[952px] overflow-y-scroll no-scrollbar scroll-smooth max-h-[500px]">
               {todos.map((todo) => (
-                <div className="space-y-2 w-full min-w-full max-h-[500px] scroll-smooth overflow-y-auto no-scrollbar last:mb-5 cursor-pointer">
+                <div
+                  key={todo.id}
+                  className="space-y-2 w-full min-w-full max-h-[500px] scroll-smooth overflow-y-auto no-scrollbar last:mb-5 cursor-pointer"
+                >
                   <div className="transition duration-300 hover:shadow-xl w-full max-w-[952px] p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg">
                     <div className="grid items-center grid-cols-2 gap-4">
                       <div className="col-span-8 space-y-2">
                         <div className="flex items-center gap-2">
                           <li
-                            key={todo.id}
-                            className={`flex w-full min-w-auto items-center justify-between px-4 py-3 rounded-md shadow-sm transition-all bg-white text-gray-800 ${
+                            className={`flex w-full min-w-auto items-center justify-between px-4 py-3 rounded-md transition-all bg-white text-gray-800 ${
                               todo.completed
                                 ? "bg-gray-100 border border-gray-200 text-slateGray shadow-inner shadow-gray-500"
                                 : "bg-white border border-gray-200 text-slateGray shadow-md shadow-gray-500 hover:border-gray-500"
@@ -329,7 +331,7 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
           )}
 
           {todos.length > 0 && (
-            <div className="ml-12 flex flex-col items-center justify-center col-span-4 space-y-4">
+            <div className="flex flex-col items-center justify-center col-span-4 space-y-4">
               <div className="text-lg font-bold text-black text-center">
                 <button
                   onClick={handleClearAll}

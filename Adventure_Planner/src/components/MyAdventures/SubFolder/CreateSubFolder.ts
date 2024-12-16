@@ -44,9 +44,9 @@ export const createDefaultSubFolders = async (
 ): Promise<void> => {
   const defaultSubFolders = [
     { itemId: 1, priority: 1, typeId: 1, title: "Flight", data: [] },
-    { itemId: 2, priority: 2, typeId: 1, title: "Accommodation", data: [] },
-    { itemId: 3, priority: 3, typeId: 1, title: "Activities", data: [] },
-    { itemId: 4, priority: 4, typeId: 2, title: "Wanderlist", title2: "My Wanderlist", data: [] },
+    { itemId: 2, priority: 2, typeId: 2, title: "Accommodation", data: [] },
+    { itemId: 3, priority: 3, typeId: 3, title: "Activities", data: [] },
+    { itemId: 4, priority: 4, typeId: 4, title: "Wanderlist", title2: "My Wanderlist", data: [] },
   ];
 
   try {

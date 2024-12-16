@@ -3,14 +3,26 @@ import React, { useEffect, useState } from "react";
 import { MapPinSimple } from "@phosphor-icons/react"; 
 import FavIconProfilePic from "../../assets/favicon/favicon.svg";
 import ProfileMap from "../../assets/profile/profile-map.png"; 
+import { fetchFolders } from "../MyAdventures/Folder/FetchFolders";
 
 const Profile: React.FC = () => {
   const [aboutMe, setAboutMe] = useState<string>("");
-  const [adventures, setAdventures] = useState<string[]>([]);
   const [markers, setMarkers] = useState<{ lat: number; lng: number }[]>([]);
+  const [folders, setFolders] = useState<any[]>([]);
 
   const auth = getAuth();
   const user = auth.currentUser;
+  const userId = user?.uid;
+
+  useEffect(() => {
+    const fetchAndSetFolders = async () => {
+      if (userId) {
+        const fetchedFolders = await fetchFolders(userId);
+        setFolders(fetchedFolders);
+      }
+    };
+    fetchAndSetFolders();
+  }, [userId]);
 
   useEffect(() => {
     if (user) {
@@ -24,16 +36,6 @@ const Profile: React.FC = () => {
       if (savedMarkers) {
         setMarkers(JSON.parse(savedMarkers));
       }
-
-      setAdventures([
-        "Adventure 1",
-        "Adventure 2",
-        "Adventure 3",
-        "Adventure 4",
-        "Adventure 5",
-        "Adventure 6",
-        "Adventure 7",
-      ]);
     }
   }, [user]);
 
@@ -123,17 +125,21 @@ const Profile: React.FC = () => {
             {/* Adventures section */}
             <div className="flex flex-col w-1/3 gap-4 overflow-auto">
               <div className="bg-gradient-to-r to-orange-50 from-orange-200 p-3 border-2 border-slate-600 rounded-lg">
-                <h4 className="text-gray-800 text-md font-medium">Adventures ({adventures.length})</h4>
+                <h4 className="text-gray-800 text-md font-medium">Adventures ({folders.length})</h4>
               </div>
-              <div className="bg-gradient-to-r to-orange-50 from-orange-200 flex flex-col gap-2 overflow-y-auto max-h-[283px] border-2 border-slate-600 rounded-lg p-2">
-                {adventures.map((adventure, index) => (
+              <div className="bg-gradient-to-r to-orange-50 from-orange-200 flex flex-col gap-2 overflow-y-auto max-h-[283px] border-2 border-slate-600 rounded-lg p-2 scroll-smooth no-scrollbar">
+              {folders?.length ? (
+                  folders.map((folder) => (
                   <div
-                    key={index}
-                    className="p-3 border border-slate-400 rounded-lg bg-white shadow-sm transition duration-300 hover:shadow-md"
+                    key={folder.id}
+                    className="p-3 border border-slate-400 rounded-lg bg-white shadow-sm transition duration-300 hover:shadow-md poi"
                   >
-                    {adventure}
+                    <p className="text-sm">{folder.title} {folder.description ? `(${folder.description})` : null}</p>
                   </div>
-                ))}
+                  ))
+                ) : (
+                  <p>You have no adventures saved yet. Head over to <span className="font-semibold text-black">My Adventures</span> and start planning your next big journey today!</p>
+                )}
               </div>
             </div>
 

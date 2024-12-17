@@ -15,6 +15,11 @@ interface AmadeusApiProps {
   ) => React.ReactNode;
 }
 
+/**
+ * AmadeusAPI Component
+ * Fetches an access token and retrieves data from a given API endpoint.
+*/
+
 const AmadeusAPI: React.FC<AmadeusApiProps> = ({ endpoint, children }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [data, setData] = useState<unknown>(null);

@@ -4,6 +4,16 @@ interface CityQuery {
   destination: string;
 }
 
+/**
+ * Get city data from the API
+ * --------------------------
+ * Sends a GET request to retrieve city-related data for hotel searches.
+ * 
+ * @param query - Object containing the destination city name.
+ * @returns The city data from the API.
+ * @throws An error if the API call fails.
+*/
+
 const getCity = async (query: CityQuery) => {
   const { destination } = query;
   console.log("DESTINATION API: ", destination);

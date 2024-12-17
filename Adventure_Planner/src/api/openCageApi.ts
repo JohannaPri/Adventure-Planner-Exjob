@@ -5,6 +5,13 @@ export interface Coordinates {
   lon: number;
 }
 
+/**
+ * Fetches the coordinates (latitude and longitude) for a given city.
+ * @param city - The name of the city to retrieve coordinates for.
+ * @returns An object containing the latitude and longitude of the city.
+ * @throws An error if the coordinates cannot be found or the API request fails.
+*/
+
 export const getCoordinatesByCity = async (
   city: string
 ): Promise<Coordinates> => {

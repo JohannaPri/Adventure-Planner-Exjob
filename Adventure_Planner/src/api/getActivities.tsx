@@ -7,6 +7,16 @@ interface ActivityQuery {
   children: number;
 }
 
+/**
+ * Fetch activity data from the API
+ * --------------------------------
+ * Sends a GET request to retrieve activity data based on the provided query.
+ * 
+ * @param query - Object containing destination, date, and number of adults/children.
+ * @returns The activity data from the API.
+ * @throws An error if the API call fails.
+*/
+
 const fetchActivityData = async (query: ActivityQuery) => {
   const { destination, date, adults, children } = query;
   console.log("Fetching activities with query: ", query);

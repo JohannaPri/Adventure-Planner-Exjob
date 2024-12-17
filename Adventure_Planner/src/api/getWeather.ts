@@ -5,6 +5,13 @@ interface WeatherQuery {
   destination: string;
 }
 
+/**
+ * Fetches weather data for a given destination.
+ * @param query - Object containing the destination city.
+ * @returns The weather data retrieved from the API.
+ * @throws An error if the request fails.
+*/
+
 const fetchWeatherData = async (query: WeatherQuery) => {
   const { destination } = query;
   console.log("Fetching weather with query: ", query);

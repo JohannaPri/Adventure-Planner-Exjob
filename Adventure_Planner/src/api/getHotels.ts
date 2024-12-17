@@ -8,6 +8,13 @@ interface HotelQuery {
   checkout: string;
 }
 
+/**
+ * Fetches hotel data based on the specified query parameters.
+ * @param query - Object containing destination, number of adults, children, check-in and check-out dates.
+ * @returns The hotel data retrieved from the API.
+ * @throws An error if the request fails.
+*/
+
 const fetchHotelData = async (query: HotelQuery) => {
   const { destination, adults, children } = query;
   console.log("Fetching hotels with query: ", query);

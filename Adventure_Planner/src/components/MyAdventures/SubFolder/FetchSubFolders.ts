@@ -25,7 +25,7 @@ export const fetchSubFolders = async (
       userId,
       "userFolders",
       folderId,
-      "subfolders"
+      "subFolders"
     );
 
     const snapshot = await getDocs(subFolderCollectionRef);
@@ -39,7 +39,8 @@ export const fetchSubFolders = async (
       const data = doc.data();
       return {
         id: doc.id,
-        folderTitle: data.folderTitle || "Untitled Folder",
+        title: data.title,
+        title2: data.title2,
         creationDate: data.creationDate || new Date().toISOString(),
         ...data,
       } as SubFolder;
@@ -52,7 +53,8 @@ export const fetchSubFolders = async (
 
 export interface SubFolder {
   id: string;
-  folderTitle: string;
+  title: string;
+  title2: string;
   creationDate: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;

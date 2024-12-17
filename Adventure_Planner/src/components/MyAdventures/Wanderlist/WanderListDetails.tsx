@@ -15,7 +15,9 @@ import {
   Check,
   PlusCircle,
   CheckCircle,
+  ArrowCircleLeft,
 } from "@phosphor-icons/react";
+import { useNavigate } from "react-router-dom";
 
 interface Todo {
   id: number;
@@ -59,8 +61,13 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
       parentFolderId,
       "subFolders"
     );
-    const q = query(subFoldersRef, where("typeId", "==", 4));
+    const q = query(
+      subFoldersRef,
+      where("typeId", "==", 4),
+      where("title2", "==", title)
+    );
     const snapshot = await getDocs(q);
+    console.log('CHECK!: ', q);
 
     if (snapshot.empty) {
       console.error("No subfolder with typeId 4 found.");
@@ -69,7 +76,13 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
 
     const subFolderDoc = snapshot.docs[0];
     return { id: subFolderDoc.id, ...subFolderDoc.data() } as SubFolder;
-  }, [userId, parentFolderId]);
+  }, [userId, parentFolderId, title]);
+
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -265,7 +278,16 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
             </button>
           </div>
         </div>
-        <h1 className="flex pb-4 font-semibold text-left uppercase">{title}</h1>
+        <div className="flex w-full justify-between items-center">
+        <div className="absolute left-0 ml-96">
+                    <button 
+                      onClick={handleBackClick}
+                    >
+                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
+                    </button>
+                  </div>
+        <h1 className="pb-4 font-semibold text-center uppercase w-full">{title}</h1>
+        </div>
         <div className="flex flex-col w-[500px] items-center min-w-[500px]">
           {todos.length > 0 ? (
             <ul className="space-y-4 w-full max-w-[952px] overflow-y-scroll no-scrollbar scroll-smooth max-h-[500px]">

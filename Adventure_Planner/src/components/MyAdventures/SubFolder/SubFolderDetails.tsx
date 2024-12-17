@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -7,6 +7,8 @@ import WanderListDetails from "../Wanderlist/WanderListDetails";
 import GetFlightsFromDb from "../SavedData/GetFlightsFromDb";
 import GetAccommodationsFromDb from "../SavedData/GetAccommodationsFromDb";
 import GetActivitiesFromDb from "../SavedData/GetActivitiesFromDb";
+import GetNewSubFolder from "../SavedData/GetNewSubFolder";
+import { ArrowCircleLeft } from "@phosphor-icons/react";
 
 interface SubFolder {
   id: string;
@@ -31,6 +33,12 @@ const SubFolderDetails: React.FC = () => {
   const [subFolder, setSubFolder] = useState<SubFolder | null>(null);
   const auth = getAuth();
   const user = auth.currentUser;
+
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     if (!user || !parentFolderId || !subFolderId) return;
@@ -81,29 +89,61 @@ const SubFolderDetails: React.FC = () => {
             case 1:
               return (
                 <div className="flex flex-col items-center mt-28">
-                  <h1 className="text-2xl font-bold text-center">Saved Flights</h1>
+                  <div className="flex w-full justify-between items-center">
+                  <div className="absolute left-0 ml-96">
+                    <button 
+                      onClick={handleBackClick}
+                    >
+                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
+                    </button>
+                  </div>
+                  <h1 className="text-2xl font-bold text-center w-full">Saved Flights</h1>
+                  </div>
                   <GetFlightsFromDb folderId={parentFolderId} />
                 </div>
               );
             case 2:
               return (
                 <div className="flex flex-col items-center mt-28">
-                  <h1 className="text-2xl font-bold text-center">Saved Accommodations</h1>
+                  <div className="flex w-full justify-between items-center">
+                  <div className="absolute left-0 ml-96">
+                    <button 
+                      onClick={handleBackClick}
+                    >
+                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
+                    </button>
+                  </div>
+                  <h1 className="text-2xl font-bold text-center w-full">Saved Accommodations</h1>
+                  </div>
                   <GetAccommodationsFromDb folderId={parentFolderId} />
                 </div>
               )
             case 3: 
               return (
                 <div className="flex flex-col items-center mt-28">
-                <h1 className="text-2xl font-bold text-center">Saved Activities</h1>
-                <GetActivitiesFromDb folderId={parentFolderId} />
-              </div>
+                  <div className="flex w-full justify-between items-center">
+                  <div className="absolute left-0 ml-96">
+                    <button 
+                      onClick={handleBackClick}
+                    >
+                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
+                    </button>
+                  </div>
+                  <h1 className="text-2xl font-bold text-center w-full">Saved Activities</h1>
+                  </div>
+                  <GetActivitiesFromDb folderId={parentFolderId} />
+                </div>
               );
-
             case 4: 
               return (
                 <div className="flex flex-col items-center justify-center">
-                  <WanderListDetails userId={user?.uid || ""} parentFolderId={parentFolderId} title={subFolder.typeId === 4 ? subFolder.title2 : subFolder.title1} title2={subFolder.title2} />
+                  <WanderListDetails userId={user?.uid || ""} parentFolderId={parentFolderId} title={subFolder.typeId === 4 ? subFolder.title2 : subFolder.title} title2={subFolder.title2} />
+                </div>
+              );
+              case 5: 
+              return (
+                <div className="flex flex-col items-center mt-28">
+                  <GetNewSubFolder userId={user?.uid || ""} parentFolderId={parentFolderId} subFolderId={subFolderId} />
                 </div>
               );
             default:

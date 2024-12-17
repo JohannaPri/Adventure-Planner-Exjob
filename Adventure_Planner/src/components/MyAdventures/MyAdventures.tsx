@@ -55,7 +55,7 @@ const MyAdventures: React.FC = () => {
     <div className="flex flex-col items-center justify-center">
       <MyAdventuresInput userId={userId!} onAddFolder={handleAddFolder} />
       <h1 className="flex pb-4 font-semibold text-left uppercase">My Adventures ({folders.length})</h1>
-      <div className="p-8 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-h-[500px] overflow-x-scroll scroll-smooth no-scrollbar">
+      <div className="p-8 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-h-[600px] overflow-x-scroll scroll-smooth no-scrollbar h-full">
       {folders.length > 0 ? (
         folders.map((folder) => {
           const folderId = folder.id || '';

@@ -14,7 +14,7 @@ import { db } from "../../../firebase/firebase-config";
 export const createSubFolder = async (
   userId: string,
   parentFolderId: string,
-  subFolderData: { title: string }
+  subFolderData: { title: string, title2?: string; }
 ): Promise<string> => {
   try {
     const subFolderCollection = collection(db, "users", userId, "userFolders", parentFolderId, "subFolders");

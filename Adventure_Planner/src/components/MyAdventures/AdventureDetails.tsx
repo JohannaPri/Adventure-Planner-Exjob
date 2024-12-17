@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase/firebase-config";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import SubFolderComponent from "./SubFolder/SubFolderComponent";
 import { getAuth } from "firebase/auth";
+import CreateSubFolderInput from "./SubFolder/CreateSubFolderInput";
+import { ArrowCircleLeft } from "@phosphor-icons/react";
 
 import { deleteFolder } from "./Folder/DeleteFolder";
 
@@ -12,7 +14,7 @@ interface Folder {
   id: string;
   title: string;
   description: string;
-  folderTitle: string;
+  title2: string;
   folderDestination: string;
   creationDate: string;
   priority: number;
@@ -24,6 +26,12 @@ const AdventureDetails: React.FC = () => {
   const [subfolders, setSubfolders] = useState<Folder[]>([]);
   const auth = getAuth();
   const user = auth.currentUser;
+
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     console.log("Extracted id from URL:", id);
@@ -105,6 +113,10 @@ const AdventureDetails: React.FC = () => {
     }
   };
 
+  const handleAddSubFolder = (newSubFolder: any) => {
+    setSubfolders((prevState) => [...prevState, newSubFolder]);
+  };
+
   if (!id) {
     return <div>Error: No adventure ID provided in the URL.</div>;
   }
@@ -114,12 +126,22 @@ const AdventureDetails: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center mt-28">
-      <h1 className="text-2xl font-bold">{folder.title}</h1>
+    <div className="flex flex-col items-center justify-center">
+      <CreateSubFolderInput userId={user?.uid || ""} parentFolderId={folder.id} onAddSubFolder={handleAddSubFolder} />
+      <div className="flex w-full justify-between items-center">
+      <div className="absolute left-0 ml-72">
+                    <button 
+                      onClick={handleBackClick}
+                    >
+                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
+                    </button>
+                  </div>
+      <h1 className="text-2xl font-bold w-full text-center">{folder.title}</h1>
+      </div>
       <p className="text-gray-500">
         {folder.description || ""}
       </p>
-      <div className="p-8 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-h-[500px] overflow-x-scroll scroll-smooth no-scrollbar">
+      <div className="p-8 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-h-[600px] overflow-x-scroll scroll-smooth no-scrollbar h-full">
         {subfolders.length > 0 ? (
           subfolders
             .sort((a, b) => a.priority - b.priority)

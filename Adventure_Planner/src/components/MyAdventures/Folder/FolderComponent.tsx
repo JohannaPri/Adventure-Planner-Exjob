@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Folder, XCircle } from "@phosphor-icons/react";
+import React, { ReactNode, useState } from "react";
+import { Folder, Warning, XCircle } from "@phosphor-icons/react";
 import { deleteFolder } from "./DeleteFolder";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import "../folder.css";
+import { DeleteModalComponent } from "../../DeleteModalComponent";
 
 interface FolderProps {
   id?: string;
@@ -21,6 +22,14 @@ const FolderComponent: React.FC<FolderProps> = ({
   onDeleteFolder,
 }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalContent, setModalContent] = useState<{
+    title: string;
+    description: string | ReactNode;
+    confirmText: string;
+    closeText: string;
+  } | null>(null);
+  
   const navigate = useNavigate();
 
   const handleDeleteFolder = async (folderId: string) => {
@@ -35,12 +44,27 @@ const FolderComponent: React.FC<FolderProps> = ({
         await deleteFolder(userId, folderId);
         console.log(`Folder with ID ${folderId} deleted.`);
         onDeleteFolder(folderId);
+        setIsModalOpen(false);
       } else {
         console.error("User not authenticated.");
       }
     } catch (error) {
       console.error("Failed to delete folder: ", error);
     }
+  }
+  
+  const openModal = () => {
+    setModalContent({
+      title: "Hold on! You're about to delete this folder...",
+      description: (
+        <>
+          Are you sure you want to delete <strong>{folderTitle}?</strong> Once it's gone, you can't get it back!
+        </>
+      ),
+      confirmText: "Yes, Delete!",
+      closeText: "No, Cancel",
+    });
+    setIsModalOpen(true);
   }
 
   const handleClick = () => {
@@ -61,7 +85,7 @@ const FolderComponent: React.FC<FolderProps> = ({
         className="bg-white w-[190px] max-h-[190px] max-w-[190px] h-[190px] relative flex flex-col items-center justify-center p-4 rounded-lg shadow-md"
       >
         <button
-          onClick={() => handleDeleteFolder(id || '')}
+          onClick={openModal}
           className="absolute text-gray-600 top-2 right-2 hover:text-gray-800"
         >
           <XCircle size={24} weight="fill" />
@@ -87,6 +111,18 @@ const FolderComponent: React.FC<FolderProps> = ({
           </p>
         </div>
       </div>
+      {isModalOpen && modalContent && (
+        <DeleteModalComponent
+          title={modalContent.title}
+          description={modalContent.description}
+          confirmText={modalContent.confirmText}
+          closeText={modalContent.closeText}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={() => handleDeleteFolder(id || '')}
+          icon={<Warning size={60} />}
+        />
+      )}
     </div>
   );
 };

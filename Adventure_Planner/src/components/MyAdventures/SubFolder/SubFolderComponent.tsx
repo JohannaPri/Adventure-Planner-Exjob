@@ -1,8 +1,9 @@
-import React from "react";
-import { Folder, XCircle } from "@phosphor-icons/react";
+import React, { ReactNode, useState } from "react";
+import { Folder, Warning, XCircle } from "@phosphor-icons/react";
 import { deleteSubFolder } from "./DeleteSubFolder";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
+import { DeleteModalComponent } from "../../DeleteModalComponent";
 
 interface SubFolderProps {
   id?: string;
@@ -19,6 +20,13 @@ const SubFolderComponent: React.FC<SubFolderProps> = ({
   onDeleteSubfolder,
 }) => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalContent, setModalContent] = useState<{
+    title: string;
+    description: string | ReactNode;
+    confirmText: string;
+    closeText: string;
+  } | null>(null);
 
   const handleDeleteSubfolder = async (subfolderId: string) => {
     try {
@@ -28,6 +36,7 @@ const SubFolderComponent: React.FC<SubFolderProps> = ({
       if (user) {
         await deleteSubFolder(user.uid, parentFolderId, subfolderId);
         onDeleteSubfolder(subfolderId);
+        setIsModalOpen(false);
       } else {
         console.error("User not authenticated.");
       }
@@ -35,6 +44,21 @@ const SubFolderComponent: React.FC<SubFolderProps> = ({
       console.error("Failed to delete subfolder: ", error);
     }
   };
+
+  const openModal = () => {
+    console.log('sdflfdk');
+    setModalContent({
+      title: "Hold on! You're about to delete this folder...",
+      description: (
+        <>
+          Are you sure you want to delete <strong>{title}?</strong> Once it's gone, you can't get it back!
+        </>
+      ),
+      confirmText: "Yes, Delete!",
+      closeText: "No, Cancel",
+    });
+    setIsModalOpen(true);
+  }
 
   const handleClick = () => {
     navigate(`/my-adventures/${parentFolderId}/subfolder/${id}`);
@@ -51,7 +75,7 @@ const SubFolderComponent: React.FC<SubFolderProps> = ({
         className="bg-white w-[190px] max-h-[190px] max-w-[190px] h-[190px] relative flex flex-col items-center justify-center p-4 rounded-lg shadow-md"
       >
         <button
-          onClick={() => handleDeleteSubfolder(id || "")}
+          onClick={openModal}
           className="absolute text-gray-600 top-2 right-2 hover:text-gray-800"
         >
           <XCircle size={24} weight="fill" />
@@ -70,6 +94,18 @@ const SubFolderComponent: React.FC<SubFolderProps> = ({
           </p>
         </div>
       </div>
+      {isModalOpen && modalContent && (
+        <DeleteModalComponent
+          title={modalContent.title}
+          description={modalContent.description}
+          confirmText={modalContent.confirmText}
+          closeText={modalContent.closeText}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={() => handleDeleteSubfolder(id || '')}
+          icon={<Warning size={60} />}
+        />
+      )}
     </div>
   );
 };

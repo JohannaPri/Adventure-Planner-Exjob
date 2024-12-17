@@ -56,13 +56,13 @@ const LoggedIn = () => {
         <div className="w-full max-w-screen-xl mx-auto">
           <section className="flex justify-center items-center w-fit h-auto max-w-screen-xl mx-auto overflow-hidden relative shadow-sm shadow-black rounded-lg">
             <div
-              className={`w-fit p-4 rounded-md shadow-md bg-cover bg-no-repeat bg-center transition-all duration-500 ${
+              className={`w-screen p-4 rounded-md shadow-md bg-cover bg-no-repeat bg-center transition-all duration-500 ${
                 isImageLoaded
                   ? "bg-bgCarOpacity opacity-100"
                   : "opacity-0 bg-white"
               }`}
             >
-              <div className="mx-4 relative backdrop-blur-sm border-black border flex lg:justify-start justify-center sm:flex-wrap sm:justify-center space-x-4 mb-10 bg-white/75 rounded-xl p-2 max-w-fit">
+              <div className="lg:mx-4 relative backdrop-blur-sm border-black border flex lg:justify-start justify-center sm:flex-wrap sm:justify-center lg:space-x-4 mb-10 bg-white/75 rounded-xl p-2 max-w-fit">
                 <ButtonWIcon
                   className={`p-2 rounded hover:scale-[1.05] transition-transform duration-300 ${
                     searchType === "flight"
@@ -116,7 +116,7 @@ const LoggedIn = () => {
                   Weather
                 </ButtonWIcon>
               </div>
-              <div className="flex flex-col gap-4 w-[1280px] px-4">
+              <div className="flex flex-col gap-4 lg:w-[1280px] w-auto sm:w-auto px-4">
                 {searchType === "flight" && <FlightComponent />}
                 {searchType === "accommodation" && <AccommodationComponent />}
                 {searchType === "activities" && <ActivityComponent />}

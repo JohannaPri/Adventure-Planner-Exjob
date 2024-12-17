@@ -1,0 +1,45 @@
+.responsive-pink-cloud {
+    position: absolute;
+    top: 30%;
+    left: 55%;
+}
+
+@media (min-width: 1025px) { /* Large screens */
+    .responsive-pink-cloud {
+        position: absolute;
+        top: 30%;
+        left: 55%;
+    }
+    .responsive-gray-cloud {
+        position: absolute;
+        top: 15%;
+        right: 10%;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) { /* Medium screens */
+    .responsive-pink-cloud {
+        position: absolute;
+        top: 27%;
+        left: 55%;
+    }
+    .responsive-gray-cloud {
+        position: absolute;
+        top: 20%;
+        right: 10%;
+    }
+}
+
+@media (max-width: 640px) { /* Small screens */
+    .responsive-pink-cloud {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+    }
+    .responsive-gray-cloud {
+        position: absolute;
+        top: 15%;
+        right: 10%;
+    }
+}
+

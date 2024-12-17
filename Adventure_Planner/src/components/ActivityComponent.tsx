@@ -458,7 +458,7 @@ const ActivityComponent: React.FC = () => {
               </div>
             </Input>
           </div>
-          <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
+          <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto max-w-fit">
             <DatePickerSingleComponent
               reset={resetDatePicker}
               onDateChange={handleDateChange}

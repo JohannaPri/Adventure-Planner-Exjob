@@ -411,7 +411,7 @@ const FlightComponent = () => {
       >
         <Select
           containerClass="relative"
-          selectClass="focus:outline-none pl-9 border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-8 pl-4 py-1 cursor-pointer appearance-none"
+          selectClass="focus:outline-none pl-9 border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-8 pl-4 py-1 cursor-pointer appearance-none sm:max-w-fit md:max-w-fit lg:max-w-fit max-w-fit"
         >
           <option value="round-trip">Round-Trip</option>
           <option value="one-way-trip" disabled={true}>
@@ -425,7 +425,7 @@ const FlightComponent = () => {
 
         <div
           id="pil"
-          className="absolute left-64 top-2.5 transform -translate-y-1/2 pointer-events-none"
+          className="absolute left-40 top-2.5 transform -translate-y-1/2 pointer-events-none sm:left-40 md:left-40"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -532,7 +532,7 @@ const FlightComponent = () => {
               )}
           </div>
 
-          <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
+          <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto max-w-fit">
             <DatePickerComponent
               reset={resetDatePicker}
               onDateChange={handleDateChange}

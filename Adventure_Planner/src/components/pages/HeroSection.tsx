@@ -6,6 +6,7 @@ import { HeroTexts, Countries } from "../../data/DataLists";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { opensignupmodal } from "../../redux/slices/modalSignupSlice";
+import './heroSection.css';
 
 const HeroSection = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
@@ -36,7 +37,7 @@ const HeroSection = () => {
     <>
       <section
         id="home"
-        className="w-full lg:h-screen md:h-[550px] h-[830px] relative overflow-x-hidden flex justify-end font-poppins"
+        className="max-h-screen w-full lg:h-screen md:h-[550px] h-[830px] relative overflow-x-hidden flex justify-end font-poppins"
       >
         <section className="w-full lg:h-screen md:h-[550px] h-[830] overflow-hidden relative">
           <svg
@@ -71,8 +72,7 @@ const HeroSection = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
-            className="max-w-full max-h-full max-md:mt-20"
-            style={{ position: "absolute", top: "15%", right: "10%" }}
+            className="max-w-full max-h-full max-md:mt-20 responsive-gray-cloud"
           >
             <defs>
               <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
@@ -99,8 +99,7 @@ const HeroSection = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
-            className="max-w-full max-h-full z-10 max-sm:w-80 max-md:w-2/3 max-md:h-2/3 max-sm:h-80 max-sm:-ml-24 max-md:-ml-28"
-            style={{ position: "absolute", top: "30%", left: "55%" }}
+            className="max-w-full max-h-full z-10 max-sm:w-80 max-md:w-2/3 max-md:h-2/3 max-sm:h-80 max-sm:-ml-24 max-md:-ml-28 responsive-pink-cloud"
           >
             <defs>
               <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
@@ -155,7 +154,7 @@ const HeroSection = () => {
             </Text>
             <Text
               as="p"
-              className="text-sm font-light max-sm:mb-4 max-md:mb-4 max-md:mt-2 text-justify text-gray-600 md:text-base"
+              className="text-sm font-light max-sm:mb-4 max-md:mb-4 max-md:mt-2 text-justify text-gray-600 md:text-base z-20"
             >
               <Fade duration={2000}>{heroText.secondText1}</Fade>
               <Fade duration={2000}>{heroText.secondText2}</Fade>

@@ -440,7 +440,7 @@ const AccommodationComponent: React.FC = () => {
                 />
               )}
           </div>
-          <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto">
+          <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto max-w-fit">
             <DatePickerComponent
               reset={resetDatePicker}
               onDateChange={handleDateChange}

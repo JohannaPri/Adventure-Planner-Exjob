@@ -99,7 +99,7 @@ const NavBar: React.FC<NavBarProps> = () => {
     <header className="fixed top-0 left-0 z-50 w-full h-auto overflow-x-hidden bg-transparent">
       <Slide direction="down">
         <nav
-          className={`w-full md:h-24 h-20 ${
+          className={`w-screen md:h-24 h-20 ${
             navBarColor ? "bg-white" : "bg-white bg-opacity-70"
           } lg:px-24 md:px-12 px-8 flex justify-between items-center`}
         >
@@ -342,11 +342,11 @@ const NavBar: React.FC<NavBarProps> = () => {
 
                   <li className="w-full text-base">
                     <NavLink
-                      to={"/my-destinations"}
+                      to={"/my-adventures"}
                       onClick={() => scrollToTopMobile()}
                       className="relative inline-block overflow-hidden pt-2 whitespace-nowrap pl-4"
                     >
-                      My Destinations
+                      My Adventures
                     </NavLink>
                   </li>
 
@@ -405,7 +405,7 @@ const NavBar: React.FC<NavBarProps> = () => {
               )}
             </ul>
           </section>
-          <ul className="flex items-center justify-center w-full gap-4 pb-24">
+          <ul className="flex items-center justify-center w-full gap-0 pl-2 pr-2 pb-24">
             {isLoggedIn ? (
               <>
                 <button

@@ -13,6 +13,16 @@ interface SubFolderProps {
   onDeleteSubfolder: (id: string) => void;
 }
 
+/**
+ * SubFolderComponent renders a subfolder with options to navigate to it or delete it.
+ * It displays the subfolder title and an icon representing the folder.
+ *
+ * @param id - The ID of the subfolder.
+ * @param title - The title of the subfolder.
+ * @param parentFolderId - The ID of the parent folder containing this subfolder.
+ * @param onDeleteSubfolder - Callback function triggered when a subfolder is deleted.
+ */
+
 const SubFolderComponent: React.FC<SubFolderProps> = ({
   id,
   title,
@@ -27,6 +37,13 @@ const SubFolderComponent: React.FC<SubFolderProps> = ({
     confirmText: string;
     closeText: string;
   } | null>(null);
+
+  /**
+   * Handles the deletion of a subfolder by calling the deleteSubFolder function
+   * and updating the parent component with the onDeleteSubfolder callback.
+   *
+   * @param subfolderId - The ID of the subfolder to be deleted.
+   */
 
   const handleDeleteSubfolder = async (subfolderId: string) => {
     try {
@@ -46,23 +63,32 @@ const SubFolderComponent: React.FC<SubFolderProps> = ({
   };
 
   const openModal = () => {
-    console.log('sdflfdk');
+    console.log("sdflfdk");
     setModalContent({
       title: "Hold on! You're about to delete this folder...",
       description: (
         <>
-          Are you sure you want to delete <strong>{title}?</strong> Once it's gone, you can't get it back!
+          Are you sure you want to delete <strong>{title}?</strong> Once it's
+          gone, you can't get it back!
         </>
       ),
       confirmText: "Yes, Delete!",
       closeText: "No, Cancel",
     });
     setIsModalOpen(true);
-  }
+  };
 
   const handleClick = () => {
     navigate(`/my-adventures/${parentFolderId}/subfolder/${id}`);
   };
+
+  /**
+   * Truncates text if it exceeds the specified length, appending '...' at the end.
+   *
+   * @param text - The text to truncate.
+   * @param length - The maximum length before truncation.
+   * @returns The truncated text.
+   */
 
   const truncateText = (text: string, length: number = 15) => {
     return text?.length > length ? `${text.slice(0, length)}...` : text;
@@ -102,7 +128,7 @@ const SubFolderComponent: React.FC<SubFolderProps> = ({
           closeText={modalContent.closeText}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onConfirm={() => handleDeleteSubfolder(id || '')}
+          onConfirm={() => handleDeleteSubfolder(id || "")}
           icon={<Warning size={60} />}
         />
       )}

@@ -12,6 +12,14 @@ interface CreateSubFolderInputProps {
   onAddSubFolder: (subFolder: any) => void;
 }
 
+/**
+ * Component that allows the user to create a new subfolder within a parent folder.
+ *
+ * @param userId - The ID of the current user.
+ * @param parentFolderId - The ID of the parent folder where the subfolder will be created.
+ * @param onAddSubFolder - Callback function to handle adding the new subfolder to the parent folder.
+ */
+
 const CreateSubFolderInput: React.FC<CreateSubFolderInputProps> = ({
   userId,
   parentFolderId,
@@ -28,6 +36,9 @@ const CreateSubFolderInput: React.FC<CreateSubFolderInputProps> = ({
     return;
   }
 
+  /**
+   * Fetches existing subfolders for the specified parent folder to validate unique titles.
+   */
   const fetchExistingSubFolders = useCallback(async () => {
     if (userId && parentFolderId) {
       try {
@@ -40,20 +51,24 @@ const CreateSubFolderInput: React.FC<CreateSubFolderInputProps> = ({
   }, [userId, parentFolderId]);
 
   useEffect(() => {
-      fetchExistingSubFolders();
+    fetchExistingSubFolders();
   }, [fetchExistingSubFolders]);
 
+  /**
+   * Handles the logic to add a new subfolder after validating the title.
+   */
   const handleAddSubFolder = async () => {
     if (!subFolderTitle.trim()) {
       return;
     }
 
     const titleExists = existingSubFolders.some(
-      (subFolder) => subFolder.title.toLowerCase() === subFolderTitle.toLowerCase()
+      (subFolder) =>
+        subFolder.title.toLowerCase() === subFolderTitle.toLowerCase()
     );
 
-    const title2Exists = existingSubFolders.some(
-      (subFolder) => console.log('Subfolder: ', subFolder)
+    const title2Exists = existingSubFolders.some((subFolder) =>
+      console.log("Subfolder: ", subFolder)
     );
 
     if (titleExists || title2Exists) {
@@ -120,7 +135,6 @@ const CreateSubFolderInput: React.FC<CreateSubFolderInputProps> = ({
         </button>
       </div>
     </div>
-    
   );
 };
 

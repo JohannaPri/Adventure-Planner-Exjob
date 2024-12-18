@@ -7,6 +7,16 @@ import { Activity } from "../../types/types";
 import { removeActivityFromDb } from "./RemoveActivityFromDb";
 import StarRating from "../../StarRating";
 
+/**
+ * Component that fetches and displays saved activities for a specific folder.
+ *
+ * This component retrieves saved activities from Firestore for a given folder ID,
+ * displaying details such as activity type, category, participants, rating, and price.
+ * Users can also remove activities from their saved list.
+ *
+ * @param folderId - The ID of the folder where saved activities are stored.
+ */
+
 const GetActivitiesFromDb = ({ folderId }: { folderId: string }) => {
   const [savedActivities, setSavedActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -62,6 +72,17 @@ const GetActivitiesFromDb = ({ folderId }: { folderId: string }) => {
   }
 
   console.log(savedActivities);
+
+  /**
+   * Removes a specific activity from the saved list and Firestore database.
+   *
+   * This function calls the removeActivityFromDb function to remove an activity
+   * from Firestore and updates the component's state to reflect the change.
+   *
+   * @param activity - The activity to be removed.
+   * @param folderId - The folder ID where the activity is saved.
+   * @param activityId - The ID of the activity to be removed.
+   */
 
   const handleRemoveActivity = (
     activity: Activity,
@@ -157,7 +178,8 @@ const GetActivitiesFromDb = ({ folderId }: { folderId: string }) => {
         ))
       ) : (
         <p className="text-center max-w-md mx-auto text-gray-800">
-          You haven’t saved any activities yet. Why not head over to Search and find exciting things to do for your next adventure? 🌍🎉
+          You haven’t saved any activities yet. Why not head over to Search and
+          find exciting things to do for your next adventure? 🌍🎉
         </p>
       )}
     </div>

@@ -1,10 +1,16 @@
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../../firebase/firebase-config';
-import { getAuth } from 'firebase/auth';
-import { useState, useEffect } from 'react';
-import { AirplaneTilt } from '@phosphor-icons/react';
-import { removeFlightFromDb } from './RemoveFlightFromDb';
-import { FormattedFlightData } from '../../../utils/formattedFlightData';
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../../firebase/firebase-config";
+import { getAuth } from "firebase/auth";
+import { useState, useEffect } from "react";
+import { AirplaneTilt } from "@phosphor-icons/react";
+import { removeFlightFromDb } from "./RemoveFlightFromDb";
+import { FormattedFlightData } from "../../../utils/formattedFlightData";
+
+/**
+ * Component that fetches and displays saved flights for a specific folder.
+ *
+ * @param folderId - The ID of the folder to retrieve flights from.
+ */
 
 const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
   const [savedFlights, setSavedFlights] = useState<FormattedFlightData[]>([]);
@@ -19,10 +25,13 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
         const userId = user?.uid;
 
         if (!userId) {
-          throw new Error('User not authenticated');
+          throw new Error("User not authenticated");
         }
 
-        const subFoldersRef = collection(db, `users/${userId}/userFolders/${folderId}/subFolders`);
+        const subFoldersRef = collection(
+          db,
+          `users/${userId}/userFolders/${folderId}/subFolders`
+        );
         const q = query(subFoldersRef, where("itemId", "==", 1));
         const snapshot = await getDocs(q);
 
@@ -31,7 +40,7 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
         }
 
         const flightsData: any[] = [];
-        snapshot.forEach(docSnap => {
+        snapshot.forEach((docSnap) => {
           const subFolderData = docSnap.data();
           const flight = subFolderData?.data || [];
           flightsData.push(...flight);
@@ -40,7 +49,7 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
         setSavedFlights(flightsData);
       } catch (error: any) {
         setError(error.message);
-        console.error('Error fetching document:', error);
+        console.error("Error fetching document:", error);
       } finally {
         setLoading(false);
       }
@@ -59,6 +68,14 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
 
   console.log(savedFlights);
 
+  /**
+   * Handles the removal of a flight from Firestore and updates the UI.
+   *
+   * @param flight - The flight to be removed.
+   * @param folderId - The folder ID where the flight is stored.
+   * @param flightId - The unique ID of the flight to be removed.
+   */
+
   const handleRemoveFlight = (
     flight: FormattedFlightData,
     folderId: string,
@@ -67,12 +84,17 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
     if (!flightId) return;
 
     removeFlightFromDb(flight, folderId)
-    .then(() => {
-      setSavedFlights(prevFlights => prevFlights.filter(savedFlight => savedFlight.flight_id !== flightId));
-    }).catch(error => {
-      console.error("Error removing flight from database: ", error);
-    });
-  }
+      .then(() => {
+        setSavedFlights((prevFlights) =>
+          prevFlights.filter(
+            (savedFlight) => savedFlight.flight_id !== flightId
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Error removing flight from database: ", error);
+      });
+  };
 
   return (
     <div className="space-y-2 w-full max-h-[500px] scroll-smooth mt-10 overflow-y-auto no-scrollbar last:mb-5 pb-10">
@@ -92,7 +114,8 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
                     <div className="flex justify-between">
                       <div>
                         <p className="text-sm font-bold">
-                          {flight.outbound.departure} - {flight.outbound.arrival}
+                          {flight.outbound.departure} -{" "}
+                          {flight.outbound.arrival}
                         </p>
                         <p className="text-xs text-gray-600">
                           {flight.outbound.carrier}
@@ -100,7 +123,8 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
                       </div>
                       <div className="text-center">
                         <p className="text-sm font-bold text-center">
-                          {flight.outbound.departureTime} – {flight.outbound.arrivalTime}
+                          {flight.outbound.departureTime} –{" "}
+                          {flight.outbound.arrivalTime}
                         </p>
                         <p className="text-xs text-gray-600 text-center">
                           {flight.outbound.duration} {flight.outbound.stops}
@@ -126,7 +150,8 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-bold text-center">
-                            {flight.return.departureTime} – {flight.return.arrivalTime}
+                            {flight.return.departureTime} –{" "}
+                            {flight.return.arrivalTime}
                           </p>
                           <p className="text-xs text-gray-600 text-center">
                             {flight.return.duration} {flight.return.stops}
@@ -140,14 +165,17 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
                 )}
               </div>
 
-              {/* Price and Save Button (Centered vertically) */}
+              {/* Price and Remove Button (Centered vertically) */}
               <div className="ml-12 flex flex-col items-center justify-center col-span-4 space-y-4">
                 <p className="text-lg font-bold text-black text-center">
                   {flight.price}
                 </p>
                 <button
-                  onClick={() => handleRemoveFlight(flight, folderId, flight.flight_id)}
-                  className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black">
+                  onClick={() =>
+                    handleRemoveFlight(flight, folderId, flight.flight_id)
+                  }
+                  className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black"
+                >
                   Remove
                 </button>
               </div>
@@ -155,12 +183,13 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
           </div>
         ))
       ) : (
-        <p className="text-center max-w-md mx-auto text-gray-800">You haven’t saved any flights yet. Why not head over to Search and find the perfect trip for your next adventure? ✈️🌍</p>
+        <p className="text-center max-w-md mx-auto text-gray-800">
+          You haven’t saved any flights yet. Why not head over to Search and
+          find the perfect trip for your next adventure? ✈️🌍
+        </p>
       )}
     </div>
   );
 };
 
 export default GetFlightsFromDb;
-
-

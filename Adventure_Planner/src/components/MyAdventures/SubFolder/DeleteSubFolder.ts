@@ -1,4 +1,4 @@
-import { doc, deleteDoc, getDocs, collection  } from "firebase/firestore";
+import { doc, deleteDoc, getDocs, collection } from "firebase/firestore";
 import { db } from "../../../firebase/firebase-config";
 
 /**
@@ -29,11 +29,13 @@ export const deleteSubFolder = async (
 
     console.log("Firestore path for deletion:", subFolderDocRef.path);
 
-    const subFolderSnapshot = await getDocs(collection(subFolderDocRef, "subFolders"));
+    const subFolderSnapshot = await getDocs(
+      collection(subFolderDocRef, "subFolders")
+    );
 
-     subFolderSnapshot.forEach(async (subFolderDoc) => {
+    subFolderSnapshot.forEach(async (subFolderDoc) => {
       await deleteDoc(subFolderDoc.ref);
-     });
+    });
 
     await deleteDoc(subFolderDocRef);
 

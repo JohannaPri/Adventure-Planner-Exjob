@@ -9,13 +9,14 @@ import { Folder } from "../types";
  * @returns A promise that resolves to an array of folders.
  */
 
-
 export const fetchFolders = async (userId: string): Promise<Folder[]> => {
   try {
-
     const folderCollection = collection(db, "users", userId, "userFolders");
 
-    const subFolderQuery = query(folderCollection, orderBy("createdAt", "desc"));
+    const subFolderQuery = query(
+      folderCollection,
+      orderBy("createdAt", "desc")
+    );
 
     const folderSnapshot = await getDocs(subFolderQuery);
 
@@ -29,7 +30,10 @@ export const fetchFolders = async (userId: string): Promise<Folder[]> => {
     });
 
     console.log(`Fetched ${folderList.length} folders`);
-    console.log(`FOLDER-LIST: `, folderList.map((folder) => folder.id));
+    console.log(
+      `FOLDER-LIST: `,
+      folderList.map((folder) => folder.id)
+    );
     return folderList;
   } catch (error) {
     console.error("Error fetching folders:", error);

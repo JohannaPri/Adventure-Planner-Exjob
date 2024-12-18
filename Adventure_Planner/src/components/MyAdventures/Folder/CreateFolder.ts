@@ -11,7 +11,10 @@ import { createDefaultSubFolders } from "../SubFolder/CreateSubFolder";
  * @returns A promise resolving to the document ID of the created folder.
  */
 
-export const createFolder = async (userId: string, folderData: NewFolder): Promise<string> => {
+export const createFolder = async (
+  userId: string,
+  folderData: NewFolder
+): Promise<string> => {
   try {
     const folderCollection = collection(db, "users", userId, "userFolders");
 

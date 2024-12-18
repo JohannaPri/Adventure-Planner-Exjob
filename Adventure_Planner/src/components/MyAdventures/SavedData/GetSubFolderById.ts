@@ -1,6 +1,16 @@
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase-config";
 
+/**
+ * Fetches a subfolder by its ID from the Firestore database.
+ * 
+ * @param userId - The ID of the user.
+ * @param parentFolderId - The ID of the parent folder.
+ * @param subFolderId - The ID of the subfolder to fetch.
+ * 
+ * @returns A Promise resolving to an object containing the subfolder's title or null if not found.
+ */
+
 export const getSubFolderById = async (
     userId: string,
     parentFolderId: string,

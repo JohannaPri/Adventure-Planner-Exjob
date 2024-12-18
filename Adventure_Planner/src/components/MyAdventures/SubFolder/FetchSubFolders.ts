@@ -3,7 +3,7 @@ import { db } from "../../../firebase/firebase-config";
 
 /**
  * Fetches subfolders from Firestore for a given user and parent folder.
- * 
+ *
  * @param userId - The ID of the logged-in user.
  * @param folderId - The ID of the parent folder.
  * @returns A promise that resolves to an array of subfolder objects.

@@ -22,6 +22,7 @@ const Signup: React.FC = () => {
   //@ts-expect-error: Unused variable warning
   const [passwordMatchError, setPasswordMatchError] = useState<boolean>(false);
 
+  // Redux dispatch and navigation hook
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -30,6 +31,11 @@ const Signup: React.FC = () => {
     setPassword("");
     setConfirmPassword("");
   };
+
+  /**
+   * Handles Google authentication and user sign-in.
+   * Initiates Firebase authentication process with Google.
+   */
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
@@ -45,6 +51,12 @@ const Signup: React.FC = () => {
       setLoading(false);
     }
   };
+
+  /**
+   * Handles email/password sign-up.
+   * Checks for password confirmation match, then signs up the user using Firebase.
+   * @param e - The form submit event
+   */
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,12 +100,15 @@ const Signup: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div className="relative z-10 w-full max-w-xl p-8 text-white rounded-md shadow-lg bg-cloudGray2">
+        {/* Close the modal when clicking on the close button */}
         <button
           onClick={() => dispatch(closesignupmodal())}
           className="absolute top-4 right-4 text-gray-600 hover:text-gray-500"
         >
           <X size={20} />
         </button>
+
+        {/* Email, Password, and Confirm Password Sign-Up Form */}
         <form onSubmit={handleSignup}>
           <div className="mb-4">
             <label
@@ -153,6 +168,8 @@ const Signup: React.FC = () => {
           </button>
         </form>
         <div className="w-full h-px mt-6 mb-6 bg-gray-500"></div>
+
+        {/* Google Sign-Up Button */}
         <div className="flex flex-col w-full text-center justify-center items-center">
           <button
             onClick={handleGoogleLogin}

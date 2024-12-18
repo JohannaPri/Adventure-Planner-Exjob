@@ -67,7 +67,7 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
       where("title2", "==", title)
     );
     const snapshot = await getDocs(q);
-    console.log('CHECK!: ', q);
+    console.log("CHECK!: ", q);
 
     if (snapshot.empty) {
       console.error("No subfolder with typeId 4 found.");
@@ -109,6 +109,14 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
 
     fetchTodos();
   }, [getSubFolderWithTypeId, userId, parentFolderId]);
+
+  /**
+   * Adds a new todo to the subfolder if the input is not empty.
+   * It calculates the next available ID by finding the highest ID in the current todos.
+   * The new todo is added to the Firestore database and the input field is cleared.
+   *
+   * @returns Void. The new todo is added to the Firestore database, and the input field is reset for the next todo.
+   */
 
   const handleAddTodo = async () => {
     if (input.trim() === "") return;
@@ -279,14 +287,18 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
           </div>
         </div>
         <div className="flex w-full justify-between items-center">
-        <div className="absolute left-0 ml-96">
-                    <button 
-                      onClick={handleBackClick}
-                    >
-                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
-                    </button>
-                  </div>
-        <h1 className="pb-4 font-semibold text-center uppercase w-full">{title}</h1>
+          <div className="absolute left-0 ml-96">
+            <button onClick={handleBackClick}>
+              <ArrowCircleLeft
+                className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"
+                weight="fill"
+                size={32}
+              />
+            </button>
+          </div>
+          <h1 className="pb-4 font-semibold text-center uppercase w-full">
+            {title}
+          </h1>
         </div>
         <div className="flex flex-col w-[500px] items-center min-w-[500px]">
           {todos.length > 0 ? (
@@ -312,7 +324,11 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
                               onClick={() => toggleComplete(todo.id)}
                             >
                               {todo.completed && (
-                                <Check size={24} weight="regular" className="text-slateGray" />
+                                <Check
+                                  size={24}
+                                  weight="regular"
+                                  className="text-slateGray"
+                                />
                               )}
                               <span
                                 className={`text-sm font-medium ${
@@ -324,13 +340,13 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
                             </div>
 
                             <div className="flex space-x-3">
-                              <button 
+                              <button
                                 onClick={() => handleEdit(todo)}
                                 className="text-gray-600 hover:text-gray-800"
                               >
                                 <Pencil size={20} />
                               </button>
-                              <button 
+                              <button
                                 onClick={() => handleDelete(todo.id)}
                                 className="text-orange-400 hover:text-orange-500"
                               >

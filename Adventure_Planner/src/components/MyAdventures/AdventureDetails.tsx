@@ -74,8 +74,18 @@ const AdventureDetails: React.FC = () => {
       if (!id || !user) return;
 
       try {
-        const subfolderCollection = collection(db, "users", user.uid, "userFolders", id, "subFolders");
-        console.log("Fetching subfolders from collection path:", subfolderCollection.path);
+        const subfolderCollection = collection(
+          db,
+          "users",
+          user.uid,
+          "userFolders",
+          id,
+          "subFolders"
+        );
+        console.log(
+          "Fetching subfolders from collection path:",
+          subfolderCollection.path
+        );
 
         const snapshot = await getDocs(subfolderCollection);
         console.log("Fetched subfolder snapshot:", snapshot);
@@ -107,11 +117,21 @@ const AdventureDetails: React.FC = () => {
       }
       await deleteFolder(user.uid, folderId);
       console.log("Folder deleted successfully");
-      setSubfolders((prevFolders) => prevFolders.filter((folder) => folder.id !== folderId));
+      setSubfolders((prevFolders) =>
+        prevFolders.filter((folder) => folder.id !== folderId)
+      );
     } catch (error) {
       console.error("Error deleting folder:", error);
     }
   };
+
+  /**
+   * Handles the addition of a new subfolder to the current folder.
+   * This function is passed down to the `CreateSubFolderInput` component
+   * to update the list of subfolders after a new one is added.
+   *
+   * @param newSubFolder The new subfolder object to add to the list.
+   */
 
   const handleAddSubFolder = (newSubFolder: any) => {
     setSubfolders((prevState) => [...prevState, newSubFolder]);
@@ -127,20 +147,26 @@ const AdventureDetails: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <CreateSubFolderInput userId={user?.uid || ""} parentFolderId={folder.id} onAddSubFolder={handleAddSubFolder} />
+      <CreateSubFolderInput
+        userId={user?.uid || ""}
+        parentFolderId={folder.id}
+        onAddSubFolder={handleAddSubFolder}
+      />
       <div className="flex w-full justify-between items-center">
-      <div className="absolute left-0 ml-72">
-                    <button 
-                      onClick={handleBackClick}
-                    >
-                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
-                    </button>
-                  </div>
-      <h1 className="text-2xl font-bold w-full text-center">{folder.title}</h1>
+        <div className="absolute left-0 ml-72">
+          <button onClick={handleBackClick}>
+            <ArrowCircleLeft
+              className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"
+              weight="fill"
+              size={32}
+            />
+          </button>
+        </div>
+        <h1 className="text-2xl font-bold w-full text-center">
+          {folder.title}
+        </h1>
       </div>
-      <p className="text-gray-500">
-        {folder.description || ""}
-      </p>
+      <p className="text-gray-500">{folder.description || ""}</p>
       <div className="p-8 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-h-[600px] overflow-x-scroll scroll-smooth no-scrollbar h-full">
         {subfolders.length > 0 ? (
           subfolders

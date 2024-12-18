@@ -3,6 +3,18 @@ import { db } from '../../../firebase/firebase-config';
 import { FormattedFlightData } from '../../../utils/formattedFlightData';
 import { getAuth } from 'firebase/auth';
 
+/**
+ * Checks if a specific flight already exists within a given folder.
+ * 
+ * This function fetches the subfolders in the given folder from Firestore and checks if
+ * the flight (passed as a parameter) already exists within the stored data.
+ * It verifies the presence of the flight by comparing its flight ID with the one stored in the database.
+ *
+ * @param flight - The flight object to check for existence in the folder.
+ * @param folderId - The ID of the folder where the flight should be checked.
+ * @returns A promise that resolves to `true` if the flight exists, `false` otherwise.
+ */
+
 const checkIfFlightExists = async (flight: FormattedFlightData, folderId: string) => {
   try {
     const auth = getAuth();

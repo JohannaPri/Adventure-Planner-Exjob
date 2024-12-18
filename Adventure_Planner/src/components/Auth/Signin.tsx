@@ -18,6 +18,7 @@ const Login: React.FC = () => {
   //@ts-expect-error: Unused variable warning
   const [error, setError] = useState("");
 
+  // Redux dispatch and navigation hook
   const dispatch = useDispatch();
   const navigate = useNavigate();
   //@ts-expect-error: Unused variable warning
@@ -27,6 +28,12 @@ const Login: React.FC = () => {
     setEmail("");
     setPassword("");
   };
+
+  /**
+   * Handles Google authentication and user sign-in.
+   * Initiates Firebase authentication process with Google.
+   */
+
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
@@ -41,6 +48,12 @@ const Login: React.FC = () => {
       setLoading(false);
     }
   };
+
+  /**
+   * Handles email/password login and signs in the user.
+   * Authenticates the user via Firebase email and password authentication.
+   * @param e - The form submit event
+   */
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,6 +90,8 @@ const Login: React.FC = () => {
         >
           <X size={20} />
         </button>
+        
+        {/* Email and Password Login Form */}
         <form onSubmit={handleEmailLogin}>
           <div className="mb-4">
             <label
@@ -119,6 +134,8 @@ const Login: React.FC = () => {
             Sign In with Email
           </button>
         </form>
+
+        {/* Links for sign-up and forgot password */}
         <div className="flex flex-row justify-between items-center px-2">
           <div className="text-sm text-gray-600 mt-3">
             Don't have an account yet?{" "}

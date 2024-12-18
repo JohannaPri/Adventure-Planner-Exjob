@@ -24,6 +24,7 @@ const NavBar: React.FC<NavBarProps> = () => {
 
   const [activeSection, setActiveSection] = useState<string>("");
 
+  // Getting authentication state from Redux store
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   const handleSignOut = async () => {
@@ -126,6 +127,8 @@ const NavBar: React.FC<NavBarProps> = () => {
               alt="Logo"
             />
           )}
+
+          {/* Desktop Navigation Links */}
           <div className="items-center hidden gap-20 lg:flex font-poppins font-light">
             {isLoggedIn ? (
               <>

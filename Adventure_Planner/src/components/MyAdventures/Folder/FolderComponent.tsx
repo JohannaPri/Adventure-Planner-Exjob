@@ -29,18 +29,25 @@ const FolderComponent: React.FC<FolderProps> = ({
     confirmText: string;
     closeText: string;
   } | null>(null);
-  
+
   const navigate = useNavigate();
 
+  /**
+   * Handles the folder deletion process by authenticating the user
+   * and calling the deleteFolder function to remove the folder.
+   *
+   * @param folderId - The ID of the folder to delete.
+   */
+
   const handleDeleteFolder = async (folderId: string) => {
-    console.log('FOLDER ID: ', id);
+    console.log("FOLDER ID: ", id);
     try {
       const auth = getAuth();
       const user = auth.currentUser;
 
       if (user) {
         const userId = user.uid;
-        console.log('Folder Id to delete: ', id);
+        console.log("Folder Id to delete: ", id);
         await deleteFolder(userId, folderId);
         console.log(`Folder with ID ${folderId} deleted.`);
         onDeleteFolder(folderId);
@@ -51,24 +58,30 @@ const FolderComponent: React.FC<FolderProps> = ({
     } catch (error) {
       console.error("Failed to delete folder: ", error);
     }
-  }
-  
+  };
+
+  /**
+   * Opens the modal to confirm folder deletion.
+   * Sets the content for the modal with a warning message and options.
+   */
+
   const openModal = () => {
     setModalContent({
       title: "Hold on! You're about to delete this folder...",
       description: (
         <>
-          Are you sure you want to delete <strong>{folderTitle}?</strong> Once it's gone, you can't get it back!
+          Are you sure you want to delete <strong>{folderTitle}?</strong> Once
+          it's gone, you can't get it back!
         </>
       ),
       confirmText: "Yes, Delete!",
       closeText: "No, Cancel",
     });
     setIsModalOpen(true);
-  }
+  };
 
   const handleClick = () => {
-    console.log('CLICK!', id);
+    console.log("CLICK!", id);
     navigate(`/my-adventures/${id}`);
   };
 
@@ -119,7 +132,7 @@ const FolderComponent: React.FC<FolderProps> = ({
           closeText={modalContent.closeText}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onConfirm={() => handleDeleteFolder(id || '')}
+          onConfirm={() => handleDeleteFolder(id || "")}
           icon={<Warning size={60} />}
         />
       )}

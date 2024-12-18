@@ -8,13 +8,18 @@ import { db } from "../../../firebase/firebase-config";
  * @param folderId - The ID of the folder to be deleted.
  * @returns A promise that resolves when the folder is deleted.
  */
-export const deleteFolder = async (userId: string, folderId: string): Promise<void> => {
+export const deleteFolder = async (
+  userId: string,
+  folderId: string
+): Promise<void> => {
   try {
     const folderDocRef = doc(db, "users", userId, "userFolders", folderId);
 
-    const folderSnapshot = await getDocs(collection(folderDocRef, "userFolders"));
+    const folderSnapshot = await getDocs(
+      collection(folderDocRef, "userFolders")
+    );
 
-    folderSnapshot.forEach(async (folderDoc) => { 
+    folderSnapshot.forEach(async (folderDoc) => {
       await deleteDoc(folderDoc.ref);
     });
 

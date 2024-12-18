@@ -1,9 +1,28 @@
 import { getAuth } from "firebase/auth";
 import { db } from "../../../firebase/firebase-config";
-import { arrayRemove, collection, getDocs, query, updateDoc, where } from "firebase/firestore";
+import {
+  arrayRemove,
+  collection,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { FormattedFlightData } from "../../../utils/formattedFlightData";
 
-export const removeFlightFromDb = async (flight: FormattedFlightData, folderId: string) => {
+/**
+ * Removes a flight from the user's subfolder in the database.
+ *
+ * @param flight - The flight object to be removed.
+ * @param folderId - The ID of the folder containing the subfolder from which the flight will be removed.
+ *
+ * @throws Will throw an error if no user is logged in, or if no matching document is found in the Firestore database.
+ */
+
+export const removeFlightFromDb = async (
+  flight: FormattedFlightData,
+  folderId: string
+) => {
   try {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -27,7 +46,7 @@ export const removeFlightFromDb = async (flight: FormattedFlightData, folderId: 
     }
 
     const docRef = snapshot.docs[0].ref;
-    console.log('This is the docRef for the flight-folder: ', docRef);
+    console.log("This is the docRef for the flight-folder: ", docRef);
 
     await updateDoc(docRef, {
       data: arrayRemove(flight),

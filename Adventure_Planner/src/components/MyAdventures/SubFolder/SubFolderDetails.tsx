@@ -22,6 +22,12 @@ interface SubFolder {
   [key: string]: any;
 }
 
+/**
+ * Component to display details of a specific subfolder.
+ * Fetches the subfolder details from Firestore based on the provided parent folder ID and subfolder ID.
+ * The content rendered depends on the type of subfolder (typeId).
+ */
+
 const SubFolderDetails: React.FC = () => {
   const { parentFolderId, subFolderId } = useParams<{
     parentFolderId: string;
@@ -61,7 +67,6 @@ const SubFolderDetails: React.FC = () => {
             id: subFolderSnap.id,
             ...subFolderSnap.data(),
           } as SubFolder);
-          
         } else {
           console.error("Subfolder not found in Firestore");
         }
@@ -90,15 +95,20 @@ const SubFolderDetails: React.FC = () => {
               return (
                 <div className="flex flex-col items-center mt-28">
                   <div className="flex w-full justify-between items-center">
-                  <div className="absolute left-0 ml-96">
-                    <button 
-                      onClick={handleBackClick}
-                    >
-                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
-                    </button>
+                    <div className="absolute left-0 ml-96">
+                      <button onClick={handleBackClick}>
+                        <ArrowCircleLeft
+                          className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"
+                          weight="fill"
+                          size={32}
+                        />
+                      </button>
+                    </div>
+                    <h1 className="text-2xl font-bold text-center w-full">
+                      Saved Flights
+                    </h1>
                   </div>
-                  <h1 className="text-2xl font-bold text-center w-full">Saved Flights</h1>
-                  </div>
+                  {/* Component to display flights from the database */}
                   <GetFlightsFromDb folderId={parentFolderId} />
                 </div>
               );
@@ -106,44 +116,69 @@ const SubFolderDetails: React.FC = () => {
               return (
                 <div className="flex flex-col items-center mt-28">
                   <div className="flex w-full justify-between items-center">
-                  <div className="absolute left-0 ml-96">
-                    <button 
-                      onClick={handleBackClick}
-                    >
-                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
-                    </button>
+                    <div className="absolute left-0 ml-96">
+                      <button onClick={handleBackClick}>
+                        <ArrowCircleLeft
+                          className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"
+                          weight="fill"
+                          size={32}
+                        />
+                      </button>
+                    </div>
+                    <h1 className="text-2xl font-bold text-center w-full">
+                      Saved Accommodations
+                    </h1>
                   </div>
-                  <h1 className="text-2xl font-bold text-center w-full">Saved Accommodations</h1>
-                  </div>
+                  {/* Component to display accommodations from the database */}
                   <GetAccommodationsFromDb folderId={parentFolderId} />
                 </div>
-              )
-            case 3: 
+              );
+            case 3:
               return (
                 <div className="flex flex-col items-center mt-28">
                   <div className="flex w-full justify-between items-center">
-                  <div className="absolute left-0 ml-96">
-                    <button 
-                      onClick={handleBackClick}
-                    >
-                      <ArrowCircleLeft className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer" weight="fill" size={32} />
-                    </button>
+                    <div className="absolute left-0 ml-96">
+                      <button onClick={handleBackClick}>
+                        <ArrowCircleLeft
+                          className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"
+                          weight="fill"
+                          size={32}
+                        />
+                      </button>
+                    </div>
+                    <h1 className="text-2xl font-bold text-center w-full">
+                      Saved Activities
+                    </h1>
                   </div>
-                  <h1 className="text-2xl font-bold text-center w-full">Saved Activities</h1>
-                  </div>
+                  {/* Component to display activities from the database */}
                   <GetActivitiesFromDb folderId={parentFolderId} />
                 </div>
               );
-            case 4: 
+            case 4:
               return (
                 <div className="flex flex-col items-center justify-center">
-                  <WanderListDetails userId={user?.uid || ""} parentFolderId={parentFolderId} title={subFolder.typeId === 4 ? subFolder.title2 : subFolder.title} title2={subFolder.title2} />
+                  {/* Component to display wanderlist details */}
+                  <WanderListDetails
+                    userId={user?.uid || ""}
+                    parentFolderId={parentFolderId}
+                    title={
+                      subFolder.typeId === 4
+                        ? subFolder.title2
+                        : subFolder.title
+                    }
+                    title2={subFolder.title2}
+                  />
                 </div>
               );
-              case 5: 
+            case 5:
               return (
                 <div className="flex flex-col items-center mt-28">
-                  <GetNewSubFolder userId={user?.uid || ""} parentFolderId={parentFolderId} subFolderId={subFolderId} />
+                  {/* Component to display a new subfolder */}
+                  <GetNewSubFolder
+                    userId={user?.uid || ""}
+                    parentFolderId={parentFolderId}
+                    subFolderId={subFolderId}
+                  />
                 </div>
               );
             default:

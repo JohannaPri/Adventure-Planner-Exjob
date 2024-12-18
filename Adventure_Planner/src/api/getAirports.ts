@@ -7,11 +7,11 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${apiKey}`;
  * Fetch airport data from the API
  * --------------------------------
  * Sends a GET request to retrieve airport data based on the provided query.
- * 
+ *
  * @param query - The search string for airport location.
  * @returns The airport data from the API.
  * @throws An error if the API call fails.
-*/
+ */
 
 const fetchAirportData = async (query: string) => {
   console.log("QUERY: ", query);

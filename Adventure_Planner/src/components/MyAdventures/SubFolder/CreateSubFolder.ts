@@ -10,14 +10,20 @@ import { db } from "../../../firebase/firebase-config";
  * @returns A promise resolving to the document ID of the created subfolder.
  */
 
-
 export const createSubFolder = async (
   userId: string,
   parentFolderId: string,
-  subFolderData: { title: string, title2?: string; }
+  subFolderData: { title: string; title2?: string }
 ): Promise<string> => {
   try {
-    const subFolderCollection = collection(db, "users", userId, "userFolders", parentFolderId, "subFolders");
+    const subFolderCollection = collection(
+      db,
+      "users",
+      userId,
+      "userFolders",
+      parentFolderId,
+      "subFolders"
+    );
 
     const docRef = await addDoc(subFolderCollection, subFolderData);
     console.log(`Subfolder created with ID: ${docRef.id}`);
@@ -37,7 +43,6 @@ export const createSubFolder = async (
  * @returns A promise resolving when all subfolders are created.
  */
 
-
 export const createDefaultSubFolders = async (
   userId: string,
   parentFolderId: string
@@ -46,11 +51,20 @@ export const createDefaultSubFolders = async (
     { itemId: 1, priority: 1, typeId: 1, title: "Flight", data: [] },
     { itemId: 2, priority: 2, typeId: 2, title: "Accommodation", data: [] },
     { itemId: 3, priority: 3, typeId: 3, title: "Activities", data: [] },
-    { itemId: 4, priority: 4, typeId: 4, title: "Wanderlist", title2: "My Wanderlist", data: [] },
+    {
+      itemId: 4,
+      priority: 4,
+      typeId: 4,
+      title: "Wanderlist",
+      title2: "My Wanderlist",
+      data: [],
+    },
   ];
 
   try {
-    const sortedSubFolders = defaultSubFolders.sort((a, b) => a.priority - b.priority);
+    const sortedSubFolders = defaultSubFolders.sort(
+      (a, b) => a.priority - b.priority
+    );
     const creationPromises = sortedSubFolders.map((subFolder) =>
       createSubFolder(userId, parentFolderId, subFolder)
     );

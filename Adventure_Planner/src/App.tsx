@@ -52,8 +52,14 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/search" element={<LoggedIn />} />
                 <Route path="/my-adventures" element={<MyAdventures />} />
-                <Route path="my-adventures/:id" element={<AdventureDetails />} />
-                <Route path="/my-adventures/:parentFolderId/subfolder/:subFolderId" element={<SubFolderDetails />} />
+                <Route
+                  path="my-adventures/:id"
+                  element={<AdventureDetails />}
+                />
+                <Route
+                  path="/my-adventures/:parentFolderId/subfolder/:subFolderId"
+                  element={<SubFolderDetails />}
+                />
               </Route>
 
               <Route path="*" element={<ErrorPage />} />

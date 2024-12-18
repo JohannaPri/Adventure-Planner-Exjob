@@ -5,6 +5,14 @@ import { Envelope } from "@phosphor-icons/react";
 import { NewsLetterTexts } from "../../data/DataLists";
 import { Slide, AttentionSeeker } from "react-awesome-reveal";
 
+/**
+ * `NewsLetterSection` component renders a newsletter subscription section.
+ * It includes a heading, a description, an input field for email, and a submit button.
+ * The section also utilizes animations for engaging user interaction.
+ *
+ * @component
+ */
+
 const NewsLetterSection = () => {
   return (
     <section className="w-full my-32 flex justify-between relative items-start h-[400px] font-poppins">

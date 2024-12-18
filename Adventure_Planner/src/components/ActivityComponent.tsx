@@ -102,6 +102,12 @@ const ActivityComponent: React.FC = () => {
     width: number;
   } | null>(null);
 
+  /**
+   * Sets the position of the dropdown based on the position of the input field.
+   * @param inputRef The reference to the input element.
+   * @param inputType The type of input field (destination).
+   */
+
   const handleInputFocus = (
     inputRef: React.RefObject<HTMLInputElement>,
     inputType: "destination"
@@ -118,6 +124,11 @@ const ActivityComponent: React.FC = () => {
     }
   };
 
+  /**
+   * Handles the city selection by updating the state and Redux store.
+   * @param cityName The name of the selected city.
+   */
+
   const handleCitySelect = (cityName: string) => {
     const matchedCity = cityData?.find((city) => city.city_full === cityName);
 
@@ -133,6 +144,11 @@ const ActivityComponent: React.FC = () => {
     setDropdownPosition(null);
   };
 
+  /**
+   * Handles changes to the destination input field.
+   * @param event The change event from the input.
+   */
+
   const handleDestinationChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -142,6 +158,11 @@ const ActivityComponent: React.FC = () => {
       debouncedFetchCities(value);
     }
   };
+
+  /**
+   * A debounced function to fetch cities from the API.
+   * @param input The search input used for fetching cities.
+   */
 
   const debouncedFetchCities = useCallback(
     debounce(async (input: string) => {
@@ -157,6 +178,11 @@ const ActivityComponent: React.FC = () => {
     }, 500),
     [dispatch]
   );
+
+  /**
+   * Handle date change in the date picker.
+   * @param fromDate The selected date.
+   */
 
   const handleDateChange = (fromDate: string) => {
     console.log(fromDate);

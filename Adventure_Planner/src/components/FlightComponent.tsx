@@ -66,7 +66,7 @@ const FlightComponent = () => {
   const [children, setChildren] = useState<number>(0);
   const [isPassengerListOpen, setIsPassengerListOpen] =
     useState<boolean>(false);
-  //@ts-expect-error: Unused variable warning  
+  //@ts-expect-error: Unused variable warning
   const [airportsLoading, setAirportsLoading] = useState<boolean>(false);
   //@ts-expect-error: Unused variable warning
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);

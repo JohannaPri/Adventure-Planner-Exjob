@@ -6,7 +6,15 @@ import { HeroTexts, Countries } from "../../data/DataLists";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { opensignupmodal } from "../../redux/slices/modalSignupSlice";
-import './heroSection.css';
+import "./heroSection.css";
+
+/**
+ * HeroSection component serves as the landing or introductory section of the website.
+ * It displays dynamic content such as a rotating list of countries and welcoming messages.
+ * It also provides a sign-up button if the user is not logged in.
+ *
+ * @component
+ */
 
 const HeroSection = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
@@ -15,6 +23,13 @@ const HeroSection = () => {
   const heroText = HeroTexts[0];
 
   const dispatch = useDispatch();
+
+  /**
+   * Randomly selects a country from the list of countries and updates the state.
+   * This function is called every 3 seconds to update the country displayed in the hero section.
+   *
+   * @returns {void}
+   */
 
   const getRandomCountry = () => {
     const randomIndex = Math.floor(Math.random() * Countries.length);
@@ -28,6 +43,13 @@ const HeroSection = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  /**
+   * Dispatches an action to open the sign-up modal.
+   * This function is triggered when the user clicks on the "Sign up" button.
+   *
+   * @returns {void}
+   */
+
   const handleSignUpModal = () => {
     console.log("Sign-up Modal");
     dispatch(opensignupmodal());
@@ -39,6 +61,7 @@ const HeroSection = () => {
         id="home"
         className="max-h-screen w-full lg:h-screen md:h-[550px] h-[830px] relative overflow-x-hidden flex justify-end font-poppins"
       >
+        {/* Background Section with animated cloud SVGs */}
         <section className="w-full lg:h-screen md:h-[550px] h-[830] overflow-hidden relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,6 +92,7 @@ const HeroSection = () => {
             />
           </svg>
 
+          {/* Another cloud SVG with slightly different styling */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
@@ -96,6 +120,7 @@ const HeroSection = () => {
             />
           </svg>
 
+          {/* Main rotating cloud SVG displaying the random country */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
@@ -122,6 +147,8 @@ const HeroSection = () => {
               className="shadow-md"
               d="M50,120 C30,110 20,90 40,80 C20,60 40,40 60,50 C70,30 100,20 120,40 C140,20 180,40 170,70 C190,80 190,120 160,110 C140,140 100,150 80,130 C70,150 50,140 50,120 Z"
             />
+
+            {/* Displays the random country name */}
             <text
               x="53%"
               y="45%"
@@ -136,6 +163,8 @@ const HeroSection = () => {
             </text>
           </svg>
         </section>
+
+        {/* Main content section with text and sign-up button */}
         <main className="absolute top-0 max-sm:top-5 left-0 grid w-full h-auto px-5 pt-24 lg:h-full md:grid-cols-2 lg:px-24 md:px-24 md:pt-32 lg:pt-0">
           <div className="flex flex-col justify-center order-2 gap-3 md:gap-6 md:order-1">
             <Text

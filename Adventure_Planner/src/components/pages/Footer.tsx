@@ -26,13 +26,16 @@ const Footer = () => {
     }
   };
 
+  // Opens the FAQ modal via Redux dispatch
   const openFAQ = () => {
     dispatch(openfaqmodal());
   };
 
   return (
     <footer id="footer" className="flex flex-col w-full bg-cloudGray">
+      {/* Main footer section with multiple grid columns */}
       <section className="grid w-full h-auto px-6 py-16 lg:grid-cols-5 md:grid-cols-3 lg:px-20 md:px-12 gap-7 md:gap-4 lg:gap-0">
+        {/* Footer logo and hero quote */}
         <div className="flex flex-col items-center gap-4 px-4 justify-center lg:px-4 md:px-4">
           <Slide direction="down">
             <div className="sm:px-20 lg:px-9 px-24 flex justify-center">
@@ -78,6 +81,7 @@ const Footer = () => {
           </blockquote>
         </div>
 
+        {/* Quick Links Section */}
         <div className="flex flex-col gap-4 md:items-center md:mt-8 font-poppins">
           <Text className="text-xl text-slateGray" as="h2">
             {FooterTexts.quickLinks.caption}
@@ -96,6 +100,7 @@ const Footer = () => {
           </ul>
         </div>
 
+        {/* Contact Section */}
         <div className="flex flex-col gap-4 md:items-center md:mt-8 font-poppins">
           <Text className="text-xl text-slateGray" as="h2">
             {FooterTexts.contacts.caption}
@@ -122,6 +127,7 @@ const Footer = () => {
           </ul>
         </div>
 
+        {/* More Section */}
         <div className="flex flex-col gap-4 md:items-center md:mt-8 font-poppins">
           <Text className="text-xl text-slateGray" as="h2">
             {FooterTexts.more.caption}
@@ -140,6 +146,7 @@ const Footer = () => {
           </ul>
         </div>
 
+        {/* Social Media Icons */}
         <div className="flex flex-col gap-4 lg:items-center md:mt-8">
           <ul className="flex items-center w-full gap-4 lg:justify-center max-sm:justify-center">
             <List>

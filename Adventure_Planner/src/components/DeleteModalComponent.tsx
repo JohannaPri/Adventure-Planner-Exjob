@@ -50,7 +50,7 @@ export const DeleteModalComponent: React.FC<DeleteModalComponentProps> = ({
           </div>
         </ModalHeader>
         <ModalFooter className="justify-center">
-        <Button
+          <Button
             className="px-5 py-3 text-white font-medium transition-all duration-300 ease-in border-none shadow-md outline-none rounded-1 lg:px-7 bg-slateGray hover:shadow-none hover:bg-black hover:text-white hover:border-gray-950"
             onClick={onConfirm}
           >

@@ -29,6 +29,11 @@ interface SuggestionsDropdownProps {
   position: { top: number; left: number; width: number };
 }
 
+/**
+ * Main component for handling accommodations search.
+ * Includes destination input, date selection, and passenger management.
+ */
+
 const AccommodationComponent: React.FC = () => {
   const { data: hotelData, status } = useSelector(
     (state: RootState) => state.hotel
@@ -45,6 +50,7 @@ const AccommodationComponent: React.FC = () => {
 
   const cityInputRef = useRef<HTMLInputElement | null>(null);
 
+  // City suggestions and loading states
   const [citySuggestions, setCitySuggestions] = useState<string[]>([]);
   //@ts-expect-error: Unused variable warning
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
@@ -97,6 +103,13 @@ const AccommodationComponent: React.FC = () => {
     width: number;
   } | null>(null);
 
+  /**
+   * Handle focus on input fields and set dropdown position.
+   *
+   * @param inputRef Reference to the input element.
+   * @param inputType The type of input being focused (e.g., destination).
+   */
+
   const handleInputFocus = (
     inputRef: React.RefObject<HTMLInputElement>,
     inputType: "destination"
@@ -112,6 +125,12 @@ const AccommodationComponent: React.FC = () => {
       });
     }
   };
+
+  /**
+   * Handles the selection of a city from the suggestions.
+   *
+   * @param cityName The name of the selected city.
+   */
 
   const handleCitySelect = (cityName: string) => {
     const matchedCity = cityData?.find((city) => city.city_full === cityName);
@@ -332,7 +351,9 @@ const AccommodationComponent: React.FC = () => {
     try {
       await dispatch(fetchHotels(requestParams)).unwrap();
     } catch (error: any) {
-      console.error(error.message || "An error occured while fetching accommodations");
+      console.error(
+        error.message || "An error occured while fetching accommodations"
+      );
     }
   };
 

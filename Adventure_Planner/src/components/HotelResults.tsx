@@ -10,8 +10,10 @@ import { saveAccommodationToDb } from "./MyAdventures/SavedData/SaveAccommodatio
 import { removeAccommodationFromDb } from "./MyAdventures/SavedData/RemoveAccommodationFromDb";
 
 const HotelResults: React.FC = () => {
-
-  const [accommodationExists, setAccommodationExists] = useState<{ [id: string]: boolean }>({});  const [folders, setFolders] = useState<any[]>([]); 
+  const [accommodationExists, setAccommodationExists] = useState<{
+    [id: string]: boolean;
+  }>({});
+  const [folders, setFolders] = useState<any[]>([]);
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -35,22 +37,24 @@ const HotelResults: React.FC = () => {
     };
     fetchAndSetFolders();
   }, [userId]);
-  
+
   const {
     data: hotelData,
     status,
     error,
-
   } = useSelector((state: RootState) => state.hotel);
 
   useEffect(() => {
     if (selectedFolderId) {
       const checkAllAccommodationsExist = async () => {
-        const existsObj: { [id: string ]: boolean } = {};
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
+        const existsObj: { [id: string]: boolean } = {};
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         for (const accommodation of hotelData) {
-          const exists = await checkIfAccommodationExists(accommodation, selectedFolderId);
+          const exists = await checkIfAccommodationExists(
+            accommodation,
+            selectedFolderId
+          );
           existsObj[accommodation.id] = exists;
         }
         setAccommodationExists(existsObj);
@@ -59,7 +63,11 @@ const HotelResults: React.FC = () => {
     }
   }, [selectedFolderId, hotelData]);
 
-  const handleSaveAccommodation = async (userId: string, accommodation: Hotel, selectedFolderId: string) => {
+  const handleSaveAccommodation = async (
+    userId: string,
+    accommodation: Hotel,
+    selectedFolderId: string
+  ) => {
     if (userId && accommodation && selectedFolderId) {
       try {
         const exists = accommodationExists[accommodation.id];
@@ -87,7 +95,7 @@ const HotelResults: React.FC = () => {
     } else {
       console.error("listRef is not set");
     }
-  }
+  };
 
   if (status === "loading")
     return (
@@ -122,7 +130,10 @@ const HotelResults: React.FC = () => {
   }
 
   return (
-    <div ref={listRef} className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
+    <div
+      ref={listRef}
+      className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10"
+    >
       {hotelData && hotelData.length > 0 && (
         <div className="relative transition duration-300 w-[40%] max-w-2xl p-6 mx-auto text-black bg-gray-100 border-2 border-white shadow-md shadow-gray-200 rounded-lg mb-6">
           <div className="mb-4">
@@ -130,7 +141,8 @@ const HotelResults: React.FC = () => {
               Select Your Adventure Folder.
             </p>
             <p className="text-sm font-medium text-gray-800">
-              Choose the folder where you'd like to save your accommodation details.
+              Choose the folder where you'd like to save your accommodation
+              details.
             </p>
             <p className="text-sm font-medium text-gray-800">
               Simply pick your Adventure folder and hit Save to store your
@@ -151,7 +163,8 @@ const HotelResults: React.FC = () => {
                 {folders?.length ? (
                   folders.map((folder) => (
                     <option key={folder.id} value={folder.id}>
-                      {folder.title} {folder.description ? `(${folder.description})` : null}
+                      {folder.title}{" "}
+                      {folder.description ? `(${folder.description})` : null}
                     </option>
                   ))
                 ) : (
@@ -162,81 +175,92 @@ const HotelResults: React.FC = () => {
           </div>
         </div>
       )}
-      {hotelData && hotelData?.map((hotel, index) => (
-        <div
-          className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
-          key={index}
-        >
-          <div className="grid items-center grid-cols-12 gap-4">
-            <div className="col-span-8 space-y-2">
-              <div className="flex items-center gap-2">
-                <House size={24} className="text-black mr-4" />
-                <div className="flex-1">
-                  <div className="flex justify-between">
-                    <div>
-                      <p className="text-sm font-bold">{hotel.name}</p>
-                      <p className="text-xs text-gray-600">{hotel.location}</p>
+      {hotelData &&
+        hotelData?.map((hotel, index) => (
+          <div
+            className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
+            key={index}
+          >
+            <div className="grid items-center grid-cols-12 gap-4">
+              <div className="col-span-8 space-y-2">
+                <div className="flex items-center gap-2">
+                  <House size={24} className="text-black mr-4" />
+                  <div className="flex-1">
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="text-sm font-bold">{hotel.name}</p>
+                        <p className="text-xs text-gray-600">
+                          {hotel.location}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm font-bold text-center"></p>
+                        <p className="text-xs text-gray-600 text-center"></p>
+                      </div>
                     </div>
-                    <div className="text-center">
-                      <p className="text-sm font-bold text-center"></p>
-                      <p className="text-xs text-gray-600 text-center"></p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <UsersThree size={24} className="text-black mr-4" />
+                  <div className="flex-1">
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="text-sm font-bold">Guests</p>
+                        <p className="text-xs text-gray-600">
+                          Adults: {hotel.adult} | Children: {hotel.child}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-center">Rating</p>
+                        <p className="text-xs text-gray-600 text-center">
+                          {hotel.rating}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <UsersThree size={24} className="text-black mr-4" />
-                <div className="flex-1">
-                  <div className="flex justify-between">
-                    <div>
-                      <p className="text-sm font-bold">Guests</p>
-                      <p className="text-xs text-gray-600">
-                        Adults: {hotel.adult} | Children: {hotel.child}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold text-center">Rating</p>
-                      <p className="text-xs text-gray-600 text-center">
-                        {hotel.rating}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            {/* Price and Save Button (Centered vertically) */}
-            <div className="ml-12 flex flex-col items-center justify-center col-span-4 space-y-4">
-              <p className="text-lg font-bold text-black text-center">
-                €{hotel.total_price}
-              </p>
-              <div
+              {/* Price and Save Button (Centered vertically) */}
+              <div className="ml-12 flex flex-col items-center justify-center col-span-4 space-y-4">
+                <p className="text-lg font-bold text-black text-center">
+                  €{hotel.total_price}
+                </p>
+                <div
                   className="w-full"
                   onClick={() => {
                     if (!selectedFolderId && listRef.current) {
                       handleScrollListToTop();
                     }
                   }}
+                >
+                  <button
+                    onClick={() => {
+                      if (userId && selectedFolderId) {
+                        handleSaveAccommodation(
+                          userId,
+                          hotel,
+                          selectedFolderId
+                        );
+                      } else {
+                        console.error(
+                          "UserId or selectedFolderId is null or undefined"
+                        );
+                      }
+                    }}
+                    className={`w-full text-center justify-center shadow-md px-4 py-1 text-white border rounded-lg outline-none lg:px-1 font-semibold ${
+                      selectedFolderId
+                        ? "bg-slateGray border-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black"
+                        : "bg-slateGray border-gray-300 cursor-not-allowed opacity-50"
+                    }`}
                   >
-              <button onClick={() => {
-                if (userId && selectedFolderId) {
-                  handleSaveAccommodation(userId, hotel, selectedFolderId);
-                } else {
-                  console.error("UserId or selectedFolderId is null or undefined");
-                }
-              }}
-              className={`w-full text-center justify-center shadow-md px-4 py-1 text-white border rounded-lg outline-none lg:px-1 font-semibold ${
-                selectedFolderId 
-                ? "bg-slateGray border-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black" 
-                : "bg-slateGray border-gray-300 cursor-not-allowed opacity-50"
-              }`}>
-                {accommodationExists[hotel.id] ? "Remove" : "Save"}
-              </button>
+                    {accommodationExists[hotel.id] ? "Remove" : "Save"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

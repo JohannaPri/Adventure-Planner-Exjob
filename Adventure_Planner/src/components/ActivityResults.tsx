@@ -11,8 +11,10 @@ import { saveActivityToDb } from "./MyAdventures/SavedData/SaveActivityToDb";
 import checkIfActivityExists from "./MyAdventures/SavedData/CheckActivityExists";
 
 const ActivityResult: React.FC = () => {
-
-  const [activityExists, setActivityExists] = useState<{ [id: string]: boolean }>({});  const [folders, setFolders] = useState<any[]>([]); 
+  const [activityExists, setActivityExists] = useState<{
+    [id: string]: boolean;
+  }>({});
+  const [folders, setFolders] = useState<any[]>([]);
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -27,6 +29,7 @@ const ActivityResult: React.FC = () => {
     }
   }, [user]);
 
+  // Fetch folders for the authenticated user
   useEffect(() => {
     const fetchAndSetFolders = async () => {
       if (userId) {
@@ -35,8 +38,9 @@ const ActivityResult: React.FC = () => {
       }
     };
     fetchAndSetFolders();
-  }, [userId]);  
+  }, [userId]);
 
+  // Fetch activity data from Redux store
   const {
     data: activityData,
     status,
@@ -46,11 +50,14 @@ const ActivityResult: React.FC = () => {
   useEffect(() => {
     if (selectedFolderId) {
       const checkAllActivitysExist = async () => {
-        const existsObj: { [id: string ]: boolean } = {};
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
+        const existsObj: { [id: string]: boolean } = {};
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         for (const activity of hotelData) {
-          const exists = await checkIfActivityExists(activity, selectedFolderId);
+          const exists = await checkIfActivityExists(
+            activity,
+            selectedFolderId
+          );
           existsObj[activity.id] = exists;
         }
         setActivityExists(existsObj);
@@ -59,7 +66,21 @@ const ActivityResult: React.FC = () => {
     }
   }, [selectedFolderId, activityData]);
 
-  const handleSaveActivity = async (userId: string, activity: Activity, selectedFolderId: string) => {
+  /**
+   * Handles the saving or removal of an activity.
+   * If the activity does not exist in the selected folder, it saves it;
+   * if it exists, it removes it from the folder.
+   *
+   * @param userId The ID of the authenticated user.
+   * @param activity The activity object to be saved or removed.
+   * @param selectedFolderId The ID of the selected folder to which the activity is associated.
+   */
+
+  const handleSaveActivity = async (
+    userId: string,
+    activity: Activity,
+    selectedFolderId: string
+  ) => {
     if (userId && activity && selectedFolderId) {
       try {
         const exists = activityExists[activity.id];
@@ -87,7 +108,7 @@ const ActivityResult: React.FC = () => {
     } else {
       console.error("listRef is not set");
     }
-  }
+  };
 
   if (status === "loading")
     return (
@@ -121,7 +142,10 @@ const ActivityResult: React.FC = () => {
   }
 
   return (
-    <div ref={listRef} className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10">
+    <div
+      ref={listRef}
+      className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10"
+    >
       {activityData && activityData.length > 0 && (
         <div className="relative transition duration-300 w-[40%] max-w-2xl p-6 mx-auto text-black bg-gray-100 border-2 border-white shadow-md shadow-gray-200 rounded-lg mb-6">
           <div className="mb-4">
@@ -150,7 +174,8 @@ const ActivityResult: React.FC = () => {
                 {folders?.length ? (
                   folders.map((folder) => (
                     <option key={folder.id} value={folder.id}>
-                      {folder.title} {folder.description ? `(${folder.description})` : null}
+                      {folder.title}{" "}
+                      {folder.description ? `(${folder.description})` : null}
                     </option>
                   ))
                 ) : (
@@ -161,89 +186,94 @@ const ActivityResult: React.FC = () => {
           </div>
         </div>
       )}
-      {activityData && activityData?.map((activity, index) => (
-        <div
-          className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
-          key={index}
-        >
-          <div className="grid items-center grid-cols-12 gap-4">
-            <div className="col-span-8 space-y-2">
-              <div className="flex items-center gap-2">
-                <Mountains size={24} className="text-black mr-4" />
-                <div className="flex-1">
-                  <div className="flex justify-between">
-                    <div>
-                      <p className="text-sm font-bold">{activity.type}</p>
-                      <p className="text-xs text-gray-600">
-                        {activity.category} ({activity.durationHours} hours) -{" "}
-                        {activity.city}
-                      </p>
+      {activityData &&
+        activityData?.map((activity, index) => (
+          <div
+            className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
+            key={index}
+          >
+            <div className="grid items-center grid-cols-12 gap-4">
+              <div className="col-span-8 space-y-2">
+                <div className="flex items-center gap-2">
+                  <Mountains size={24} className="text-black mr-4" />
+                  <div className="flex-1">
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="text-sm font-bold">{activity.type}</p>
+                        <p className="text-xs text-gray-600">
+                          {activity.category} ({activity.durationHours} hours) -{" "}
+                          {activity.city}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm font-bold text-center"></p>
+                        <p className="text-xs text-gray-600 text-center"></p>
+                      </div>
                     </div>
-                    <div className="text-center">
-                      <p className="text-sm font-bold text-center"></p>
-                      <p className="text-xs text-gray-600 text-center"></p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <UsersThree size={24} className="text-black mr-4" />
+                  <div className="flex-1">
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="text-sm font-bold">Participants</p>
+                        <p className="text-xs text-gray-600">
+                          Adults: {activity.adults} | Children:{" "}
+                          {activity.children}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-center">Rating</p>
+                        <p className="text-xs text-gray-600 text-center">
+                          <StarRating
+                            value={activity.rating}
+                            maxStars={5}
+                            size={16}
+                            color="yellow-500"
+                          />
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <UsersThree size={24} className="text-black mr-4" />
-                <div className="flex-1">
-                  <div className="flex justify-between">
-                    <div>
-                      <p className="text-sm font-bold">Participants</p>
-                      <p className="text-xs text-gray-600">
-                        Adults: {activity.adults} | Children:{" "}
-                        {activity.children}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold text-center">Rating</p>
-                      <p className="text-xs text-gray-600 text-center">
-                        <StarRating
-                          value={activity.rating}
-                          maxStars={5}
-                          size={16}
-                          color="yellow-500"
-                        />
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div className="ml-12 flex flex-col items-center justify-center col-span-4 space-y-4">
-              <p className="text-lg font-bold text-black text-center">
-                €{activity.price}
-              </p>
-              <div
+              <div className="ml-12 flex flex-col items-center justify-center col-span-4 space-y-4">
+                <p className="text-lg font-bold text-black text-center">
+                  €{activity.price}
+                </p>
+                <div
                   className="w-full"
                   onClick={() => {
                     if (!selectedFolderId && listRef.current) {
                       handleScrollListToTop();
                     }
                   }}
+                >
+                  <button
+                    onClick={() => {
+                      if (userId && selectedFolderId) {
+                        handleSaveActivity(userId, activity, selectedFolderId);
+                      } else {
+                        console.error(
+                          "UserId or selectedFolderId is null or undefined"
+                        );
+                      }
+                    }}
+                    className={`w-full text-center justify-center shadow-md px-4 py-1 text-white border rounded-lg outline-none lg:px-1 font-semibold ${
+                      selectedFolderId
+                        ? "bg-slateGray border-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black"
+                        : "bg-slateGray border-gray-300 cursor-not-allowed opacity-50"
+                    }`}
                   >
-              <button onClick={() => {
-                if (userId && selectedFolderId) {
-                  handleSaveActivity(userId, activity, selectedFolderId);
-                } else {
-                  console.error("UserId or selectedFolderId is null or undefined");
-                }
-              }}
-              className={`w-full text-center justify-center shadow-md px-4 py-1 text-white border rounded-lg outline-none lg:px-1 font-semibold ${
-                selectedFolderId 
-                ? "bg-slateGray border-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black" 
-                : "bg-slateGray border-gray-300 cursor-not-allowed opacity-50"
-              }`}>
-                {activityExists[activity.id] ? "Remove" : "Save"}
-              </button>
+                    {activityExists[activity.id] ? "Remove" : "Save"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

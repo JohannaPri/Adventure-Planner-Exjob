@@ -13,6 +13,14 @@ import { NotificationComponent } from "../NotificationComponent";
 import { Info } from "@phosphor-icons/react";
 import ActivityResults from "../ActivityResults";
 
+/**
+ * `LoggedIn` component displays a dynamic user interface for logged-in users.
+ * It allows users to search for flights, accommodation, activities, or weather updates.
+ * Depending on the selected search type, different components will be rendered.
+ *
+ * @component
+ */
+
 const LoggedIn = () => {
   const [searchType, setSearchType] = useState<SearchType>("flight");
 
@@ -43,6 +51,7 @@ const LoggedIn = () => {
     );
   };
 
+  // Effect hook for loading the background image once the component mounts
   useEffect(() => {
     const img = new Image();
     img.src = bgCarOpacity;

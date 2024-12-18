@@ -1,9 +1,17 @@
 import { getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { MapPinSimple } from "@phosphor-icons/react"; 
+import { MapPinSimple } from "@phosphor-icons/react";
 import FavIconProfilePic from "../../assets/favicon/favicon.svg";
-import ProfileMap from "../../assets/profile/profile-map.png"; 
+import ProfileMap from "../../assets/profile/profile-map.png";
 import { fetchFolders } from "../MyAdventures/Folder/FetchFolders";
+
+/**
+ * Profile component displays the user's profile details, including their
+ * photo, email, a custom "About Me" section, and a list of adventures.
+ * It also provides an interactive map to mark the places the user has visited.
+ *
+ * @component
+ */
 
 const Profile: React.FC = () => {
   const [aboutMe, setAboutMe] = useState<string>("");
@@ -14,6 +22,11 @@ const Profile: React.FC = () => {
   const user = auth.currentUser;
   const userId = user?.uid;
 
+  /**
+   * Fetches the user's saved folders after the component mounts.
+   * Updates the folders state with the fetched data.
+   */
+
   useEffect(() => {
     const fetchAndSetFolders = async () => {
       if (userId) {
@@ -23,6 +36,10 @@ const Profile: React.FC = () => {
     };
     fetchAndSetFolders();
   }, [userId]);
+
+  /**
+   * Loads saved "About Me" text and markers from localStorage if available.
+   */
 
   useEffect(() => {
     if (user) {
@@ -39,7 +56,15 @@ const Profile: React.FC = () => {
     }
   }, [user]);
 
-  const handleAboutMeChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  /**
+   * Handles changes to the "About Me" text input.
+   *
+   * @param event The change event triggered by the textarea input.
+   */
+
+  const handleAboutMeChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setAboutMe(event.target.value);
   };
 
@@ -49,20 +74,29 @@ const Profile: React.FC = () => {
     }
   };
 
+  /**
+   * Handles clicks on the map to add or remove markers based on the clicked location.
+   *
+   * @param e The click event on the map container.
+   */
+
   const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const mapContainer = e.currentTarget;
     const rect = mapContainer.getBoundingClientRect();
     const lat = ((e.clientY - rect.top) / mapContainer.offsetHeight) * 100;
     const lng = ((e.clientX - rect.left) / mapContainer.offsetWidth) * 100;
 
-    const tolerance = 1; 
+    const tolerance = 1;
     const existingMarkerIndex = markers.findIndex(
       (marker) =>
-        Math.abs(marker.lat - lat) < tolerance && Math.abs(marker.lng - lng) < tolerance
+        Math.abs(marker.lat - lat) < tolerance &&
+        Math.abs(marker.lng - lng) < tolerance
     );
 
     if (existingMarkerIndex !== -1) {
-      const updatedMarkers = markers.filter((_, index) => index !== existingMarkerIndex);
+      const updatedMarkers = markers.filter(
+        (_, index) => index !== existingMarkerIndex
+      );
       setMarkers(updatedMarkers);
       saveMarkers(updatedMarkers);
     } else {
@@ -71,6 +105,12 @@ const Profile: React.FC = () => {
       saveMarkers(updatedMarkers);
     }
   };
+
+  /**
+   * Saves the markers to localStorage to persist the data.
+   *
+   * @param newMarkers The updated list of markers.
+   */
 
   const saveMarkers = (newMarkers: { lat: number; lng: number }[]) => {
     if (user) {
@@ -118,27 +158,39 @@ const Profile: React.FC = () => {
             Welcome, {user.displayName || "Adventurer"}!
           </h2>
           <p className="text-gray-500 text-sm">
-            Update your settings, get an overview of your adventures, share your story, and click on the map to mark the places you've visited!
+            Update your settings, get an overview of your adventures, share your
+            story, and click on the map to mark the places you've visited!
           </p>
 
           <div className="mt-4 flex flex-row gap-4 h-full">
             {/* Adventures section */}
             <div className="flex flex-col w-1/3 gap-4 overflow-auto">
               <div className="bg-gradient-to-r to-orange-50 from-orange-200 p-3 border-2 border-slate-600 rounded-lg">
-                <h4 className="text-gray-800 text-md font-medium">Adventures ({folders.length})</h4>
+                <h4 className="text-gray-800 text-md font-medium">
+                  Adventures ({folders.length})
+                </h4>
               </div>
               <div className="bg-gradient-to-r to-orange-50 from-orange-200 flex flex-col gap-2 overflow-y-auto max-h-[283px] border-2 border-slate-600 rounded-lg p-2 scroll-smooth no-scrollbar">
-              {folders?.length ? (
+                {folders?.length ? (
                   folders.map((folder) => (
-                  <div
-                    key={folder.id}
-                    className="p-3 border border-slate-400 rounded-lg bg-white shadow-sm transition duration-300 hover:shadow-md poi"
-                  >
-                    <p className="text-sm">{folder.title} {folder.description ? `(${folder.description})` : null}</p>
-                  </div>
+                    <div
+                      key={folder.id}
+                      className="p-3 border border-slate-400 rounded-lg bg-white shadow-sm transition duration-300 hover:shadow-md poi"
+                    >
+                      <p className="text-sm">
+                        {folder.title}{" "}
+                        {folder.description ? `(${folder.description})` : null}
+                      </p>
+                    </div>
                   ))
                 ) : (
-                  <p>You have no adventures saved yet. Head over to <span className="font-semibold text-black">My Adventures</span> and start planning your next big journey today!</p>
+                  <p>
+                    You have no adventures saved yet. Head over to{" "}
+                    <span className="font-semibold text-black">
+                      My Adventures
+                    </span>{" "}
+                    and start planning your next big journey today!
+                  </p>
                 )}
               </div>
             </div>
@@ -149,7 +201,7 @@ const Profile: React.FC = () => {
               className="cursor-pointer flex-grow h-[350px] border-2 border-slate-600 rounded-lg relative"
               onClick={handleMapClick}
               style={{
-                backgroundImage: `url(${ProfileMap})`, 
+                backgroundImage: `url(${ProfileMap})`,
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -179,68 +231,6 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* import { getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";

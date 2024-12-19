@@ -123,10 +123,10 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div className="mt-24 mb-12 mx-12">
-      <div className="flex flex-col md:flex-row justify-between gap-4 p-4">
+    <div className="mt-24 mb-12 mx-0 lg:mx-12">
+      <div className="flex flex-col md:flex-col lg:flex-row justify-between gap-4 p-4">
         {/* Left profile box */}
-        <div className="flex flex-col items-center p-4 w-full md:w-1/4 bg-white border-2 border-slate-500 rounded-lg shadow-xl">
+        <div className="flex flex-col items-center p-4 w-full lg:w-1/4 md:w-full bg-white border-2 border-slate-500 rounded-lg shadow-xl">
           <img
             className="border-2 border-white rounded-full w-24 h-24 p-4 flex justify-center items-center ring-slateGray ring-2 bg-cloudGray"
             src={user.photoURL || FavIconProfilePic}
@@ -153,7 +153,7 @@ const Profile: React.FC = () => {
         </div>
 
         {/* Right profile box with Adventures and map */}
-        <div className="flex flex-col p-4 w-full md:w-3/4 bg-white border-2 border-slate-500 rounded-lg shadow-xl">
+        <div className="flex flex-col p-4 w-full lg:w-3/4 md:w-full bg-white border-2 border-slate-500 rounded-lg shadow-xl">
           <h2 className="text-gray-800 text-xl font-semibold mb-2">
             Welcome, {user.displayName || "Adventurer"}!
           </h2>
@@ -162,9 +162,9 @@ const Profile: React.FC = () => {
             story, and click on the map to mark the places you've visited!
           </p>
 
-          <div className="mt-4 flex flex-row gap-4 h-full">
+          <div className="mt-4 flex lg:flex-row flex-col sm:flex-col gap-4 h-full">
             {/* Adventures section */}
-            <div className="flex flex-col w-1/3 gap-4 overflow-auto">
+            <div className="flex flex-col lg:w-1/3 w-full sm:w-full gap-4 overflow-auto">
               <div className="bg-gradient-to-r to-orange-50 from-orange-200 p-3 border-2 border-slate-600 rounded-lg">
                 <h4 className="text-gray-800 text-md font-medium">
                   Adventures ({folders.length})
@@ -231,45 +231,3 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-
-/* import { getAuth } from "firebase/auth";
-import React, { useEffect, useState } from "react";
-
-const Profile: React.FC = () => {
-  const [userId, setUserId] = useState<string | null>(null);
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const currentUser = auth.currentUser;
-
-  useEffect(() => {
-    if (user) {
-      setUserId(user.uid);
-    }
-  }, [user]);
-
-  if (!user) {
-    throw new Error("No user is logged in");
-  }
-
-  if (!user) {
-    return <p>Loading...</p>;
-  }  
-
-  return (
-    <div className="profile-container mt-24 p-4">
-      <h2 className="text-center text-2xl font-medium">
-        <div className="flex flex-col justify-center items-center border border-slateGray rounded-md p-4 h-[400px] w-[300px]">
-          <img className="border-2 border-white rounded-full w-16 h-16 p-4 flex justify-center items-center ring-slateGray ring-2 bg-cloudGray" src={currentUser?.photoURL || ""} alt="PP" />
-          userid
-          email
-          shoe size
-        </div>
-        Welcome, {user.displayName ? user.displayName : "Adventurer"}!
-      </h2>
-      <p className="text-gray-200">Email: {user.email}</p>
-      <p className="text-gray-200">UID: {user.uid}</p>
-    </div>
-  );
-};
-
-export default Profile; */

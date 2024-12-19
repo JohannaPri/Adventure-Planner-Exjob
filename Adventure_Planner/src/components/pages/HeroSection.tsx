@@ -22,13 +22,20 @@ const HeroSection = () => {
   const [randomCountry, setRandomCountry] = useState<string>("");
   const heroText = HeroTexts[0];
 
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+  }, 1100);
+  return () => clearTimeout(timer);
+  }, [isLoggedIn]);
+
   const dispatch = useDispatch();
 
   /**
    * Randomly selects a country from the list of countries and updates the state.
    * This function is called every 3 seconds to update the country displayed in the hero section.
-   *
-   * @returns {void}
    */
 
   const getRandomCountry = () => {
@@ -46,8 +53,6 @@ const HeroSection = () => {
   /**
    * Dispatches an action to open the sign-up modal.
    * This function is triggered when the user clicks on the "Sign up" button.
-   *
-   * @returns {void}
    */
 
   const handleSignUpModal = () => {
@@ -189,7 +194,7 @@ const HeroSection = () => {
               <Fade duration={2000}>{heroText.secondText2}</Fade>
             </Text>
             <div className="flex items-center justify-between w-full gap-0 md:justify-start lg:gap-12 md:gap-6">
-              {!isLoggedIn ? (
+              {!loading && !isLoggedIn ? (
                 <Button
                   onClick={() => {
                     handleSignUpModal();
@@ -199,7 +204,7 @@ const HeroSection = () => {
                 >
                   Sign up
                 </Button>
-              ) : null}
+              ) : <div className="h-12 w-40"></div>}
             </div>
           </div>
         </main>

@@ -287,7 +287,7 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
           </div>
         </div>
         <div className="flex w-full justify-between items-center">
-          <div className="absolute left-0 ml-96">
+          <div className="absolute left-0 lg:ml-96 ml-80 sm:ml-80 md:left-3 md:ml-20">
             <button onClick={handleBackClick}>
               <ArrowCircleLeft
                 className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"
@@ -296,17 +296,17 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
               />
             </button>
           </div>
-          <h1 className="pb-4 font-semibold text-center uppercase w-full">
+          <h1 className="pb-1 font-semibold text-center uppercase w-full">
             {title}
           </h1>
         </div>
-        <div className="flex flex-col w-[500px] items-center min-w-[500px]">
+        <div className="flex flex-col lg:w-[500px] w-screen sm:w-screen min-w-screen items-center lg:min-w-[500px] md:w-[500px]">
           {todos.length > 0 ? (
             <ul className="space-y-4 w-full max-w-[952px] overflow-y-scroll no-scrollbar scroll-smooth max-h-[500px]">
               {todos.map((todo) => (
                 <div
                   key={todo.id}
-                  className="space-y-2 w-full min-w-full max-h-[500px] scroll-smooth overflow-y-auto no-scrollbar last:mb-5 cursor-pointer"
+                  className="space-y-2 mt-10 w-full min-w-full max-h-[500px] scroll-smooth overflow-y-auto no-scrollbar last:mb-5 cursor-pointer"
                 >
                   <div className="transition duration-300 hover:shadow-xl w-full max-w-[952px] p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg">
                     <div className="grid items-center grid-cols-2 gap-4">
@@ -362,7 +362,7 @@ const WonderListDetails: React.FC<WonderListDetailsProps> = ({
               ))}
             </ul>
           ) : (
-            <p className="text-center text-gray-600 mt-6 font-medium">
+            <p className="text-center text-sm lg:text-base sm:text-sm text-gray-600 mt-6 font-medium">
               Your Wanderlist is empty. Let's start planning your next
               adventure!
             </p>

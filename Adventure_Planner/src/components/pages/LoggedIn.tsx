@@ -60,7 +60,7 @@ const LoggedIn = () => {
 
   return (
     <>
-      <section className="animate-fade-in-long relative flex flex-col items-center justify-center w-full h-fit my-25 md:px-20 bg-white mt-28 transition-all duration-2000">
+      <section className="animate-fade-in-long relative flex flex-col items-center justify-center w-full h-fit my-25 bg-white mt-28 transition-all duration-2000">
         <div className="md:min-h-0 min-h-0 w-screen bg-black"></div>
         <div className="w-full max-w-screen-xl mx-auto">
           <section className="flex justify-center items-center w-fit h-auto max-w-screen-xl mx-auto overflow-hidden relative shadow-sm shadow-black rounded-lg">
@@ -71,9 +71,9 @@ const LoggedIn = () => {
                   : "opacity-0 bg-white"
               }`}
             >
-              <div className="lg:mx-4 relative backdrop-blur-sm border-black border flex lg:justify-start justify-center sm:flex-wrap sm:justify-center lg:space-x-4 mb-10 bg-white/75 rounded-xl p-2 max-w-fit">
+              <div className="lg:mx-4 relative backdrop-blur-sm border-black border flex lg:justify-start justify-center sm:flex-wrap sm:justify-center lg:space-x-4 mb-10 bg-white/75 rounded-xl p-2 lg:max-w-fit sm:max-w-screen max-w-screen md:max-w-fit">
                 <ButtonWIcon
-                  className={`p-2 rounded hover:scale-[1.05] transition-transform duration-300 ${
+                  className={`p-2 rounded hover:scale-[1.05] transition-transform duration-300 sm:text-sm text-sm lg:text-base ${
                     searchType === "flight"
                       ? "bg-transparent text-slateGray"
                       : "bg-red-transparent"
@@ -86,7 +86,7 @@ const LoggedIn = () => {
                   Flight
                 </ButtonWIcon>
                 <ButtonWIcon
-                  className={`p-2 rounded hover:scale-[1.05] transition-transform duration-300 ${
+                  className={`p-2 rounded hover:scale-[1.05] transition-transform duration-300 sm:text-sm text-sm lg:text-base ${
                     searchType === "accommodation"
                       ? "bg-transparent text-slateGray"
                       : "bg-red-transparent"
@@ -99,7 +99,7 @@ const LoggedIn = () => {
                   Accommodation
                 </ButtonWIcon>
                 <ButtonWIcon
-                  className={`p-2 rounded hover:scale-[1.05] transition-transform duration-300 ${
+                  className={`p-2 rounded hover:scale-[1.05] transition-transform duration-300 sm:text-sm text-sm lg:text-base ${
                     searchType === "activities"
                       ? "bg-transparent text-slateGray"
                       : "bg-red-transparent"
@@ -112,7 +112,7 @@ const LoggedIn = () => {
                   Activities
                 </ButtonWIcon>
                 <ButtonWIcon
-                  className={`p-2 rounded hover:scale-[1.05] transition-transform duration-300 ${
+                  className={`p-2 rounded hover:scale-[1.05] transition-transform duration-300 sm:text-sm text-sm lg:text-base ${
                     searchType === "weather"
                       ? "bg-transparent text-slateGray"
                       : "bg-red-transparent"
@@ -125,7 +125,7 @@ const LoggedIn = () => {
                   Weather
                 </ButtonWIcon>
               </div>
-              <div className="flex flex-col gap-4 lg:w-[1280px] w-auto sm:w-auto px-4">
+              <div className="flex flex-col gap-4 lg:w-[1280px] w-auto sm:w-auto lg-px4 lg:px-4 sm:px-0 md:px-0">
                 {searchType === "flight" && <FlightComponent />}
                 {searchType === "accommodation" && <AccommodationComponent />}
                 {searchType === "activities" && <ActivityComponent />}

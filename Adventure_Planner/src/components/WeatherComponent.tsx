@@ -108,7 +108,7 @@ const WeatherComponent: React.FC = () => {
           <div>
             <Input
               containerClass="relative"
-              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
+              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] md:w-[360.2px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
               type="text"
               placeholder="City"
               value={selectedCityName}
@@ -123,14 +123,14 @@ const WeatherComponent: React.FC = () => {
             </Input>
           </div>
           <div className="relative w-full">
-            <div className="absolute w-fit -top-32 right-80 left-60">
+            <div className="block lg:absolute sm:block w-full lg:w-fit sm:w-full -top-32 right-80 left-60">
               <WeatherResults />
             </div>
           </div>
         </div>
       </div>
       <div className="mt-[50px]"></div>
-      <div className="flex gap-4 justify-end">
+      <div className="flex gap-4 lg:justify-end sm:justify-center md:justify-end justify-center">
         <Button
           type="button"
           onClick={handleResetSearch}

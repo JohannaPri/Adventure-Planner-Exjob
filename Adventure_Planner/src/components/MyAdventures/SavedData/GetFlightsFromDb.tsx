@@ -102,7 +102,7 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
         savedFlights.map((flight, index) => (
           <div
             key={index}
-            className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
+            className="transition duration-300 hover:shadow-xl lg:w-[40%] w-screen text-sm lg:text-base sm:text-sm sm:w-screen max-w-2xl lg:p-6 p-4 sm:p-4 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
           >
             <div className="grid items-center grid-cols-12 gap-4">
               {/* Outbound and Return Flights */}
@@ -174,7 +174,7 @@ const GetFlightsFromDb = ({ folderId }: { folderId: string }) => {
                   onClick={() =>
                     handleRemoveFlight(flight, folderId, flight.flight_id)
                   }
-                  className="w-full text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black"
+                  className="lg:w-full w-fit sm:w-fit text-center justify-center shadow-md px-4 py-1 text-white border border-slateGray rounded-lg outline-none lg:px-1 font-semibold bg-slateGray hover:shadow-inner hover:shadow-gray-600 hover:bg-black hover:text-white hover:border-black"
                 >
                   Remove
                 </button>

@@ -95,7 +95,7 @@ const SubFolderDetails: React.FC = () => {
               return (
                 <div className="flex flex-col items-center mt-28">
                   <div className="flex w-full justify-between items-center">
-                    <div className="absolute left-0 ml-96">
+                    <div className="absolute left-0 lg:ml-96 ml-80 sm:ml-80 pt-1 md:ml-20">
                       <button onClick={handleBackClick}>
                         <ArrowCircleLeft
                           className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"
@@ -116,7 +116,7 @@ const SubFolderDetails: React.FC = () => {
               return (
                 <div className="flex flex-col items-center mt-28">
                   <div className="flex w-full justify-between items-center">
-                    <div className="absolute left-0 ml-96">
+                    <div className="absolute lg:left-0 right-3 lg:ml-96 ml-80 sm:ml-80 pt-1 sm:right-3 md:left-3 md:ml-20">
                       <button onClick={handleBackClick}>
                         <ArrowCircleLeft
                           className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"
@@ -137,7 +137,7 @@ const SubFolderDetails: React.FC = () => {
               return (
                 <div className="flex flex-col items-center mt-28">
                   <div className="flex w-full justify-between items-center">
-                    <div className="absolute left-0 ml-96">
+                    <div className="absolute left-0 lg:ml-96 ml-80 sm:ml-80 pt-1 md:left-3 md:ml-20">
                       <button onClick={handleBackClick}>
                         <ArrowCircleLeft
                           className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"

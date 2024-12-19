@@ -201,7 +201,7 @@ const FlightComponent = () => {
       top: `${position.top + 8}px`,
       left: `${position.left}px`,
       width: `${position.width}px`,
-      zIndex: 5,
+      zIndex: 10,
     };
 
     return ReactDOM.createPortal(
@@ -411,7 +411,7 @@ const FlightComponent = () => {
       >
         <Select
           containerClass="relative"
-          selectClass="focus:outline-none pl-9 border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-8 pl-4 py-1 cursor-pointer appearance-none sm:max-w-fit md:max-w-fit lg:max-w-fit max-w-fit"
+          selectClass="focus:outline-none pl-9 border bg-white border-slateGray rounded-lg outline-none lg:w-[300px] md:w-[360.2px] w-full h-[50px] focus:outline-none text-slateGray pr-8 pl-4 py-1 cursor-pointer appearance-none sm:max-w-fit md:max-w-fit lg:max-w-fit max-w-fit"
         >
           <option value="round-trip">Round-Trip</option>
           <option value="one-way-trip" disabled={true}>
@@ -443,14 +443,14 @@ const FlightComponent = () => {
           </svg>
         </div>
 
-        <div className="flex flex-col gap-4 md:flex-row md:gap-4">
+        <div className="flex flex-col sm:flex-col lg:flex-row gap-4 md:flex-col md:gap-4">
           <div className="relative">
             <Input
               ref={departureInputRef}
               onFocus={() => handleInputFocus(departureInputRef, "departure")}
               onChange={handleDepartureChange}
               containerClass="relative"
-              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
+              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] md:w-[360.2px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
               type="text"
               placeholder="Departure (min 3 letters)"
               value={localDeparture}
@@ -461,7 +461,7 @@ const FlightComponent = () => {
               </div>
 
               {hasSelectedDeparture && localDeparture && (
-                <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] justify-between overflow-hidden">
+                <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[87%] lg:max-w-[252px] sm:max-w-[87%] md:max-w-[314px] justify-between overflow-hidden">
                   <span className="text-slateGray text-ellipsis overflow-hidden whitespace-nowrap">
                     {localDeparture.length > 20
                       ? `${localDeparture.slice(0, 25)}...`
@@ -495,7 +495,7 @@ const FlightComponent = () => {
               }
               onChange={handleDestinationChange}
               containerClass="relative"
-              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
+              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] md:w-[360.2px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
               type="text"
               placeholder="Destination (min 3 letters)"
               value={localDestination}
@@ -506,7 +506,7 @@ const FlightComponent = () => {
               </div>
 
               {hasSelectedDestination && localDestination && (
-                <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] justify-between overflow-hidden">
+                <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[87%] lg:max-w-[252px] sm:max-w-[87%] md:max-w-[314px] justify-between overflow-hidden">
                   <span className="text-slateGray text-ellipsis overflow-hidden whitespace-nowrap">
                     {localDestination.length > 20
                       ? `${localDestination.slice(0, 25)}...`
@@ -532,7 +532,7 @@ const FlightComponent = () => {
               )}
           </div>
 
-          <div className="relative lg:w-[300px] sm:w-[100%] w-screen h-auto max-w-fit">
+          <div className="relative lg:w-[300px] md:w-[360.2px] sm:w-[100%] w-screen h-auto max-w-fit">
             <DatePickerComponent
               reset={resetDatePicker}
               onDateChange={handleDateChange}
@@ -541,7 +541,7 @@ const FlightComponent = () => {
           <div ref={passengerRef} className="relative">
             <Button
               onClick={togglePassengerSelector}
-              className="border border-slateGray bg-white text-slateGray rounded-lg lg:w-[300px] w-full h-[50px] p-2 flex items-center justify-start"
+              className="border border-slateGray bg-white text-slateGray rounded-lg lg:w-[300px] md:w-[360.2px] w-full h-[50px] p-2 flex items-center justify-start"
             >
               <div className="mr-2">
                 <UserList size={20} color="slateGray" weight="regular" />
@@ -555,7 +555,7 @@ const FlightComponent = () => {
 
             <div className="relative">
               <div
-                className={`absolute top-full left-0 border border-slateGray rounded-lg outline-none lg:w-[300px] mt-2 w-full bg-white text-slateGray p-4 space-y-3 transition-all duration-800 ease-in-out ${
+                className={`absolute top-full left-0 border border-slateGray rounded-lg outline-none lg:w-[300px] md:w-[360.2px] mt-2 w-full bg-white text-slateGray p-4 space-y-3 transition-all duration-800 ease-in-out ${
                   isPassengerListOpen
                     ? "opacity-100 max-h-[300px] -translate-y-0 duration-500 ease-out"
                     : "opacity-0 hidden pointer-events-none max-h-0 -translate-y-2 duration-300 ease-in"
@@ -603,7 +603,7 @@ const FlightComponent = () => {
           </div>
         </div>
       </div>
-      <div className="flex gap-4 justify-end">
+      <div className="flex gap-4 lg:justify-end sm:justify-center md:justify-end justify-center">
         <Button
           type="button"
           className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"

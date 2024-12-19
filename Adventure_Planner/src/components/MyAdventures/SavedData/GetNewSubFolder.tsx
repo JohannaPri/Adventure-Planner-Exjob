@@ -71,7 +71,7 @@ const GetNewSubFolder: React.FC<GetSubFolderProps> = ({
   return (
     <div className="w-full">
       <div className="flex w-full justify-between items-center">
-        <div className="absolute left-0 ml-96">
+        <div className="absolute lg:left-0 lg:ml-96 right-20 md:left-0 md:ml-20 mr-0 sm:right-20 sm:mr-20 pt-1">
           <button onClick={handleBackClick}>
             <ArrowCircleLeft
               className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"
@@ -87,7 +87,7 @@ const GetNewSubFolder: React.FC<GetSubFolderProps> = ({
       <h2 className="mt-6 mb-2 font-medium text-lg text-center w-full">
         🚧 Under Construction 🚧
       </h2>
-      <div className="text-center max-w-md mx-auto text-gray-800">
+      <div className="text-center text-sm sm:text-sm lg:text-lg md:text-lg max-w-md mx-auto text-gray-800">
         <p className="mb-2">
           This folder is still on its journey and not quite ready for you yet.
           But don't worry! There are plenty of other folders to explore while we

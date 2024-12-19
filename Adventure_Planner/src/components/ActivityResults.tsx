@@ -147,7 +147,7 @@ const ActivityResult: React.FC = () => {
       className="space-y-2 w-full max-h-[500px] scroll-smooth mt-20 overflow-y-auto no-scrollbar last:mb-5 pb-10"
     >
       {activityData && activityData.length > 0 && (
-        <div className="relative transition duration-300 w-[40%] max-w-2xl p-6 mx-auto text-black bg-gray-100 border-2 border-white shadow-md shadow-gray-200 rounded-lg mb-6">
+        <div className="relative transition duration-300 lg:w-[40%] w-screen text-sm lg:text-base sm:text-sm sm:w-screen max-w-2xl lg:p-6 p-4 sm:p-4 mx-auto text-black bg-gray-100 border-2 border-white shadow-md shadow-gray-200 rounded-lg mb-6">
           <div className="mb-4">
             <p className="text-base font-semibold mb-2 text-gray-800">
               Select Your Adventure Folder.
@@ -189,7 +189,7 @@ const ActivityResult: React.FC = () => {
       {activityData &&
         activityData?.map((activity, index) => (
           <div
-            className="transition duration-300 hover:shadow-xl w-[40%] max-w-2xl p-6 mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
+            className="transition duration-300 hover:shadow-xl lg:w-[40%] w-screen text-sm lg:text-base sm:text-sm sm:w-screen max-w-2xl lg:p-6 p-4 sm:p-4  mx-auto text-black bg-gradient-to-r to-orange-50 from-orange-200 border-2 border-white shadow-sm shadow-white rounded-lg"
             key={index}
           >
             <div className="grid items-center grid-cols-12 gap-4">
@@ -244,7 +244,7 @@ const ActivityResult: React.FC = () => {
                   €{activity.price}
                 </p>
                 <div
-                  className="w-full"
+                  className="lg:w-full w-fit sm:w-fit"
                   onClick={() => {
                     if (!selectedFolderId && listRef.current) {
                       handleScrollListToTop();

@@ -32,7 +32,7 @@ export const AccordionComponent = () => {
       <div className="fixed w-[80%] h-[90%] z-10 p-8 text-white rounded-md shadow-lg bg-cloudGray2 overflow-hidden flex flex-col">
         <button
           onClick={() => dispatch(closefaqmodal())}
-          className="fixed top-[35.5px] right-20 text-gray-600 bg-cloudGray hover:bg-gray-200 p-4 hover:text-gray-500 rounded-md"
+          className="fixed lg:top-[36.5px] top-[45px] sm:top-[45px] lg:right-20 sm:right-[41.5px] right-[41.5px] md:right-[18px] md:top-[51px] text-gray-600 bg-cloudGray hover:bg-gray-200 p-4 hover:text-gray-500 rounded-md"
         >
           <X size={20} />
         </button>

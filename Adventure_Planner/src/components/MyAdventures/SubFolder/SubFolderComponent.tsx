@@ -63,7 +63,6 @@ const SubFolderComponent: React.FC<SubFolderProps> = ({
   };
 
   const openModal = () => {
-    console.log("sdflfdk");
     setModalContent({
       title: "Hold on! You're about to delete this folder...",
       description: (

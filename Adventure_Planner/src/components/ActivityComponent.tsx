@@ -427,12 +427,12 @@ const ActivityComponent: React.FC = () => {
           isVisible ? "animate-fade-in-long" : "opacity-0"
         }`}
       >
-        <div className="flex flex-col gap-4 md:flex-row md:gap-4">
+        <div className="flex flex-col lg:flex-row sm:flex-col md:flex-col gap-4 md:gap-4">
           <div className="relative">
             <Input
               ref={cityInputRef}
               containerClass="relative"
-              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
+              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] md:w-[360.2px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
               type="text"
               placeholder="City"
               onChange={handleDestinationChange}
@@ -446,7 +446,7 @@ const ActivityComponent: React.FC = () => {
                 <City size={20} color="slateGray" weight="regular" />
               </div>
               {hasSelectedDestination && selectedCityName && (
-                <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[252px] justify-between overflow-hidden">
+                <div className="w-full absolute top-1/2 left-9 transform -translate-y-1/2 flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full max-w-[87%] lg:max-w-[252px] sm:max-w-[87%] md:max-w-[314px] justify-between overflow-hidden">
                   <span className="overflow-hidden text-slateGray text-ellipsis whitespace-nowrap">
                     {selectedCityName.length > 20
                       ? `${selectedCityName.slice(0, 25)}...`
@@ -474,7 +474,7 @@ const ActivityComponent: React.FC = () => {
           <div className="relative">
             <Input
               containerClass="relative"
-              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
+              inputClass="border border-slateGray rounded-lg outline-none lg:w-[300px] md:w-[360.2px] w-full h-[50px] focus:outline-none text-slateGray pr-4 pl-9 py-1 cursor-pointer"
               type="text"
               disabled={true}
               placeholder="Find Activity"
@@ -493,7 +493,7 @@ const ActivityComponent: React.FC = () => {
           <div ref={passengerRef} className="relative">
             <Button
               onClick={togglePassengerSelector}
-              className="border border-slateGray bg-white text-slateGray rounded-lg lg:w-[300px] w-full h-[50px] p-2 flex items-center justify-start"
+              className="border border-slateGray bg-white text-slateGray rounded-lg lg:w-[300px] md:w-[360.2px] w-full h-[50px] p-2 flex items-center justify-start"
             >
               <div className="mr-2">
                 <UserList size={20} color="slateGray" weight="regular" />
@@ -560,7 +560,7 @@ const ActivityComponent: React.FC = () => {
         </div>
       </div>
       <div className="mt-[50px]"></div>
-      <div className="flex gap-4 justify-end">
+      <div className="flex gap-4 lg:justify-end sm:justify-center md:justify-end justify-center">
         <Button
           type="button"
           className="mt-14 bg-white/75 backdrop-blur-sm border-[0.5px] border-black before:top-0 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-white/65 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"

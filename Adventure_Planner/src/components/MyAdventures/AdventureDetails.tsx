@@ -153,7 +153,7 @@ const AdventureDetails: React.FC = () => {
         onAddSubFolder={handleAddSubFolder}
       />
       <div className="flex w-full justify-between items-center">
-        <div className="absolute left-0 ml-72">
+        <div className="absolute left-0 ml-72 md:ml-20 lg:ml-72 pt-2">
           <button onClick={handleBackClick}>
             <ArrowCircleLeft
               className="rounded-full shadow-black text-gray-600 hover:text-gray-800 cursor-pointer"

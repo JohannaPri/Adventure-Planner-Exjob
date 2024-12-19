@@ -48,7 +48,7 @@ const Footer = () => {
             </div>
           </Slide>
           <blockquote className="max-w-md text-lg italic font-semibold text-slateGray mt-4 relative text-center">
-            <div className="absolute top-0 left-0">
+            <div className="absolute lg:top-0 top-0 left-0 lg:left-0 md:left-1 md-top-2">
               <svg
                 className="w-3 h-3 text-slateGray"
                 aria-hidden="true"
@@ -61,7 +61,7 @@ const Footer = () => {
             </div>
 
             <Text
-              className="text-sm text-slateGray font-poppins mt-4 italic text-center"
+              className="text-sm text-slateGray font-poppins lg:mt-4 mt-4 md:mt-0 italic text-center"
               as="p"
             >
               {heroText.bigText}

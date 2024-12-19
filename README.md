@@ -194,74 +194,95 @@ Visit http://localhost:`<your_port_number>` in your browser to start using Adven
 
 ## 📸 Project Preview
 
-#### Here are some screenshots of Adventure Planner in action:
 
-**Home Page of Adventure Planner:**
+**Here are some screenshots of Adventure Planner in action:**
 
-![Home Page](assets/homepage.png)
+### Start Page
 
-**Search flights for your next adventure!**
+<p align="center">
+  <img src="./Screenshots/heroSection.png" alt="Start page first section" width="400"/>
+  <img src="./Screenshots/services.png" alt="Our services section" width="400"/>
+  <img src="./Screenshots/topDestinations.png" alt="Top Destination section" width="400"/>
+  <img src="./Screenshots/newsLetter.png" alt="NewsLetter section" width="400"/>
+  <img src="./Screenshots/footer.png" alt="Contact section" width="400"/>  
+  <img src="./Screenshots/cookies.png" alt="Consent Cookies" width="400"/> 
+</p>
 
-![Sign In](assets/flight_search.png)
+---
 
-**Search flights for your next adventure!**
+### Sign Up / Sign In 
 
-![Sign Up](assets/flight_search.png)
+<p align="center">
+  <img src="./Screenshots/signIn.png" alt="Sign In modal" width="400"/>
+  <img src="./Screenshots/signUp.png"
+  alt="Sign Up modal" width="400"/>
+</p>
 
-**Search flights for your next adventure!**
+---
 
-![Flight Search](assets/flight_search.png)
+### Profile
 
-**Search flights for your next adventure!**
+<p align="center">
+  <img src="./Screenshots/profile.png" alt="Profile Page" width="400"/>
+  <img src="./Screenshots/profileMap.png" alt="Interactive Map in profile" width="400"/>
+</p>
 
-![Accommodation Search](assets/flight_search.png)
+---
 
-**Search flights for your next adventure!**
+### Flight Search
 
-![Activities Search](assets/flight_search.png)
+<p align="center">
+  <img src="./Screenshots/flightSearch.png" alt="Search Page" width="400"/>
+  <img src="./Screenshots/flightSearchFilled1.png" alt="Flight search filled" width="400"/>
+  <img src="./Screenshots/flightListNoFolder.png" alt="Search flight list no folder" width="400"/>
+  <img src="./Screenshots/flightList.png" alt="Search flight list with folder" width="400"/>
+  <img src="./Screenshots/modalInfo.png" alt="Information about search modal" width="400"/>  
+</p>
 
-**Get real-time weather updates for your destinations.**
+---
 
-![Weather Update](assets/weather_update.png)
+### Accommodation Search
 
-**Search flights for your next adventure!**
+<p align="center">
+  <img src="./Screenshots/accommodationSearch1.png" alt="Accommodation search filled" width="400"/>
+  <img src="./Screenshots/accommodationList.png" alt="Accomodation search list with folder" width="400"/>
+</p>
 
-![My Destinations](assets/flight_search.png)
+---
 
-**Search flights for your next adventure!**
 
-![My Profile](assets/flight_search.png)
+### Activity Search
 
-**Search flights for your next adventure!**
+<p align="center">
+  <img src="./Screenshots/activitySearch1.png" alt="Activity search filled" width="400"/>
+  <img src="./Screenshots/accommodationList.png" alt="Activity search list with folder" width="400"/>
+</p>
 
-![My Profile](assets/flight_search.png)
+---
 
-**Search flights for your next adventure!**
+### Weather Search
 
-![My Profile](assets/flight_search.png)
+<p align="center">
+  <img src="./Screenshots/weatherSearchWait.png" alt="Weather search wait" width="400"/>
+  <img src="./Screenshots/weatherList1.png" alt="Weather search result" width="400"/>
+</p>
 
-**Search flights for your next adventure!**
+---
 
-![My Profile](assets/flight_search.png)
+### My Adventures
 
-**Search flights for your next adventure!**
-
-#### These images showcase the app's functionality and design. Enjoy exploring!
+<p align="center">
+  <img src="./Screenshots/myAdventuresFolder.png" alt="My Adventures Folder" width="400"/>
+  <img src="./Screenshots/myAdventuresSubFolder.png" alt="My Adventure Subfolders" width="400"/>
+  <img src="./Screenshots/wanderlist.png" alt="Wanderlist as a todo" width="400"/>
+  <img src="./Screenshots/createOwnSubFolder.png" alt="Create my own subfolder" width="400"/>
+  <img src="./Screenshots/savedSearch.png" alt="Example of saved search" width="400"/> 
+  <img src="./Screenshots/noSavedSearch.png" alt="No saved search in subfolder" width="400"/> 
+  <img src="./Screenshots/modalDeleteFolder.png" alt="Delete folder modal" width="400"/>  
+</p>
 
 ---
 
 #### Published: Year 2025
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-

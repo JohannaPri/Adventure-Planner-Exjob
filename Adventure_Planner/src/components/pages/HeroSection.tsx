@@ -71,7 +71,7 @@ const HeroSection = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
-            className="max-w-full max-h-full z-10 max-md:z-0"
+            className="max-w-full max-h-full z-10 max-md:z-0 responsive-blue-cloud"
             style={{ position: "absolute", bottom: "6%", right: "-3%" }}
           >
             <defs>

@@ -71,8 +71,8 @@ const HeroSection = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
-            className="max-w-full max-h-full z-10 max-md:z-0 responsive-blue-cloud"
-            style={{ position: "absolute", bottom: "6%", right: "-3%" }}
+            className="max-w-full max-h-full z-10 max-md:z-0 responsive-blue-cloud pointer-events-none"
+            style={{ position: "absolute", bottom: "6%", right: "-3%", }}
           >
             <defs>
               <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
@@ -101,7 +101,7 @@ const HeroSection = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
-            className="max-w-full max-h-full max-md:mt-20 responsive-gray-cloud"
+            className="max-w-full max-h-full max-md:mt-20 responsive-gray-cloud pointer-events-none"
           >
             <defs>
               <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
@@ -129,7 +129,7 @@ const HeroSection = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
-            className="max-w-full max-h-full z-10 max-sm:w-80 max-md:w-2/3 max-md:h-2/3 max-sm:h-80 max-sm:-ml-24 max-md:-ml-28 responsive-pink-cloud"
+            className="max-w-full max-h-full z-10 max-sm:w-80 max-md:w-2/3 max-md:h-2/3 max-sm:h-80 max-sm:-ml-24 max-md:-ml-28 responsive-pink-cloud pointer-events-none"
           >
             <defs>
               <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">

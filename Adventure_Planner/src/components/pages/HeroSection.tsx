@@ -174,7 +174,7 @@ const HeroSection = () => {
           <div className="flex flex-col justify-center order-2 gap-3 md:gap-6 md:order-1">
             <Text
               as="p"
-              className="text-sm max-sm:mb-2 max-md:mt-4 font-normal tracking-widest uppercase text-slateGray lg:text-base"
+              className="text-sm max-sm:mb-2 max-md:mt-4 font-normal tracking-widest uppercase text-slateGray lg:text-base lg:mt-10"
             >
               <Fade duration={2000}>{heroText.firstText}</Fade>
             </Text>

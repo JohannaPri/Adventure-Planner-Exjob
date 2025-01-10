@@ -171,10 +171,10 @@ const HeroSection = () => {
 
         {/* Main content section with text and sign-up button */}
         <main className="absolute top-0 max-sm:top-5 left-0 grid w-full h-auto px-5 pt-24 lg:h-full md:grid-cols-2 lg:px-24 md:px-24 md:pt-32 lg:pt-0">
-          <div className="flex flex-col justify-center order-2 gap-3 md:gap-6 md:order-1">
+          <div className="flex flex-col justify-center order-2 gap-3 md:gap-6 md:order-1 lg:mt-20">
             <Text
               as="p"
-              className="text-sm max-sm:mb-2 max-md:mt-4 font-normal tracking-widest uppercase text-slateGray lg:text-base lg:mt-10"
+              className="text-sm max-sm:mb-2 max-md:mt-4 font-normal tracking-widest uppercase text-slateGray lg:text-base"
             >
               <Fade duration={2000}>{heroText.firstText}</Fade>
             </Text>

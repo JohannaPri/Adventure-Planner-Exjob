@@ -33,8 +33,8 @@
         width: 90%;
         height: 90%;
         position: absolute;
-        top: 34%;
-        left: 35%;
+        top: 30%;
+        left: 34.5%;
     }
     .responsive-gray-cloud {
         height: 80%;
@@ -47,6 +47,8 @@
         width: 80%;
         height: 80%;
         position: absolute;
+        left: 25%;
+        top: 10%;
     }
 }
 
@@ -55,8 +57,8 @@
         width: 90%;
         height: 90%;
         position: absolute;
-        top: 38%;
-        left: 45%;
+        top: 40%;
+        left: 48%;
     }
     .responsive-gray-cloud {
         height: 80%;

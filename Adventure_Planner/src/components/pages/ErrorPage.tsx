@@ -19,7 +19,7 @@ const EmptyComponent = () => {
             alt="404"
           />
         </EmptyImage>
-        <EmptyTitle className="mb-[14px] mt-5">
+        <EmptyTitle className="mb-[14px] mt-5 text-center sm:justify-center">
           404 - Lost in the Journey 🌍
         </EmptyTitle>
         <EmptyDescription className="mb-8">
